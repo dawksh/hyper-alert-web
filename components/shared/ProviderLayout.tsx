@@ -1,5 +1,11 @@
 "use client"
 
+import '@rainbow-me/rainbowkit/styles.css';
+
+import {
+    getDefaultConfig,
+    RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
 import React from 'react'
 import { WagmiProvider } from 'wagmi'
 import { config } from '@/lib/config'
@@ -13,7 +19,9 @@ function ProviderLayout({ children }: { children: React.ReactNode }) {
         <div>
             <WagmiProvider config={config}>
                 <QueryClientProvider client={queryClient}>
-                    {children}
+                    <RainbowKitProvider coolMode={true} showRecentTransactions={true}>
+                        {children}
+                    </RainbowKitProvider>
                 </QueryClientProvider>
             </WagmiProvider>
         </div>
