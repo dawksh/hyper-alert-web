@@ -3,6 +3,9 @@ import { Position, usePositions } from '@/hooks/usePositions'
 import { Loader2 } from 'lucide-react'
 import React, { useState } from 'react'
 import { Button } from '../ui/button'
+import axios from 'axios'
+import { useAccount } from 'wagmi'
+import { queryClient } from '../shared/ProviderLayout'
 
 const columns = [
     'select',
@@ -28,10 +31,25 @@ const tabs = ['Active Positions', 'Active Alerts']
 
 const PositionsTable = ({ data }: { data: Position[] }) => {
     const [selected, setSelected] = useState<string[]>([])
+    const { address } = useAccount()
+    const [loading, setLoading] = useState(false)
     const all = data?.map(p => p.asset) || []
     const allSelected = !!all.length && selected.length === all.length
     const toggle = (asset: string) => setSelected(s => s.includes(asset) ? s.filter(a => a !== asset) : [...s, asset])
     const selectAll = () => setSelected(allSelected ? [] : all)
+    const createAlert = async () => {
+        setLoading(true)
+        await axios.post('/api/alerts', {
+            alerts: selected.map(a => ({
+                asset: a,
+                liqPrice: data.find(p => p.asset === a)?.liquidationPrice,
+                direction: data.find(p => p.asset === a)?.direction.toLowerCase(),
+                address
+            }))
+        })
+        queryClient.invalidateQueries({ queryKey: ['activeAlerts'] })
+        setLoading(false)
+    }
     return (
         <div>
             <table className="w-full text-sm">
@@ -63,7 +81,9 @@ const PositionsTable = ({ data }: { data: Position[] }) => {
                 </tbody>
             </table>
             <div className="flex justify-end mt-4">
-                <Button variant="secondary">Create Alert</Button>
+                <Button variant="secondary" onClick={createAlert} disabled={loading || !selected.length}>
+                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Create Alert'}
+                </Button>
             </div>
         </div>
     )
@@ -71,10 +91,17 @@ const PositionsTable = ({ data }: { data: Position[] }) => {
 
 const AlertsTable = ({ data }: { data: Alert[] }) => {
     const [selected, setSelected] = useState<string[]>([])
+    const [loading, setLoading] = useState(false)
     const all = data?.map(a => a.id) || []
     const allSelected = !!all.length && selected.length === all.length
     const toggle = (id: string) => setSelected(s => s.includes(id) ? s.filter(a => a !== id) : [...s, id])
     const selectAll = () => setSelected(allSelected ? [] : all)
+    const deleteAlerts = async () => {
+        setLoading(true)
+        await axios.delete('/api/alerts', { data: selected })
+        queryClient.invalidateQueries({ queryKey: ['activeAlerts'] })
+        setLoading(false)
+    }
     if (!data.length) return <div className="w-full flex items-center justify-center h-40 text-muted-foreground text-base">No active alerts</div>
     return (
         <div>
@@ -112,7 +139,9 @@ const AlertsTable = ({ data }: { data: Alert[] }) => {
                 </tbody>
             </table>
             <div className="flex justify-end mt-4">
-                <Button variant="destructive">Delete</Button>
+                <Button variant="destructive" onClick={deleteAlerts} disabled={loading || !selected.length}>
+                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Delete Alerts'}
+                </Button>
             </div>
         </div>
     )
