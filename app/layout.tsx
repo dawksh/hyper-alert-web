@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "wagmi starter",
-  description: "wagmi starter",
+  title: "hyper alerts",
+  description: "hyper alerts",
 };
 
 export default function RootLayout({
