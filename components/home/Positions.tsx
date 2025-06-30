@@ -41,10 +41,8 @@ const PositionsTable = ({ data }: { data: Position[] }) => {
     const toggle = (asset: string) => setSelected(s => s.includes(asset) ? s.filter(a => a !== asset) : [...s, asset])
     const selectAll = () => setSelected(allSelected ? [] : all)
     const createAlert = async () => {
-        if (!user?.telegram_id && !user?.pd_id) {
-            toast.error('Please connect your Telegram or PD account to create alerts', {
-                description: 'You can connect your account in the profile page',
-            })
+        if ((user?.telegram_id && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(user.telegram_id)) && !user?.pd_id) {
+            toast.error('Please connect your Telegram or PD account to create alerts in the profile page')
             return
         }
         setLoading(true)
@@ -80,7 +78,7 @@ const PositionsTable = ({ data }: { data: Position[] }) => {
                                 <input type="checkbox" checked={selected.includes(p.asset)} onChange={() => toggle(p.asset)} className="accent-primary" />
                             </td>
                             <td className="px-4 py-2 font-semibold">{p.asset}</td>
-                            <td className="px-4 py-2">{p.size}</td>
+                            <td className="px-4 py-2">{Math.abs(Number(p.size))}</td>
                             <td className="px-4 py-2">{p.entryPrice}</td>
                             <td className="px-4 py-2">{Number(p.collateral).toFixed(2)}</td>
                             <td className="px-4 py-2">{Number(p.liquidationPrice).toFixed(2)}</td>
