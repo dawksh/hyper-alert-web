@@ -6,6 +6,8 @@ import { Button } from '../ui/button'
 import axios from 'axios'
 import { useAccount } from 'wagmi'
 import { queryClient } from '../shared/ProviderLayout'
+import { useUser } from '@/hooks/useUser'
+import { toast } from 'sonner'
 
 const columns = [
     'select',
@@ -32,12 +34,19 @@ const tabs = ['Active Positions', 'Active Alerts']
 const PositionsTable = ({ data }: { data: Position[] }) => {
     const [selected, setSelected] = useState<string[]>([])
     const { address } = useAccount()
+    const { data: user } = useUser()
     const [loading, setLoading] = useState(false)
     const all = data?.map(p => p.asset) || []
     const allSelected = !!all.length && selected.length === all.length
     const toggle = (asset: string) => setSelected(s => s.includes(asset) ? s.filter(a => a !== asset) : [...s, asset])
     const selectAll = () => setSelected(allSelected ? [] : all)
     const createAlert = async () => {
+        if (!user?.telegram_id && !user?.pd_id) {
+            toast.error('Please connect your Telegram or PD account to create alerts', {
+                description: 'You can connect your account in the profile page',
+            })
+            return
+        }
         setLoading(true)
         await axios.post('/api/alerts', {
             alerts: selected.map(a => ({
