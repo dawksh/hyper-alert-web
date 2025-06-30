@@ -50,6 +50,7 @@ const PositionsTable = ({ data }: { data: Position[] }) => {
         queryClient.invalidateQueries({ queryKey: ['activeAlerts'] })
         setLoading(false)
     }
+    if (data.length === 0) return <div className="w-full flex items-center justify-center h-40 text-muted-foreground text-base">No active positions</div>
     return (
         <div>
             <table className="w-full text-sm">
@@ -64,7 +65,7 @@ const PositionsTable = ({ data }: { data: Position[] }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data?.map((p: Position) => (
+                    {data.map((p: Position) => (
                         <tr key={p.asset} className="hover:bg-accent/40 transition-colors">
                             <td className="px-4 py-2">
                                 <input type="checkbox" checked={selected.includes(p.asset)} onChange={() => toggle(p.asset)} className="accent-primary" />

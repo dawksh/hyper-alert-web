@@ -1,5 +1,6 @@
 "use client"
 import { useUser } from "@/hooks/useUser"
+import { Loader2 } from "lucide-react"
 import { useState, useEffect } from "react"
 
 const page = () => {
@@ -33,7 +34,7 @@ const page = () => {
         }))
     }
 
-    if (isLoading) return <div>Loading...</div>
+    if (isLoading) return <div className="flex items-center justify-center h-screen"><Loader2 className="animate-spin" /></div>
 
     return (
         <div className="max-w-md mx-auto p-6">
