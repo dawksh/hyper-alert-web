@@ -1,17 +1,20 @@
 "use client"
+import { queryClient } from "@/components/shared/ProviderLayout"
 import { useUser } from "@/hooks/useUser"
+import axios from "axios"
 import { Loader2 } from "lucide-react"
 import { useState, useEffect } from "react"
+import { toast } from "sonner"
 
 const page = () => {
-    const { data, isLoading } = useUser()
+    const { data, isLoading: userLoading } = useUser()
     const [formData, setFormData] = useState({
         email: "",
         telegram_id: "",
         pd_id: ""
     })
     const [copied, setCopied] = useState(false)
-
+    const [isLoading, setIsLoading] = useState(false)
     useEffect(() => {
         if (data) {
             setFormData({
@@ -22,9 +25,22 @@ const page = () => {
         }
     }, [data])
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        console.log("Form submitted:", formData)
+    const handleSubmit = async () => {
+        if (!data?.id) return
+        setIsLoading(true)
+        try {
+            await axios.post("/api/user", {
+                id: data?.id,
+                telegram_id: formData.telegram_id,
+                pd_id: formData.pd_id
+            })
+            queryClient.invalidateQueries({ queryKey: ["user"] })
+            toast.success("Profile updated successfully")
+        } catch (error) {
+            toast.error("Failed to update profile")
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,12 +50,12 @@ const page = () => {
         }))
     }
 
-    if (isLoading) return <div className="flex items-center justify-center h-screen"><Loader2 className="animate-spin" /></div>
+    if (userLoading) return <div className="flex items-center justify-center h-screen"><Loader2 className="animate-spin" /></div>
 
     return (
         <div className="max-w-md mx-auto p-6">
             <h1 className="text-2xl font-bold mb-6">alerts profile</h1>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-4">
                 <div>
                     <label className="block text-sm font-medium mb-1">Telegram ID</label>
                     <input
@@ -52,7 +68,7 @@ const page = () => {
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium mb-1">PD ID</label>
+                    <label className="block text-sm font-medium mb-1">Phone Number (With Country Code)</label>
                     <input
                         type="text"
                         name="pd_id"
@@ -62,12 +78,13 @@ const page = () => {
                     />
                 </div>
                 <button
-                    type="submit"
-                    className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                    className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 flex items-center justify-center gap-2"
+                    onClick={handleSubmit}
+                    disabled={isLoading}
                 >
-                    Update Profile
+                    {isLoading ? <Loader2 className="animate-spin" /> : "Update Profile"}
                 </button>
-            </form>
+            </div>
             {data?.telegram_id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(data.telegram_id) && (
                 <div className="mt-4 p-3 bg-yellow-100 border border-yellow-400 rounded">
                     <p className="text-yellow-800">
