@@ -10,8 +10,8 @@ export default function Home() {
   const { data: session } = useSession()
   return (
     <div className="flex flex-col gap-4 p-4 items-center justify-start h-screen">
-      {!isConnected && !session?.address && <p>Connect your wallet to get started</p>} 
-      {!isConnected && !session?.address && <ConnectButton />}
+      {(!isConnected || !session?.address) && <p>Connect your wallet to get started</p>} 
+      {(!isConnected || !session?.address) && <ConnectButton />}
       {isConnected && session?.address && <Positions />}
     </div>
   );
