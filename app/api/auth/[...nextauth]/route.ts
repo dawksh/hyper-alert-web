@@ -15,7 +15,6 @@ const authOptions: NextAuthOptions = {
     CredentialsProvider({
       async authorize(credentials: any) {
         try {
-          console.log('Authorizing with credentials:', credentials);
           const siweMessage = parseSiweMessage(
             credentials?.message,
           ) as SiweMessage;
@@ -29,10 +28,6 @@ const authOptions: NextAuthOptions = {
             return null;
           }
 
-          console.log('Environment variables:', {
-            NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-            VERCEL_URL: process.env.VERCEL_URL
-          });
           
           let nextAuthHost = 'localhost:3000';
           if (process.env.NEXTAUTH_URL) {
@@ -45,9 +40,7 @@ const authOptions: NextAuthOptions = {
             nextAuthHost = process.env.VERCEL_URL;
           }
           
-          console.log('Expected host:', nextAuthHost);
           if (siweMessage.domain !== nextAuthHost) {
-            console.log('Domain mismatch:', siweMessage.domain, 'expected:', nextAuthHost);
             return null;
           }
 
@@ -61,10 +54,8 @@ const authOptions: NextAuthOptions = {
             message: credentials?.message,
             signature: credentials?.signature,
           });
-
-          console.log('Message verification result:', valid);
+          
           if (!valid) {
-            console.log('Message verification failed');
             return null;
           }
 
