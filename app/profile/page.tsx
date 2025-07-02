@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useSession } from "next-auth/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import phone from "phone"
 
 const page = () => {
   const { data, isLoading: userLoading } = useUser();
@@ -45,6 +46,11 @@ const page = () => {
     if (!data?.id) return;
     setIsLoading(true);
     try {
+      const number = phone(formData.pd_id)
+      if (!number.isValid) {
+        toast.error("Invalid phone number, please verify.");
+        return;
+      }
       await axios.post("/api/user", {
         id: data?.id,
         telegram_id: formData.telegram_id,
