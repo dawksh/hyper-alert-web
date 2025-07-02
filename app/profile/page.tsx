@@ -111,16 +111,9 @@ const page = () => {
               </TooltipContent>
             </Tooltip>
           </label>
-          <input
-            type="text"
-            name="telegram_id"
-            value={
-              /^\d+$/.test(formData.telegram_id) ? formData.telegram_id : ""
-            }
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            disabled={true}
-          />
+          <div className={`w-full p-2 border rounded ${/^\d+$/.test(formData.telegram_id) ? "bg-green-500 text-white" : "bg-red-500 text-white"}`}>
+          {/^\d+$/.test(formData.telegram_id) ? "Connected" : "Not Connected"}
+          </div>
         </div>
         <div>
           <label className="block text-sm font-medium mb-1 flex items-center gap-1">
