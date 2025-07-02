@@ -15,9 +15,11 @@ import {
 import { useSession } from "next-auth/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import phone from "phone"
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const { data, isLoading: userLoading } = useUser();
+  const router = useRouter()
   const [formData, setFormData] = useState({
     email: "",
     telegram_id: "",
@@ -59,6 +61,7 @@ const page = () => {
       });
       queryClient.invalidateQueries({ queryKey: ["user"] });
       toast.success("Profile updated successfully");
+      router.push("/")
     } catch (error) {
       toast.error("Failed to update profile");
     } finally {

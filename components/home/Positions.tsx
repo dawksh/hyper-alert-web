@@ -142,12 +142,12 @@ const AlertsTable = ({ data }: { data: Alert[] }) => {
                             <td className="px-4 py-2 capitalize">{a.direction}</td>
                             <td className="px-4 py-2">{a.acknowledged ? 'Yes' : 'No'}</td>
                             <td className="px-4 py-2">
-                                {new Date(a.last_alert).toLocaleDateString('en-US', {
+                                {a.last_alert ? new Date(a.last_alert).toLocaleDateString('en-US', {
                                     month: 'short',
                                     day: 'numeric',
                                     hour: '2-digit',
                                     minute: '2-digit'
-                                })}
+                                }) : '-'}
                             </td>
                         </tr>
                     ))}
