@@ -13,17 +13,20 @@ const page = () => {
     const [formData, setFormData] = useState({
         email: "",
         telegram_id: "",
-        pd_id: ""
+        pd_id: "",
+        threshold: 20
     })
     const [copied, setCopied] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [threshold, setThreshold] = useState(20)
 
     useEffect(() => {
         if (data) {
             setFormData({
                 email: data.email || "",
                 telegram_id: data.telegram_id || "",
-                pd_id: data.pd_id || ""
+                pd_id: data.pd_id || "",
+                threshold: data.threshold || 20
             })
         }
     }, [data])
@@ -35,7 +38,8 @@ const page = () => {
             await axios.post("/api/user", {
                 id: data?.id,
                 telegram_id: formData.telegram_id,
-                pd_id: formData.pd_id
+                pd_id: formData.pd_id,
+                threshold: threshold / 100
             })
             queryClient.invalidateQueries({ queryKey: ["user"] })
             toast.success("Profile updated successfully")
@@ -77,6 +81,11 @@ const page = () => {
                         value={formData.pd_id || data?.pd_id || ""}
                         onChange={(phone) => setFormData(prev => ({ ...prev, pd_id: phone }))}
                     />
+                </div>
+                <div>
+                    <label className="block text-sm font-medium mb-1">Liquidation Threshold (%)</label>
+                    <input type="range" min={0} max={100} value={threshold} onChange={e => setThreshold(Number(e.target.value))} className="w-full" />
+                    <div className="text-right text-xs mt-1">{threshold}%</div>
                 </div>
                 <button
                     className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 flex items-center justify-center gap-2"

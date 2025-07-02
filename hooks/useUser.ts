@@ -10,6 +10,7 @@ type User = {
     email: string | null
     createdAt: string
     updatedAt: string
+    threshold: number
 }
 
 export const useUser = (): { data: User | undefined, isLoading: boolean } => {
