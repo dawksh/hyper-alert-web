@@ -8,6 +8,7 @@ import { useAccount } from 'wagmi'
 import { queryClient } from '../shared/ProviderLayout'
 import { useUser } from '@/hooks/useUser'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 const columns = [
     'select',
@@ -36,6 +37,7 @@ const PositionsTable = ({ data, alerts }: { data: Position[], alerts: Alert[] })
     const { address } = useAccount()
     const { data: user } = useUser()
     const [loading, setLoading] = useState(false)
+    const router = useRouter()
     const all = data?.map(p => p.asset) || []
     const allSelected = !!all.length && selected.length === all.length
     const isDisabled = (p: Position) => alerts?.some(a => a.coin === p.asset && Number(a.liq_price) === Number(p.liquidationPrice) && a.direction.toLowerCase() === p.direction.toLowerCase())
@@ -43,7 +45,8 @@ const PositionsTable = ({ data, alerts }: { data: Position[], alerts: Alert[] })
     const selectAll = () => setSelected(allSelected ? [] : all.filter(a => !isDisabled(data.find(p => p.asset === a)!)))
     const createAlert = async () => {
         if ((user?.telegram_id && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(user.telegram_id)) && !user?.pd_id) {
-            toast.error('Please connect your Telegram or PD account to create alerts in the profile page')
+            toast.error('Please connect your Telegram or PD account to create alerts.')
+            router.push('/profile')
             return
         }
         setLoading(true)
