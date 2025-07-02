@@ -5,6 +5,8 @@ import axios from "axios"
 import { Loader2 } from "lucide-react"
 import { useState, useEffect } from "react"
 import { toast } from "sonner"
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
 
 const page = () => {
     const { data, isLoading: userLoading } = useUser()
@@ -15,6 +17,7 @@ const page = () => {
     })
     const [copied, setCopied] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+
     useEffect(() => {
         if (data) {
             setFormData({
@@ -69,12 +72,10 @@ const page = () => {
                 </div>
                 <div>
                     <label className="block text-sm font-medium mb-1">Phone Number (With Country Code)</label>
-                    <input
-                        type="text"
-                        name="pd_id"
-                        value={formData.pd_id}
-                        onChange={handleChange}
-                        className="w-full p-2 border rounded"
+                    <PhoneInput
+                        defaultCountry="us"
+                        value={formData.pd_id || data?.pd_id || ""}
+                        onChange={(phone) => setFormData(prev => ({ ...prev, pd_id: phone }))}
                     />
                 </div>
                 <button
