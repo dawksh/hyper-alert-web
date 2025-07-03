@@ -1,6 +1,6 @@
 import axios from "axios";
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "../auth/[...nextauth]/route"
+import { getServerSession } from "next-auth/next"   
+import { authOptions } from "@/lib/auth"
 
 export async function GET(request: Request) {
     const session = await getServerSession(authOptions)
