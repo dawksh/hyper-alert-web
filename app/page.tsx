@@ -13,6 +13,13 @@ export default function Home() {
       {(!isConnected || !session?.address) && <p>Connect your wallet to get started</p>} 
       {(!isConnected || !session?.address) && <ConnectButton />}
       {isConnected && session?.address && <Positions />}
+      <form action="/api/checkout_sessions" method="POST">
+      <section>
+        <button type="submit" role="link">
+          Checkout
+        </button>
+      </section>
+    </form>
     </div>
   );
 }
