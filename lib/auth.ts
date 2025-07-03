@@ -8,6 +8,7 @@ import {
 
 import { createPublicClient, http } from 'viem';
 import { base } from 'viem/chains';
+import { randomBytes } from 'crypto';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -93,5 +94,8 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
+    generateSessionToken: () => {
+      return randomBytes(32).toString('hex');
+    }
   },
 };
