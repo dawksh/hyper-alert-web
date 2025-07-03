@@ -12,6 +12,12 @@ export async function GET(request: Request) {
     }
     const { searchParams } = new URL(request.url);
     const wallet = searchParams.get("wallet");
+    if(wallet && wallet !== session.address) {
+        return Response.json(
+            { error: "Unauthorized" },
+            { status: 401 }
+        );
+    }
     try {
         const { data } = await axios.get(`${process.env.API_URL}/user/alerts`, {
             params: {
