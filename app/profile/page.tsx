@@ -1,217 +1,191 @@
 "use client";
-import { queryClient } from "@/components/shared/ProviderLayout";
-import { useUser } from "@/hooks/useUser";
-import axios from "axios";
-import { Loader2, MessageCircleQuestion } from "lucide-react";
-import { useState, useEffect } from "react";
-import { toast } from "sonner";
+import Link from "next/link";
+import React, { useState } from "react";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
-import {
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from "@/components/ui/tooltip";
-import { useSession } from "next-auth/react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import phone from "phone"
-import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
-const page = () => {
-  const { data, isLoading: userLoading } = useUser();
-  const router = useRouter()
-  const [formData, setFormData] = useState({
-    email: "",
-    telegram_id: "",
-    pd_id: "",
-    threshold: 20,
-  });
-  const [copied, setCopied] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [threshold, setThreshold] = useState(
-    data?.threshold ? data.threshold * 100 : 20
-  );
+// Mobile Number Section
+const MobileSection = () => (
+  <div className="flex flex-row gap-2 w-full">
+    <div className="flex-1 bg-indigo-500 rounded-xl h-20 flex items-center px-8 text-white text-xl font-medium font-['Archivo']">
+      Your mobile number to get alert calls
+    </div>
+    <PhoneInput
+      defaultCountry="us"
+      value={"+919084857736"}
+      className="w-2/5 bg-white rounded-xl h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo']"
+      onChange={(phone) => console.log(phone)}
+    />
+    <div className="bg-lime-400 rounded-xl h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo'] cursor-pointer">
+      Update
+    </div>
+  </div>
+);
 
-  useEffect(() => {
-    if (data) {
-      setFormData({
-        email: data.email || "",
-        telegram_id: data.telegram_id || "",
-        pd_id: data.pd_id || "",
-        threshold: data.threshold * 100 || 20,
-      });
-      setThreshold(data.threshold * 100 || 20);
-    }
-  }, [data]);
-
-  const handleSubmit = async () => {
-    if (!data?.id) return;
-    setIsLoading(true);
-    try {
-      const number = phone(formData.pd_id)
-      if (!number.isValid) {
-        toast.error("Invalid phone number, please verify.");
-        return;
-      }
-      await axios.post("/api/user", {
-        id: data?.id,
-        telegram_id: formData.telegram_id,
-        pd_id: formData.pd_id,
-        threshold: threshold / 100,
-      });
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-      toast.success("Profile updated successfully");
-      router.push("/")
-    } catch (error) {
-      toast.error("Failed to update profile");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-
-  const { data: session } = useSession();
-
-  if (!session?.address)
-    return (
-      <div className="flex flex-col items-center justify-center h-screen gap-4">
-        <p>Connect your wallet to get started</p>
-        <ConnectButton />
-      </div>
-    );
-
-  if (userLoading)
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Loader2 className="animate-spin" />
-      </div>
-    );
-
+// Telegram Section
+const TelegramSection = () => {
+  const [openTelegram, setOpenTelegram] = useState(false);
   return (
-    <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">alerts profile</h1>
-      <div className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium mb-1 flex items-center gap-1">
-            Telegram ID
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <span className="ml-1 cursor-pointer">
-                  <MessageCircleQuestion size={16} />
-                </span>
-              </TooltipTrigger>
-              <TooltipContent>
-                Unique ID for your Telegram account, used for alert delivery. Cannot be edited, please use the /register command to register your account.
-              </TooltipContent>
-            </Tooltip>
-          </label>
-          <div className={`w-full p-2 border rounded ${/^\d+$/.test(formData.telegram_id) ? "bg-green-500 text-white" : "bg-red-500 text-white"}`}>
-          {/^\d+$/.test(formData.telegram_id) ? "Connected" : "Not Connected"}
+    <>
+      <div className="flex flex-row gap-x-2 w-full">
+        <div className="flex-1 bg-indigo-500 rounded-xl h-20 flex items-center px-8 text-white text-xl font-medium font-['Archivo']">
+          Get notified on Telegram
+        </div>
+        <div className="flex-1 bg-white rounded-xl h-20 flex items-center px-8 text-red-600 text-2xl font-medium font-['Archivo']">
+          Telegram <span className="font-bold ml-2">Not Connected!</span>
+        </div>
+        <div className="flex-1 bg-lime-400 rounded-xl h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo']">
+          Register
+          <span
+            className="font-bold underline ml-2"
+            onClick={() => setOpenTelegram(!openTelegram)}
+          >
+            here
+          </span>
+        </div>
+      </div>
+      <div
+        className={`transition-all duration-300 ease-in-out overflow-hidden flex flex-row gap-2 w-full  ${
+          openTelegram
+            ? "h-full opacity-100"
+            : "h-0 opacity-0 pointer-events-none"
+        }`}
+        style={{}}
+      >
+        <div className="flex-1 bg-white rounded-xl h-[30vh] flex flex-col items-start justify-center px-8 text-neutral-900 text-3xl font-medium font-['Archivo']">
+          <div>
+            Open Bot{" "}
+            <span className="font-bold ml-2 underline">
+              <Link href="https://t.me/liquialertbot" target="_blank">
+                here
+              </Link>
+            </span>
+          </div>
+          <div>&gt; send /register</div>
+          <div>
+            &gt; send{" "}
+            <span
+              className="font-bold underline cursor-pointer"
+              onClick={() => {
+                navigator.clipboard.writeText("1234567890");
+                toast.success("Copied to clipboard");
+              }}
+            >
+              1234567890
+            </span>{" "}
+            as register code
           </div>
         </div>
-        <div>
-          <label className="block text-sm font-medium mb-1 flex items-center gap-1">
-            Phone Number (With Country Code)
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <span className="ml-1 cursor-pointer">
-                  <MessageCircleQuestion size={16} />
-                </span>
-              </TooltipTrigger>
-              <TooltipContent>
-                Phone number for call alerts, include country code (e.g. +1).
-              </TooltipContent>
-            </Tooltip>
-          </label>
-          <PhoneInput
-            defaultCountry="us"
-            value={formData.pd_id || data?.pd_id || ""}
-            onChange={(phone) =>
-              setFormData((prev) => ({ ...prev, pd_id: phone }))
-            }
-          />
+      </div>
+    </>
+  );
+};
+
+// Liquidation Threshold Section
+const ThresholdSection = () => {
+  const [value, setValue] = useState(20);
+  return (
+    <div className="flex flex-col gap-2 w-full">
+      <div className="bg-lime-400 rounded-xl w-full flex flex-col items-start px-12 py-6 gap-2 ">
+        <div className="text-zinc-800 text-5xl font-bold font-['Archivo']">
+          Liquidation Threshold (%)
         </div>
-        <div>
-          <label className="block text-sm font-medium mb-1 flex items-center gap-1">
-            Liquidation Threshold (%)
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <span className="ml-1 cursor-pointer">
-                  <MessageCircleQuestion size={16} />
-                </span>
-              </TooltipTrigger>
-              <TooltipContent>
-                Set the percentage at which you want to be alerted for
-                liquidation risk.
-              </TooltipContent>
-            </Tooltip>
-          </label>
+        <div className="text-zinc-800 text-xl font-normal font-['Archivo']">
+          i.e. the margin you want to get{" "}
+          <span className="font-bold">alerted</span> on before getting
+          liquidated
+        </div>
+      </div>
+      <div className="bg-neutral-800 rounded-xl w-full flex flex-col items-center px-12 py-6 gap-6">
+        <div className="text-white text-8xl font-bold font-['Archivo']">{value}%</div>
+        <div className="w-full flex flex-col items-center">
+          <div className="w-full flex flex-row items-center justify-between px-2">
+            <span className="text-neutral-400 text-lg">min</span>
+            <span className="text-neutral-400 text-lg">max</span>
+          </div>
           <input
             type="range"
-            min={0}
+            min={5}
             max={90}
-            value={threshold}
-            onChange={(e) => setThreshold(Number(e.target.value))}
-            className="w-full"
+            value={value}
+            onChange={e => setValue(Number(e.target.value))}
+            className="w-full h-2 bg-neutral-700 rounded-lg appearance-none cursor-pointer accent-lime-400 mt-2 mb-2"
+            style={{ accentColor: '#c6ff00', height: '0.5rem', WebkitAppearance: 'none', appearance: 'none' }}
           />
-          <div className="text-right text-xs mt-1">{threshold}%</div>
+          <style jsx global>{`
+            input[type='range']::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              appearance: none;
+              width: 2.5rem;
+              height: 2.5rem;
+              border-radius: 9999px;
+              background: #fff;
+              border: 4px solid #fff;
+              box-shadow: 0 0 4px #0003;
+              cursor: pointer;
+              transition: background 0.2s;
+            }
+            input[type='range']::-moz-range-thumb {
+              width: 2.5rem;
+              height: 2.5rem;
+              border-radius: 9999px;
+              background: #fff;
+              border: 4px solid #fff;
+              box-shadow: 0 0 4px #0003;
+              cursor: pointer;
+              transition: background 0.2s;
+            }
+            input[type='range']::-ms-thumb {
+              width: 2.5rem;
+              height: 2.5rem;
+              border-radius: 9999px;
+              background: #fff;
+              border: 4px solid #fff;
+              box-shadow: 0 0 4px #0003;
+              cursor: pointer;
+              transition: background 0.2s;
+            }
+          `}</style>
         </div>
-        <button
-          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 flex items-center justify-center gap-2"
-          onClick={handleSubmit}
-          disabled={isLoading}
-        >
-          {isLoading ? <Loader2 className="animate-spin" /> : "Update Profile"}
-        </button>
       </div>
-    
-      {data?.telegram_id &&
-        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
-          data.telegram_id
-        ) && (
-          <div className="mt-4 p-3 bg-yellow-100 border border-yellow-400 rounded">
-            <p className="text-yellow-800">
-              To Connect Telegram, visit{" "}
-              <a
-                href="https://t.me/liquialertbot"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:underline"
-              >
-                https://t.me/liquialertbot
-              </a>{" "}
-              and send <b>/register</b> command and provide{" "}
-              <span
-                className="cursor-pointer bg-white px-2 py-1 rounded border border-yellow-400 hover:bg-yellow-200 transition-colors"
-                onClick={() => {
-                  navigator.clipboard.writeText(data.telegram_id || "");
-                  setCopied(true);
-                  setTimeout(() => setCopied(false), 1200);
-                }}
-              >
-                {data.telegram_id}
-              </span>
-              {copied && <span className="ml-2 text-green-600">Copied!</span>}
-            </p>
-          </div>
-        )}
-          {!!data?.payments?.length && (
-        <div className="mt-8">
-          <h2 className="text-lg font-semibold mb-2">invoices</h2>
-          <ul className="space-y-2">
-            {data.payments.filter(p => p.receipt_url).map(p => (
-              <li key={p.id}>
-                  invoice for ${p.amount} - {new Date(p.createdAt).toLocaleDateString()} - <a href={p.receipt_url!} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">view</a>
-              </li>
-            ))}
-            {data.payments.filter(p => p.receipt_url).length === 0 && (
-              <li className="text-gray-500">no invoices</li>
-            )}
-          </ul>
-        </div>
-      )}
     </div>
   );
 };
 
-export default page;
+// Subscription Plan Section
+const SubscriptionSection = () => (
+  <div className="bg-zinc-800 rounded-xl w-full flex flex-col items-start px-12 py-8 gap-2">
+    <div className="text-zinc-800 text-xl font-bold font-['Archivo']">
+      Your Subscription Plan
+    </div>
+    <div className="text-zinc-800 text-xl font-normal font-['Archivo']">
+      Alerts are sent at a flat fee of 1$/call. No charges for telegram alerts.
+    </div>
+    <div className="flex flex-row gap-8 mt-8 w-full">
+      <div className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center py-8">
+        <div className="text-white text-xl font-normal font-['Archivo']">
+          Remaining Credits
+        </div>
+        <div className="text-white text-xl font-bold font-['Archivo']">499</div>
+      </div>
+      <div className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center py-8" />
+      <div className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center py-8" />
+    </div>
+  </div>
+);
+
+const Profile = () => (
+  <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-2 gap-1 px-28">
+    {/* Mobile Number Section */}
+    <MobileSection />
+    {/* Telegram Section */}
+    <TelegramSection />
+    {/* Liquidation Threshold Section */}
+    <ThresholdSection />
+    {/* Subscription Plan Section */}
+    {/* <SubscriptionSection /> */}
+  </div>
+);
+
+export default Profile;

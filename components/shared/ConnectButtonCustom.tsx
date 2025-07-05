@@ -42,7 +42,7 @@ export default function ConnectButtonCustom() {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.25 }}
                   onClick={openConnectModal}
-                  className="flex flex-row items-center justify-center w-full h-20 bg-lime-300 rounded-md cursor-pointer"
+                  className="flex flex-row items-center justify-center w-full h-20 bg-lime-400 rounded-md cursor-pointer"
                 >
                   <span className="text-neutral-900 text-xl font-semibold">Connect Wallet</span>
                 </motion.div>
@@ -59,7 +59,7 @@ export default function ConnectButtonCustom() {
                   <motion.button
                     onClick={openAccountModal}
                     type="button"
-                    className="flex items-center justify-center flex-1 h-20 bg-lime-300 rounded-md cursor-pointer"
+                    className="flex items-center justify-center flex-1 h-20 bg-lime-400 rounded-md cursor-pointer"
                     initial={{ x: 0 }}
                     animate={{ x: 0 }}
                     exit={{ x: -40, opacity: 0 }}
