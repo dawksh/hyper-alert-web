@@ -28,7 +28,7 @@ export async function POST() {
         },
       },
       mode: "payment",
-      success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${origin}/profile?success`,
       cancel_url: `${origin}/?canceled=true`,
       payment_method_types: ["crypto", "card"],
     });
