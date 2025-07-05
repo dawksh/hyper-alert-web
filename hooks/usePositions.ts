@@ -41,6 +41,5 @@ export const usePositions = () => {
             id: alerts?.find(alert => alert.coin === position.asset && alert.direction.toLowerCase() === position.direction.toLowerCase())?.id
         }
     })
-    console.log(data)
     return { data: modifiedData, isLoading, error }
 }
