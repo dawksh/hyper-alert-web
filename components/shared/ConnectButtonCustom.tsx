@@ -1,4 +1,5 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useDisconnect } from 'wagmi';
 export default function ConnectButtonCustom() {
   return (
     <ConnectButton.Custom>
@@ -11,6 +12,7 @@ export default function ConnectButtonCustom() {
         authenticationStatus,
         mounted,
       }) => {
+        const {disconnect} = useDisconnect();
         const ready = mounted && authenticationStatus !== 'loading';
         const connected =
           ready &&
@@ -47,38 +49,11 @@ export default function ConnectButtonCustom() {
               }
               return (
                 <div className="flex flex-row items-center gap-3 w-full h-20">
-                  <button
-                    onClick={openChainModal}
-                    className="flex items-center"
-                    type="button"
-                  >
-                    {chain.hasIcon && (
-                      <div
-                        style={{
-                          background: chain.iconBackground,
-                          width: 12,
-                          height: 12,
-                          borderRadius: 999,
-                          overflow: 'hidden',
-                          marginRight: 4,
-                        }}
-                      >
-                        {chain.iconUrl && (
-                          <img
-                            alt={chain.name ?? 'Chain icon'}
-                            src={chain.iconUrl}
-                            style={{ width: 12, height: 12 }}
-                          />
-                        )}
-                      </div>
-                    )}
-                    {chain.name}
+                  <button onClick={openAccountModal} type="button" className="flex items-center justify-center flex-1 h-20 bg-lime-300 rounded-md cursor-pointer">
+                    <span className="text-green-900 text-xl font-medium">{account.address.slice(0, 6)}...{account.address.slice(-4)}</span>
                   </button>
-                  <button onClick={openAccountModal} type="button">
-                    {account.displayName}
-                    {account.displayBalance
-                      ? ` (${account.displayBalance})`
-                      : ''}
+                  <button onClick={() => disconnect()} type="button" className="flex items-center justify-center w-20 h-20 bg-red-500 rounded-md cursor-pointer">
+                    <span className="text-white text-xl font-medium">X</span>
                   </button>
                 </div>
               );
