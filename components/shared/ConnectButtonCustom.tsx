@@ -1,6 +1,7 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useDisconnect } from 'wagmi';
 import { motion, AnimatePresence } from 'framer-motion';
+import { LogOut } from 'lucide-react';
 export default function ConnectButtonCustom() {
   return (
     <ConnectButton.Custom>
@@ -76,7 +77,7 @@ export default function ConnectButtonCustom() {
                     exit={{ x: 40, opacity: 0 }}
                     transition={{ duration: 0.25 }}
                   >
-                    <span className="text-white text-xl font-semibold">X</span>
+                    <LogOut className="text-white text-xl font-semibold" />
                   </motion.button>
                 </motion.div>
               )}

@@ -10,7 +10,7 @@ import { queryClient } from "../shared/ProviderLayout";
 import { Button } from "../ui/button";
 
 const Positions = () => {
-  const { data: positions } = usePositions();
+  const { data: positions, isLoading } = usePositions();
   const { data: user } = useUser();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -153,12 +153,19 @@ const Positions = () => {
           <div>Direction</div>
           <div>Alert</div>
         </div>
-        {filteredPositions?.length === 0 && (
+        {isLoading ? (
+          Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="grid grid-cols-8 gap-4 bg-white rounded-2xl px-8 h-16 items-center animate-pulse">
+              {Array.from({ length: 8 }).map((_, j) => (
+                <div key={j} className="h-6 w-full bg-zinc-200 rounded" />
+              ))}
+            </div>
+          ))
+        ) : filteredPositions?.length === 0 ? (
           <div className="text-white text-lg text-center font-medium">
             No positions found
           </div>
-        )}
-        {((filteredPositions ?? []).length > 0) &&
+        ) : (
           (filteredPositions ?? []).map((p, i) => (
             <div
               key={i}
@@ -203,7 +210,8 @@ const Positions = () => {
                 </button>
               </div>
             </div>
-          ))}
+          ))
+        )}
       </div>
     </div>
   );
