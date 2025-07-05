@@ -1,15 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { useAccount } from "wagmi";
 import ConnectButtonCustom from "./ConnectButtonCustom";
 import PerpAlertLogo from "../Icons/PerpAlertLogo";
 
 export default function Navbar() {
-  const { address } = useAccount();
-  const { data: session } = useSession();
-
   return (
     <nav className="w-full flex flex-row justify-center items-center bg-zinc-900 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-28 pt-2 sm:pt-3 md:pt-8 gap-1">
       <div className="flex flex-row items-center gap-1 w-full">
@@ -25,7 +20,7 @@ export default function Navbar() {
         <div className="bg-white rounded-md px-3 sm:px-4 md:px-7 py-0 w-full sm:w-2/5 md:w-2/5 h-20 flex items-center justify-center">
           <Link href="/pricing">
             <span className="flex flex-col items-center">
-              <span className="text-neutral-900 text-sm sm:text-base md:text-xl font-medium">
+              <span className="text-neutral-900 text-sm sm:text-base md:text-xl font-semibold">
                 Pricing
               </span>
             </span>

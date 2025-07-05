@@ -36,7 +36,7 @@ export default function ConnectButtonCustom() {
               if (!connected) {
                 return (
                   <div onClick={openConnectModal} className="flex flex-row items-center justify-center w-full h-20 bg-lime-300 rounded-md cursor-pointer">
-                    <span className="text-neutral-900 text-xl font-medium">Connect Wallet</span>
+                    <span className="text-neutral-900 text-xl font-semibold">Connect Wallet</span>
                   </div>
                 );
               }
@@ -50,10 +50,10 @@ export default function ConnectButtonCustom() {
               return (
                 <div className="flex flex-row items-center gap-3 w-full h-20">
                   <button onClick={openAccountModal} type="button" className="flex items-center justify-center flex-1 h-20 bg-lime-300 rounded-md cursor-pointer">
-                    <span className="text-green-900 text-xl font-medium">{account.address.slice(0, 6)}...{account.address.slice(-4)}</span>
+                    <span className="text-green-900 text-xl font-semibold">{account.address.slice(0, 6)}...{account.address.slice(-4)}</span>
                   </button>
                   <button onClick={() => disconnect()} type="button" className="flex items-center justify-center w-20 h-20 bg-red-500 rounded-md cursor-pointer">
-                    <span className="text-white text-xl font-medium">X</span>
+                    <span className="text-white text-xl font-semibold">X</span>
                   </button>
                 </div>
               );
