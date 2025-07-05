@@ -93,7 +93,7 @@ const Positions = () => {
         </button>
       </div>
       {filterTabVisible && (
-        <div className={`w-full bg-lime-300 rounded-3xl p-6 flex flex-col gap-4 transition-all duration-300 transform ${filterTabOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8 pointer-events-none'}`}>
+        <div className={`w-full bg-lime-300 rounded-3xl p-6 flex flex-col gap-4 transition-all duration-500 ease-in-out overflow-hidden ${filterTabOpen ? 'h-20' : 'h-0 pointer-events-none'}`}>
           <div className="flex flex-col md:flex-row gap-4 w-full">
             <div className="relative">
               <Button
