@@ -7,12 +7,19 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { queryClient } from "../shared/ProviderLayout";
+import { Button } from "../ui/button";
 
 const Positions = () => {
   const { data: positions } = usePositions();
   const { data: user } = useUser();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [filterTabOpen, setFilterTabOpen] = useState(false)
+  const [filterTabVisible, setFilterTabVisible] = useState(false)
+  const [activeFilter, setActiveFilter] = useState<string>("all")
+  const [directionFilter, setDirectionFilter] = useState<string>("all")
+  const [statusOpen, setStatusOpen] = useState(false)
+  const [directionOpen, setDirectionOpen] = useState(false)
 
   const createAlert = async (p: Position) => {
     if (
@@ -49,6 +56,12 @@ const Positions = () => {
     queryClient.invalidateQueries({ queryKey: ["activeAlerts"] });
     setLoading(false);
   };
+
+  const filteredPositions = positions?.filter(p =>
+    (activeFilter === "all" || (activeFilter === "active" ? p.isActive : !p.isActive)) &&
+    (directionFilter === "all" || p.direction.toLowerCase() === directionFilter)
+  )
+
   return (
     <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-2 px-28 gap-2">
       <div className="w-full flex gap-2 items-center">
@@ -63,10 +76,68 @@ const Positions = () => {
             className="w-full bg-transparent outline-none text-neutral-500 text-xl"
           />
         </div>
-        <button className="bg-white rounded-2xl flex items-center justify-center h-16 w-[10vw]">
-          <FilterIcon className="w-8 h-8 text-neutral-900" />
+        <button className="bg-white rounded-2xl flex items-center justify-center h-16 w-[10vw]" onClick={() => {
+          if (!filterTabOpen) {
+            setFilterTabVisible(true)
+            setTimeout(() => setFilterTabOpen(true), 10)
+          } else {
+            setFilterTabOpen(false)
+            setTimeout(() => setFilterTabVisible(false), 300)
+          }
+        }}>
+          <FilterIcon className="w-8 h-8 text-neutral-900 cursor-pointer" />
         </button>
       </div>
+      {filterTabVisible && (
+        <div className={`w-full bg-lime-300 rounded-3xl p-6 flex flex-col gap-4 transition-all duration-300 transform ${filterTabOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8 pointer-events-none'}`}>
+          <div className="flex flex-col md:flex-row gap-4 w-full">
+            <div className="relative">
+              <Button
+                variant="outline"
+                className="w-36 justify-between"
+                onClick={() => setStatusOpen(o => !o)}
+                type="button"
+              >
+                {activeFilter === "active"
+                  ? "Active"
+                  : activeFilter === "inactive"
+                  ? "Inactive"
+                  : "Status"}
+                <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+              </Button>
+              {statusOpen && (
+                <div className="absolute left-0 mt-2 w-36 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-10">
+                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setActiveFilter("all"); setStatusOpen(false); }}>Status</button>
+                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setActiveFilter("active"); setStatusOpen(false); }}>Active</button>
+                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setActiveFilter("inactive"); setStatusOpen(false); }}>Inactive</button>
+                </div>
+              )}
+            </div>
+            <div className="relative">
+              <Button
+                variant="outline"
+                className="w-36 justify-between"
+                onClick={() => setDirectionOpen(o => !o)}
+                type="button"
+              >
+                {directionFilter === "long"
+                  ? "Long"
+                  : directionFilter === "short"
+                  ? "Short"
+                  : "Direction"}
+                <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+              </Button>
+              {directionOpen && (
+                <div className="absolute left-0 mt-2 w-36 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-10">
+                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setDirectionFilter("all"); setDirectionOpen(false); }}>Direction</button>
+                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setDirectionFilter("long"); setDirectionOpen(false); }}>Long</button>
+                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setDirectionFilter("short"); setDirectionOpen(false); }}>Short</button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
       <div className="w-full bg-indigo-500 rounded-3xl p-6 flex flex-col gap-4">
         <div className="grid grid-cols-8 gap-4 text-white text-md font-semibold px-8 h-8 items-center">
           <div>Asset</div>
@@ -78,14 +149,13 @@ const Positions = () => {
           <div>Direction</div>
           <div>Alert</div>
         </div>
-        {positions?.length === 0 && (
+        {filteredPositions?.length === 0 && (
           <div className="text-white text-lg text-center font-medium">
             No positions found
           </div>
         )}
-        {positions?.length &&
-          positions?.length > 0 &&
-          positions?.map((p, i) => (
+        {((filteredPositions ?? []).length > 0) &&
+          (filteredPositions ?? []).map((p, i) => (
             <div
               key={i}
               className="grid grid-cols-8 gap-4 bg-white rounded-2xl px-8 h-16 items-center mb-4:last:mb-0"
