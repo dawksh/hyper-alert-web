@@ -2,6 +2,25 @@ import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useAccount } from "wagmi"
 
+type Credit = {
+    id: string
+    user_id: string
+    credits: number
+    createdAt: string
+    updatedAt: string
+}
+
+type Payment = {
+    id: string
+    user_id: string
+    amount: number
+    createdAt: string
+    stripe_id: string
+    mode: string
+    payment_id: string
+    receipt_url: string | null
+}
+
 type User = {
     id: string
     address: string
@@ -11,6 +30,8 @@ type User = {
     createdAt: string
     updatedAt: string
     threshold: number
+    credits: Credit[]
+    payments: Payment[]
 }
 
 export const useUser = (): { data: User | undefined, isLoading: boolean } => {
