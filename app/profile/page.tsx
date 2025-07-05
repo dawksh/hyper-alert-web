@@ -38,7 +38,7 @@ const TelegramSection = () => {
         <div className="flex-1 bg-lime-400 rounded-xl h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo']">
           Register
           <span
-            className="font-bold underline ml-2"
+            className="font-bold underline ml-2 cursor-pointer"
             onClick={() => setOpenTelegram(!openTelegram)}
           >
             here
@@ -56,7 +56,7 @@ const TelegramSection = () => {
         <div className="flex-1 bg-white rounded-xl h-[30vh] flex flex-col items-start justify-center px-8 text-neutral-900 text-3xl font-medium font-['Archivo']">
           <div>
             Open Bot{" "}
-            <span className="font-bold ml-2 underline">
+            <span className="font-bold ml-2 underline cursor-pointer">
               <Link href="https://t.me/liquialertbot" target="_blank">
                 here
               </Link>
@@ -97,8 +97,10 @@ const ThresholdSection = () => {
           liquidated
         </div>
       </div>
-      <div className="bg-neutral-800 rounded-xl w-full flex flex-col items-center px-12 py-6 gap-6">
-        <div className="text-white text-8xl font-bold font-['Archivo']">{value}%</div>
+      <div className="bg-neutral-800 rounded-xl max-w-5/12 h-[40vh] flex flex-col items-start justify-center px-12 py-6 gap-6">
+        <div className="text-white text-9xl text-start font-bold font-['Archivo']">
+          {value}%
+        </div>
         <div className="w-full flex flex-col items-center">
           <div className="w-full flex flex-row items-center justify-between px-2">
             <span className="text-neutral-400 text-lg">min</span>
@@ -109,12 +111,17 @@ const ThresholdSection = () => {
             min={5}
             max={90}
             value={value}
-            onChange={e => setValue(Number(e.target.value))}
+            onChange={(e) => setValue(Number(e.target.value))}
             className="w-full h-2 bg-neutral-700 rounded-lg appearance-none cursor-pointer accent-lime-400 mt-2 mb-2"
-            style={{ accentColor: '#c6ff00', height: '0.5rem', WebkitAppearance: 'none', appearance: 'none' }}
+            style={{
+              accentColor: "#c6ff00",
+              height: "0.5rem",
+              WebkitAppearance: "none",
+              appearance: "none",
+            }}
           />
           <style jsx global>{`
-            input[type='range']::-webkit-slider-thumb {
+            input[type="range"]::-webkit-slider-thumb {
               -webkit-appearance: none;
               appearance: none;
               width: 2.5rem;
@@ -126,7 +133,7 @@ const ThresholdSection = () => {
               cursor: pointer;
               transition: background 0.2s;
             }
-            input[type='range']::-moz-range-thumb {
+            input[type="range"]::-moz-range-thumb {
               width: 2.5rem;
               height: 2.5rem;
               border-radius: 9999px;
@@ -136,7 +143,7 @@ const ThresholdSection = () => {
               cursor: pointer;
               transition: background 0.2s;
             }
-            input[type='range']::-ms-thumb {
+            input[type="range"]::-ms-thumb {
               width: 2.5rem;
               height: 2.5rem;
               border-radius: 9999px;
@@ -154,26 +161,31 @@ const ThresholdSection = () => {
 };
 
 // Subscription Plan Section
-const SubscriptionSection = () => (
-  <div className="bg-zinc-800 rounded-xl w-full flex flex-col items-start px-12 py-8 gap-2">
-    <div className="text-zinc-800 text-xl font-bold font-['Archivo']">
-      Your Subscription Plan
-    </div>
-    <div className="text-zinc-800 text-xl font-normal font-['Archivo']">
-      Alerts are sent at a flat fee of 1$/call. No charges for telegram alerts.
-    </div>
-    <div className="flex flex-row gap-8 mt-8 w-full">
-      <div className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center py-8">
-        <div className="text-white text-xl font-normal font-['Archivo']">
-          Remaining Credits
+const SubscriptionSection = () => {
+  return (
+    <div className="flex flex-col justify-center gap-2 w-full">
+      <div className="bg-lime-400 rounded-xl w-full flex flex-row items-start px-12 py-6 gap-2 ">
+        <div className="flex flex-col gap-x-2 w-full">
+          <div className="text-zinc-800 text-5xl font-bold font-['Archivo']">
+            Your Subscription Plan
+          </div>
+          <div className="text-zinc-800 text-xl font-normal font-['Archivo']">
+            Alerts are sent at a flat fee of 1$/call. No charges for telegram
+            alerts.
+          </div>
         </div>
-        <div className="text-white text-xl font-bold font-['Archivo']">499</div>
+        <div className="bg-neutral-800 rounded-xl w-[15vw] h-[10vh] flex flex-row items-center justify-center px-12 py-6 gap-2 ">
+          <div className="text-white text-lg font-normal font-['Archivo']">
+            Remaining Credits
+          </div>
+          <div className="text-white text-4xl font-bold font-['Archivo']">
+            499
+          </div>
+        </div>
       </div>
-      <div className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center py-8" />
-      <div className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center py-8" />
     </div>
-  </div>
-);
+  );
+};
 
 const Profile = () => (
   <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-2 gap-1 px-28">
@@ -184,7 +196,7 @@ const Profile = () => (
     {/* Liquidation Threshold Section */}
     <ThresholdSection />
     {/* Subscription Plan Section */}
-    {/* <SubscriptionSection /> */}
+    <SubscriptionSection />
   </div>
 );
 
