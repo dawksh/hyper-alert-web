@@ -20,6 +20,7 @@ const Positions = () => {
   const [directionFilter, setDirectionFilter] = useState<string>("all")
   const [statusOpen, setStatusOpen] = useState(false)
   const [directionOpen, setDirectionOpen] = useState(false)
+  const [search, setSearch] = useState("")
 
   const createAlert = async (p: Position) => {
     if (
@@ -59,7 +60,8 @@ const Positions = () => {
 
   const filteredPositions = positions?.filter(p =>
     (activeFilter === "all" || (activeFilter === "active" ? p.isActive : !p.isActive)) &&
-    (directionFilter === "all" || p.direction.toLowerCase() === directionFilter)
+    (directionFilter === "all" || p.direction.toLowerCase() === directionFilter) &&
+    (search === "" || [p.asset, p.entryPrice, p.direction].some(v => v.toString().toLowerCase().includes(search.toLowerCase())))
   )
 
   return (
@@ -74,6 +76,8 @@ const Positions = () => {
             type="text"
             placeholder="Search your trade"
             className="w-full bg-transparent outline-none text-neutral-500 text-xl"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
           />
         </div>
         <button className="bg-white rounded-2xl flex items-center justify-center h-16 w-[10vw]" onClick={() => {
