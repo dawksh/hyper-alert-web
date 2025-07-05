@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-const page = () => (
+const Page = () => (
   <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-4 px-2">
     <div className="w-full max-w-7xl flex flex-col gap-y-2 md:gap-y-4 items-center">
       {/* Hero Section */}
@@ -68,4 +68,4 @@ const page = () => (
   </div>
 );
 
-export default page;
+export default Page;
