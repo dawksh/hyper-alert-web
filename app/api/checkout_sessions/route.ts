@@ -32,7 +32,7 @@ export async function POST() {
       cancel_url: `${origin}/?canceled=true`,
       payment_method_types: ["crypto", "card"],
     });
-    return NextResponse.redirect(session?.url || "/", 303);
+    return NextResponse.json({ url: session?.url }, { status: 200 });
   } catch (err: any) {
     console.error(err);
     return NextResponse.json(
