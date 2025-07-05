@@ -7,8 +7,16 @@ const Page = () => (
       {/* Hero Section */}
       <section className="w-full bg-indigo-500 rounded-xl flex flex-col justify-center items-center min-h-[300px] md:min-h-[unset] py-4 md:py-8 shadow-xl px-2 text-center">
         <h1 className="text-white text-5xl md:text-6xl lg:text-8xl font-black leading-tight max-w-4xl mx-auto">
-          We send you a call on your phone, before your hyperliquid trades get <span className="text-lime-400">liquidated.</span>
+          We send you a call on your phone, before your hyperliquid trades get{" "}
+          <span className="text-lime-400">liquidated.</span>
         </h1>
+      </section>
+      <section className="w-full bg-blue-500 rounded-xl flex flex-col justify-center items-center min-h-[300px] md:min-h-[unset] py-4 md:py-8 shadow-xl px-2 text-center">
+        <h2 className="text-white text-3xl md:text-6xl lg:text-6xl font-bold text-center">
+          <Link href="/app">
+            Open App
+          </Link>
+        </h2>
       </section>
       {/* Pricing Section */}
       <section className="w-full bg-lime-400 rounded-xl flex flex-col items-center py-5 md:py-8 shadow-xl px-1">
