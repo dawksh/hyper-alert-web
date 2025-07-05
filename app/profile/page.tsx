@@ -282,16 +282,16 @@ const TierCards = () => {
     }
   };
   return (
-    <div className="flex flex-row gap-6 w-full justify-center">
+    <div className="flex flex-row gap-2 w-full justify-center mb-8">
       {tiers.map((t, idx) => (
         <div
           key={t.name}
-          className="flex flex-col items-center bg-white rounded-xl shadow-lg px-8 py-8 w-1/4 min-w-[220px]"
+          className="flex flex-col items-center bg-indigo-500 rounded-xl shadow-lg px-8 py-8 w-2/4 min-w-[220px]"
         >
-          <div className="text-3xl font-bold text-zinc-800">{t.name}</div>
-          <div className="text-6xl font-extrabold text-lime-500 my-2">{t.credits}</div>
+          <div className="text-3xl font-bold text-white">{t.name}</div>
+          <div className="text-6xl font-extrabold text-white my-2">{t.credits}</div>
           <div className="text-lg text-neutral-700 mb-4">credits</div>
-          <div className="text-2xl font-semibold text-zinc-800 mb-4">${t.price}</div>
+          <div className="text-2xl font-semibold text-white mb-4">${t.price}</div>
           <button
             className="bg-lime-400 hover:bg-lime-500 text-zinc-900 font-bold py-2 px-6 rounded-lg transition-all"
             onClick={() => handleBuy(t, idx)}
