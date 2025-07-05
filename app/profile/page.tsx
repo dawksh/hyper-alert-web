@@ -69,12 +69,6 @@ const page = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
 
   const { data: session } = useSession();
 
@@ -170,6 +164,7 @@ const page = () => {
           {isLoading ? <Loader2 className="animate-spin" /> : "Update Profile"}
         </button>
       </div>
+    
       {data?.telegram_id &&
         /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
           data.telegram_id
@@ -200,6 +195,21 @@ const page = () => {
             </p>
           </div>
         )}
+          {!!data?.payments?.length && (
+        <div className="mt-8">
+          <h2 className="text-lg font-semibold mb-2">invoices</h2>
+          <ul className="space-y-2">
+            {data.payments.filter(p => p.receipt_url).map(p => (
+              <li key={p.id}>
+                  invoice for ${p.amount} - {new Date(p.createdAt).toLocaleDateString()} - <a href={p.receipt_url!} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">view</a>
+              </li>
+            ))}
+            {data.payments.filter(p => p.receipt_url).length === 0 && (
+              <li className="text-gray-500">no invoices</li>
+            )}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
