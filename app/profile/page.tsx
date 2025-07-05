@@ -4,6 +4,7 @@ import { useUser } from "@/hooks/useUser";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import phone from "phone";
 import React, { useState, useEffect, useRef } from "react";
 import { PhoneInput } from "react-international-phone";
@@ -159,24 +160,21 @@ const ThresholdSection = ({
   threshold: number | null | undefined;
   id: string | null | undefined;
 }) => {
-  const [value, setValue] = useState(threshold ?? 20);
-  const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState(threshold ? threshold * 100 : 20);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleSubmit = async () => {
     if (!id) return;
-    setIsLoading(true);
+    if (threshold === value / 100) return;
     try {
       await axios.post("/api/user", {
         id: id,
-        threshold: value,
+        threshold: value / 100,
       });
       queryClient.invalidateQueries({ queryKey: ["user"] });
       toast.success("Threshold updated successfully");
     } catch (error) {
       toast.error("Failed to update threshold");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -265,6 +263,48 @@ const ThresholdSection = ({
   );
 };
 
+const tiers = [
+  { name: "Basic", credits: 50, price: 50 },
+  { name: "Pro", credits: 200, price: 200 },
+  { name: "Elite", credits: 500, price: 500 },
+];
+
+const TierCards = () => {
+  const router = useRouter();
+  const [loadingIndex, setLoadingIndex] = useState<number | null>(null);
+  const handleBuy = async (t: { price: number; credits: number }, idx: number) => {
+    setLoadingIndex(idx);
+    try {
+      const res = await axios.post("/api/checkout_sessions", { price: t.price, credits: t.credits });
+      if (res.data?.url) window.location.href = res.data.url;
+    } finally {
+      setLoadingIndex(null);
+    }
+  };
+  return (
+    <div className="flex flex-row gap-6 w-full justify-center">
+      {tiers.map((t, idx) => (
+        <div
+          key={t.name}
+          className="flex flex-col items-center bg-white rounded-xl shadow-lg px-8 py-8 w-1/4 min-w-[220px]"
+        >
+          <div className="text-3xl font-bold text-zinc-800">{t.name}</div>
+          <div className="text-6xl font-extrabold text-lime-500 my-2">{t.credits}</div>
+          <div className="text-lg text-neutral-700 mb-4">credits</div>
+          <div className="text-2xl font-semibold text-zinc-800 mb-4">${t.price}</div>
+          <button
+            className="bg-lime-400 hover:bg-lime-500 text-zinc-900 font-bold py-2 px-6 rounded-lg transition-all"
+            onClick={() => handleBuy(t, idx)}
+            disabled={loadingIndex === idx}
+          >
+            {loadingIndex === idx ? <Loader2 className="animate-spin" /> : "Buy"}
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 // Subscription Plan Section
 const SubscriptionSection = ({
   credits,
@@ -283,7 +323,7 @@ const SubscriptionSection = ({
             alerts.
           </div>
         </div>
-        <div className="bg-neutral-800 rounded-xl w-[15vw] h-[10vh] flex flex-row items-center justify-center px-12 py-6 gap-2 ">
+        <div className="bg-neutral-800 rounded-xl w-[18vw] h-[10vh] flex flex-row items-center justify-around px-10 py-6 gap-2 ">
           <div className="text-white text-lg font-normal font-['Archivo'] tracking-tight">
             Remaining Credits
           </div>
@@ -292,6 +332,7 @@ const SubscriptionSection = ({
           </div>
         </div>
       </div>
+      <TierCards />
     </div>
   );
 };
@@ -313,7 +354,9 @@ const Profile = () => {
       {/* Liquidation Threshold Section */}
       <ThresholdSection threshold={user?.threshold} id={user?.id} />
       {/* Subscription Plan Section */}
-      <SubscriptionSection credits={user?.credits[0].credits} />
+      <SubscriptionSection
+        credits={user.credits.length > 0 ? user.credits[0].credits : 0}
+      />
     </div>
   );
 };
