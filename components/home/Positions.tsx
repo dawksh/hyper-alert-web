@@ -110,7 +110,7 @@ const Positions = () => {
                 <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
               </Button>
               {statusOpen && (
-                <div className="absolute left-0 mt-2 w-36 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-10">
+                <div className="absolute left-0 mt-2 w-36 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-[999]">
                   <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setActiveFilter("all"); setStatusOpen(false); }}>Status</button>
                   <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setActiveFilter("active"); setStatusOpen(false); }}>Active</button>
                   <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setActiveFilter("inactive"); setStatusOpen(false); }}>Inactive</button>
@@ -132,7 +132,7 @@ const Positions = () => {
                 <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
               </Button>
               {directionOpen && (
-                <div className="absolute left-0 mt-2 w-36 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-10">
+                <div className="absolute left-0 mt-2 w-36 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-[999]">
                   <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setDirectionFilter("all"); setDirectionOpen(false); }}>Direction</button>
                   <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setDirectionFilter("long"); setDirectionOpen(false); }}>Long</button>
                   <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setDirectionFilter("short"); setDirectionOpen(false); }}>Short</button>
