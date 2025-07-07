@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { queryClient } from "../shared/ProviderLayout";
 import { Button } from "../ui/button";
+import { MobileSection } from "@/app/profile/page";
 
 const Positions = () => {
   const { data: positions, isLoading } = usePositions();
@@ -66,9 +67,10 @@ const Positions = () => {
   )
 
   return (
-    <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-2 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5 gap-2">
+    <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-2 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5 gap-1">
+      {(!user?.credits.length ||  user?.credits[0].credits === 0) && <MobileSection mobileNumber={user?.pd_id} id={user?.id} />}
       <CreditsCard />
-      <div className="w-full flex gap-2 items-center">
+      <div className="w-full flex gap-1 items-center">
         <div className="rounded-xl flex justify-center items-center px-24 w-[60vw] h-16 bg-indigo-500">
           <span className="text-white text-xl font-normal">Your Positions</span>
         </div>
@@ -232,11 +234,11 @@ const CreditsCard = () => {
           <span className="text-neutral-900 text-lg font-semibold">Credits</span>
         </span>
         <span className="text-neutral-900 text-6xl font-bold">{user?.credits?.length && user?.credits[0].credits || 0}</span>
-        <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer ` flex flex-row items-center gap-2 rounded-xl px-2 py-1 "> <HistoryIcon className="w-4 h-4" /><Link href="/history"> Alert history</Link></span>
+        <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer ` flex flex-row items-center gap-1 rounded-xl px-2 py-1 "> <HistoryIcon className="w-4 h-4" /><Link href="/history"> Alert history</Link></span>
       </div>
       <div className="flex flex-row items-center gap-4">
         <span className="text-neutral-900 text-xl font-normal">Get started with<br/> monthly alerts</span>
-        <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-2 rounded-sm px-4 py-4"><Link href="/pricing">Subscribe</Link></span>
+        <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4"><Link href="/pricing">Subscribe</Link></span>
       </div>
     </div>
   )

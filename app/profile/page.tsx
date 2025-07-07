@@ -12,7 +12,7 @@ import "react-international-phone/style.css";
 import { toast } from "sonner";
 
 // Mobile Number Section
-const MobileSection = ({
+export const MobileSection = ({
   mobileNumber,
   id,
 }: {
@@ -275,8 +275,8 @@ const ThresholdSection = ({
 
 const tiers = [
   { name: "Basic", credits: 50, price: 50 },
-  { name: "Pro", credits: 100, price: 100 },
-  { name: "Elite", credits: 200, price: 200 },
+  { name: "Pro", credits: 200, price: 200 },
+  { name: "Elite", credits: 500, price: 500 },
 ];
 
 const TierCards = () => {
