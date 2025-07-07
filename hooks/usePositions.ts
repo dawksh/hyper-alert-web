@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useQuery } from "@tanstack/react-query"
 import { useAccount } from "wagmi"
-import { useActiveAlerts } from "./useActiveAlerts"
+import { useAlerts } from "./useActiveAlerts"
 
 export type Position = {
     asset: string
@@ -19,7 +19,7 @@ export type Position = {
 
 export const usePositions = () => {
     const { address } = useAccount()
-    const {data: alerts} = useActiveAlerts()
+    const {data: alerts} = useAlerts()
     const { data, isLoading, error } = useQuery({
         queryKey: ['positions', address],
         queryFn: async () => {
@@ -33,7 +33,8 @@ export const usePositions = () => {
         const hasActiveAlert = alerts?.some(alert => 
             alert.coin === position.asset && 
             Number(alert.liq_price) === Number(position.liquidationPrice) && 
-            alert.direction.toLowerCase() === position.direction.toLowerCase()
+            alert.direction.toLowerCase() === position.direction.toLowerCase() &&
+            alert.acknowledged === false
         )
         return {
             ...position,

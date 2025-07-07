@@ -3,18 +3,22 @@ import axios from "axios"
 import { useAccount } from "wagmi"
 
 export type Alert = {
-    id: string
-    coin: string
-    liq_price: number
-    user_address: string
-    acknowledged: boolean
-    direction: string
-    last_alert: string
-    createdAt: string
-    updatedAt: string
+  id: string
+  coin: string
+  liq_price: number
+  user_address: string
+  acknowledged: boolean
+  size: number
+  margin: number
+  last_price: number
+  leverage: number
+  direction: string
+  last_alert: string
+  createdAt: string
+  updatedAt: string
 }
 
-export const useActiveAlerts = () => {
+export const useAlerts = () => {
     const { address } = useAccount()
     const { data, isLoading, error } = useQuery({
         queryKey: ['activeAlerts', address],
