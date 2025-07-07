@@ -48,7 +48,7 @@ const Positions = () => {
           address: user?.address,
           size: p.size,
           margin: p.collateral,
-          leverage: p.leverage.value,
+          leverage: p.leverage.value.toString(),
         },
       ],
     });
