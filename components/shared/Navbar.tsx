@@ -9,7 +9,7 @@ export default function Navbar() {
   const { data: session } = useSession();
   const isConnected = !!session?.address;
   return (
-    <nav className="w-full flex flex-row justify-center items-center bg-zinc-900 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-28 pt-2 sm:pt-3 md:pt-8 gap-1">
+    <nav className="w-full flex flex-row justify-center items-center bg-zinc-900 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5 pt-2 sm:pt-3 md:pt-4 gap-x-2">
       <div className="flex flex-row items-center gap-1 w-full">
         {/* Perp Alert Logo */}
         <div className="bg-zinc-800 rounded-md px-3 sm:px-4 md:px-7 py-0 w-full sm:w-1/5 md:w-1/5 h-20 flex items-center justify-center">
