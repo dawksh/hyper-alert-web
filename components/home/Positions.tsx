@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { queryClient } from "../shared/ProviderLayout";
 import { Button } from "../ui/button";
-import { MobileSection } from "@/app/profile/page";
+import { MobileSection } from "@/components/profile/MobileSection";
 
 const Positions = () => {
   const { data: positions, isLoading } = usePositions();
