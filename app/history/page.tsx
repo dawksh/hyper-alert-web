@@ -64,7 +64,7 @@ const History = () => {
             <div className="text-white text-3xl font-semibold">
               Total Funds Saved
             </div>
-            <div className="text-white text-6xl font-semibold">{abbreviateNumber(Number(alerts?.reduce((acc, alert) => acc + alert.margin, 0).toFixed(2)))}$</div>
+            <div className="text-white text-6xl font-semibold">{abbreviateNumber(Number(alerts?.filter((alert) => alert.acknowledged).reduce((acc, alert) => acc + alert.margin, 0).toFixed(2)))}$</div>
           </div>
         </div>
       </div>
