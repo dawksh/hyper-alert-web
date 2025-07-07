@@ -46,6 +46,9 @@ const Positions = () => {
           liqPrice: p.liquidationPrice,
           direction: p.direction.toLowerCase(),
           address: user?.address,
+          size: p.size,
+          margin: p.collateral,
+          leverage: p.leverage.value,
         },
       ],
     });
