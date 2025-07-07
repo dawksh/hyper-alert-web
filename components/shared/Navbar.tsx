@@ -13,7 +13,7 @@ export default function Navbar() {
       <div className="flex flex-row items-center gap-1 w-full">
         {/* Perp Alert Logo */}
         <div className="bg-zinc-800 rounded-md px-3 sm:px-4 md:px-7 py-0 w-full sm:w-1/5 md:w-1/5 h-20 flex items-center justify-center">
-          <Link href="/">
+          <Link href={isConnected ? "/app" : "/"}>
             <span className="flex flex-col items-center">
               <PerpAlertLogo className="w-3/4 h-3/4" />
             </span>

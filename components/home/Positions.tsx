@@ -2,6 +2,7 @@
 import { Position, usePositions } from "@/hooks/usePositions";
 import { useUser } from "@/hooks/useUser";
 import { FilterIcon, HistoryIcon, Search } from "lucide-react";
+import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -231,11 +232,11 @@ const CreditsCard = () => {
           <span className="text-neutral-900 text-lg font-semibold">Credits</span>
         </span>
         <span className="text-neutral-900 text-6xl font-bold">{user?.credits?.length && user?.credits[0].credits || 0}</span>
-        <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer ` flex flex-row items-center gap-2 rounded-xl px-2 py-1 "> <HistoryIcon className="w-4 h-4" /> Alert history</span>
+        <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer ` flex flex-row items-center gap-2 rounded-xl px-2 py-1 "> <HistoryIcon className="w-4 h-4" /><Link href="/history"> Alert history</Link></span>
       </div>
-      <div className="flex flex-row items-center gap-2">
-        <span className="text-neutral-900 text-xl font-normal">Get started with monthly alerts</span>
-        <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-2 rounded-sm px-4 py-4">Subscribe</span>
+      <div className="flex flex-row items-center gap-4">
+        <span className="text-neutral-900 text-xl font-normal">Get started with<br/> monthly alerts</span>
+        <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-2 rounded-sm px-4 py-4"><Link href="/pricing">Subscribe</Link></span>
       </div>
     </div>
   )
