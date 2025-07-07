@@ -45,23 +45,33 @@ const MobileSection = ({
   };
 
   return (
-    <div className="flex flex-row gap-2 w-full">
-      <div className="flex-1 bg-indigo-500 rounded-xl h-20 flex items-center px-8 text-white text-xl font-medium font-['Archivo']">
-        Your mobile number to get alert calls
+    <div className="flex flex-col gap-1 w-full">
+      <div className="bg-lime-400 rounded-md w-full flex flex-col items-start px-12 py-6 gap-1 ">
+        <div className="text-zinc-800 text-5xl font-bold font-['Archivo']">
+          Get alerts on your phone
+        </div>
+        <div className="text-zinc-800 text-xl font-normal font-['Archivo']">
+        Enter your phone number to get alert calls.
+        </div>
       </div>
-      <PhoneInput
-        defaultCountry="us"
-        value={mobileNumber || phoneNumber}
-        className="w-2/5 bg-white rounded-xl h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo']"
-        onChange={(phone) => setPhoneNumber(phone)}
-      />
-      <div
-        className={`bg-lime-400 rounded-xl h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo'] cursor-pointer ${
-          isLoading ? "opacity-50 cursor-not-allowed" : ""
-        }`}
-        onClick={handleSubmit}
-      >
-        {isLoading ? <Loader2 className="animate-spin" /> : "Update"}
+      <div className="flex flex-row gap-1 w-full">
+        <div className="flex-1 bg-[#2A2A2A] rounded-md h-20 flex items-center px-8 text-white text-xl font-medium font-['Archivo']">
+          Your mobile number to get alert calls
+        </div>
+        <PhoneInput
+          defaultCountry="us"
+          value={mobileNumber || phoneNumber}
+          className="w-2/5 bg-white rounded-md h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo']"
+          onChange={(phone) => setPhoneNumber(phone)}
+        />
+        <div
+          className={`bg-indigo-500 rounded-md h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo'] cursor-pointer ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          onClick={handleSubmit}
+        >
+          {isLoading ? <Loader2 className="animate-spin" /> : "Update"}
+        </div>
       </div>
     </div>
   );
@@ -78,12 +88,12 @@ const TelegramSection = ({
 
   return (
     <>
-      <div className="flex flex-row gap-x-2 w-full">
-        <div className="flex-1 bg-indigo-500 rounded-xl h-20 flex items-center px-8 text-white text-xl font-medium font-['Archivo']">
+      <div className="flex flex-row gap-x-1 w-full">
+        <div className="flex-1 bg-[#2A2A2A] rounded-md h-20 flex items-center px-8 text-white text-xl font-medium font-['Archivo']">
           Get notified on Telegram
         </div>
         <div
-          className="flex-1 bg-white rounded-xl h-20 flex items-center px-8 text-2xl font-medium font-['Archivo']"
+          className="flex-1 bg-white rounded-md h-20 flex items-center px-8 text-2xl font-medium font-['Archivo']"
           style={{ color: isTelegramConnected ? "#22c55e" : "#dc2626" }}
         >
           Telegram{" "}
@@ -92,10 +102,10 @@ const TelegramSection = ({
           </span>
         </div>
         <div
-          className={`flex-1 rounded-xl h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo'] ${
+          className={`flex-1 rounded-md h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo'] ${
             isTelegramConnected
-              ? "bg-lime-300 opacity-60 cursor-not-allowed"
-              : "bg-lime-400 cursor-pointer"
+              ? "bg-indigo-500 opacity-60 cursor-not-allowed"
+              : "bg-indigo-500 cursor-pointer"
           }`}
         >
           Register
@@ -115,14 +125,14 @@ const TelegramSection = ({
       </div>
       {!isTelegramConnected && (
         <div
-          className={`transition-all duration-300 ease-in-out overflow-hidden flex flex-row gap-2 w-full  ${
+          className={`transition-all duration-300 ease-in-out overflow-hidden flex flex-row gap-1 w-full  ${
             openTelegram
               ? "h-full opacity-100"
               : "h-0 opacity-0 pointer-events-none"
           }`}
           style={{}}
         >
-          <div className="flex-1 bg-white rounded-xl h-[30vh] flex flex-col items-start justify-center px-8 text-neutral-900 text-3xl font-medium font-['Archivo']">
+          <div className="flex-1 bg-white rounded-md h-[30vh] flex flex-col items-start justify-center px-8 text-neutral-900 text-3xl font-medium font-['Archivo']">
             <div>
               Open Bot{" "}
               <span className="font-bold ml-2 underline cursor-pointer">
@@ -189,8 +199,8 @@ const ThresholdSection = ({
   }, [value]);
 
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <div className="bg-lime-400 rounded-xl w-full flex flex-col items-start px-12 py-6 gap-2 ">
+    <div className="flex flex-col gap-1 w-full">
+      <div className="bg-lime-400 rounded-md w-full flex flex-col items-start px-12 py-6 gap-1 ">
         <div className="text-zinc-800 text-5xl font-bold font-['Archivo']">
           Liquidation Threshold (%)
         </div>
@@ -200,7 +210,7 @@ const ThresholdSection = ({
           liquidated
         </div>
       </div>
-      <div className="bg-neutral-800 rounded-xl max-w-5/12 h-[40vh] flex flex-col items-start justify-center px-12 py-6 gap-6">
+      <div className="bg-neutral-800 rounded-md h-[40vh] flex flex-col items-start justify-center px-12 py-6 gap-6">
         <div className="text-white text-9xl text-start font-bold font-['Archivo']">
           {value}%
         </div>
@@ -265,39 +275,54 @@ const ThresholdSection = ({
 
 const tiers = [
   { name: "Basic", credits: 50, price: 50 },
-  { name: "Pro", credits: 200, price: 200 },
-  { name: "Elite", credits: 500, price: 500 },
+  { name: "Pro", credits: 100, price: 100 },
+  { name: "Elite", credits: 200, price: 200 },
 ];
 
 const TierCards = () => {
-  const router = useRouter();
   const [loadingIndex, setLoadingIndex] = useState<number | null>(null);
-  const handleBuy = async (t: { price: number; credits: number }, idx: number) => {
+  const handleBuy = async (
+    t: { price: number; credits: number },
+    idx: number
+  ) => {
     setLoadingIndex(idx);
     try {
-      const res = await axios.post("/api/checkout_sessions", { price: t.price, credits: t.credits });
+      const res = await axios.post("/api/checkout_sessions", {
+        price: t.price,
+      });
       if (res.data?.url) window.location.href = res.data.url;
     } finally {
       setLoadingIndex(null);
     }
   };
   return (
-    <div className="flex flex-row gap-2 w-full justify-center mb-8">
+    <div className="flex items-center flex-row justify-center w-full h-full gap-1">
       {tiers.map((t, idx) => (
         <div
           key={t.name}
-          className="flex flex-col items-center bg-indigo-500 rounded-xl shadow-lg px-8 py-8 w-2/4 min-w-[220px]"
+          className="relative w-full bg-indigo-500 rounded-xl flex flex-col justify-between items-center py-8 px-4"
         >
-          <div className="text-3xl font-bold text-white">{t.name}</div>
-          <div className="text-6xl font-extrabold text-white my-2">{t.credits}</div>
-          <div className="text-lg text-neutral-700 mb-4">credits</div>
-          <div className="text-2xl font-semibold text-white mb-4">${t.price}</div>
+          <div className="w-full flex flex-col items-center gap-1">
+            <div className="w-full h-24 bg-lime-400 rounded-2xl flex items-center justify-center mb-2">
+              <span className="text-neutral-900 text-7xl font-black">{`$${t.price}`}</span>
+            </div>
+            <span className="text-white text-4xl font-normal">
+              Pack of <span className="font-bold">{t.credits}</span>
+            </span>
+            <span className="text-white text-4xl font-normal">
+              alerts/month
+            </span>
+          </div>
           <button
-            className="bg-lime-400 hover:bg-lime-500 text-zinc-900 font-bold py-2 px-6 rounded-lg transition-all"
+            className="w-full h-14 bg-white rounded-2xl text-zinc-800 text-2xl py-4 font-semibold flex items-center justify-center mt-4"
             onClick={() => handleBuy(t, idx)}
             disabled={loadingIndex === idx}
           >
-            {loadingIndex === idx ? <Loader2 className="animate-spin" /> : "Buy"}
+            {loadingIndex === idx ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              "Get Started"
+            )}
           </button>
         </div>
       ))}
@@ -312,9 +337,9 @@ const SubscriptionSection = ({
   credits: number | null | undefined;
 }) => {
   return (
-    <div className="flex flex-col justify-center gap-2 w-full mt-1">
-      <div className="bg-lime-400 rounded-xl w-full flex flex-row items-start px-12 py-6 gap-2 ">
-        <div className="flex flex-col gap-x-2 w-full">
+    <div className="flex flex-col justify-center gap-1 w-full mt-1">
+      <div className="bg-lime-400 rounded-md w-full flex flex-row items-start px-12 py-6 gap-1 ">
+        <div className="flex flex-col gap-x-1 w-full">
           <div className="text-zinc-800 text-5xl font-bold font-['Archivo']">
             Your Subscription Plan
           </div>
@@ -323,7 +348,7 @@ const SubscriptionSection = ({
             alerts.
           </div>
         </div>
-        <div className="bg-neutral-800 rounded-xl w-[18vw] h-[10vh] flex flex-row items-center justify-around px-10 py-6 gap-2 ">
+        <div className="bg-neutral-800 rounded-md w-[18vw] h-[10vh] flex flex-row items-center justify-around px-10 py-6 gap-1 ">
           <div className="text-white text-lg font-normal font-['Archivo'] tracking-tight">
             Remaining Credits
           </div>
@@ -346,7 +371,7 @@ const Profile = () => {
       </div>
     );
   return (
-    <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-2 gap-1 px-28">
+    <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-2 gap-1 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5">
       {/* Mobile Number Section */}
       <MobileSection mobileNumber={user?.pd_id} id={user?.id} />
       {/* Telegram Section */}
