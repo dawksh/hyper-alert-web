@@ -1,7 +1,7 @@
 "use client";
 import { Position, usePositions } from "@/hooks/usePositions";
 import { useUser } from "@/hooks/useUser";
-import { FilterIcon, Search } from "lucide-react";
+import { FilterIcon, HistoryIcon, Search } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -65,7 +65,8 @@ const Positions = () => {
   )
 
   return (
-    <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-2 px-28 gap-2">
+    <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-2 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5 gap-2">
+      <CreditsCard />
       <div className="w-full flex gap-2 items-center">
         <div className="rounded-xl flex justify-center items-center px-24 w-[60vw] h-16 bg-indigo-500">
           <span className="text-white text-xl font-normal">Your Positions</span>
@@ -146,11 +147,11 @@ const Positions = () => {
         <div className="grid grid-cols-8 gap-4 text-white text-md font-semibold px-8 h-8 items-center">
           <div>Asset</div>
           <div>Size</div>
-          <div>Entry</div>
-          <div>Collateral</div>
-          <div>Liquidation Price</div>
           <div>Leverage</div>
-          <div>Direction</div>
+          <div>Collateral</div>
+          <div>Entry</div>
+          <div>Liquidation Price</div>
+          <div>Buffer</div>
           <div>Alert</div>
         </div>
         {isLoading ? (
@@ -171,23 +172,26 @@ const Positions = () => {
               key={i}
               className="grid grid-cols-8 gap-4 bg-white rounded-2xl px-8 h-16 items-center mb-4:last:mb-0"
             >
-              <div className="text-neutral-900 text-lg font-medium">
+              <div className="text-neutral-900 text-lg font-bold flex flex-col">
                 {p.asset}
+                <span className="text-neutral-500 text-xs font-medium">
+                  {p.direction.toUpperCase()}
+                </span>
               </div>
               <div className="text-neutral-900 text-lg">
                 {Math.abs(Number(p.size))}
               </div>
-              <div className="text-neutral-900 text-lg">{p.entryPrice}</div>
-              <div className="text-neutral-900 text-lg">
-                $ {Number(p.collateral).toFixed(2)}
-              </div>
-              <div className="text-neutral-900 text-lg">
-                $ {Number(p.liquidationPrice).toFixed(2)}
-              </div>
               <div className="text-neutral-900 text-lg">
                 {p.leverage.value}x {p.leverage.type}
               </div>
-              <div className="text-neutral-900 text-lg">{p.direction}</div>
+              <div className="text-neutral-900 text-lg">
+                $ {Number(p.collateral).toFixed(2)}
+              </div>
+              <div className="text-neutral-900 text-lg">{p.entryPrice}</div>
+              <div className="text-neutral-900 text-lg">
+                $ {Number(p.liquidationPrice).toFixed(2)}
+              </div>
+              <div className="text-neutral-900 text-lg">${(Number(p.liquidationPrice) - Number(p.entryPrice)).toFixed(2)} ({((Number(p.liquidationPrice) - Number(p.entryPrice)) / Number(p.entryPrice) * 100).toFixed(2)}%)</div>
               <div className="flex justify-start">
                 <button
                   className={`w-10 h-6 rounded-full transition-colors duration-200 cursor-pointer disabled:cursor-not-allowed ${
@@ -216,5 +220,25 @@ const Positions = () => {
     </div>
   );
 };
+
+const CreditsCard = () => {
+  const { data: user } = useUser();
+  return (
+    <div className="w-full bg-lime-400 rounded-2xl p-4 flex flex-row justify-between px-8 gap-4">
+      <div className="flex flex-row items-end gap-4">
+        <span className="text-neutral-900 flex flex-col text-lg font-semibold">
+          <span className="text-neutral-900 text-lg font-semibold">Available</span>
+          <span className="text-neutral-900 text-lg font-semibold">Credits</span>
+        </span>
+        <span className="text-neutral-900 text-6xl font-bold">{user?.credits?.length && user?.credits[0].credits || 0}</span>
+        <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer ` flex flex-row items-center gap-2 rounded-xl px-2 py-1 "> <HistoryIcon className="w-4 h-4" /> Alert history</span>
+      </div>
+      <div className="flex flex-row items-center gap-2">
+        <span className="text-neutral-900 text-xl font-normal">Get started with monthly alerts</span>
+        <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-2 rounded-sm px-4 py-4">Subscribe</span>
+      </div>
+    </div>
+  )
+}
 
 export default Positions;
