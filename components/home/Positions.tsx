@@ -1,5 +1,5 @@
 "use client";
-import { Position, usePositions } from "@/hooks/usePositions";
+import { Position as BasePosition, usePositions } from "@/hooks/usePositions";
 import { useUser } from "@/hooks/useUser";
 import { FilterIcon, HistoryIcon, Search } from "lucide-react";
 import Link from "next/link";
@@ -12,35 +12,146 @@ import { Button } from "../ui/button";
 import { MobileSection } from "@/components/profile/MobileSection";
 import { motion } from "framer-motion";
 
+type Position = BasePosition & { isActive: boolean; id: string };
+type FilterDirection = "all" | "long" | "short";
+type FilterStatus = "all" | "active" | "inactive";
+
+const filterPositions = (
+  positions: Position[] | undefined,
+  active: FilterStatus,
+  direction: FilterDirection,
+  search: string
+) =>
+  positions?.filter(
+    (p: Position) =>
+      (active === "all" || (active === "active" ? p.isActive : !p.isActive)) &&
+      (direction === "all" || p.direction.toLowerCase() === direction) &&
+      (search === "" ||
+        [p.asset, p.entryPrice, p.direction].some((v) =>
+          v.toString().toLowerCase().includes(search.toLowerCase())
+        ))
+  );
+
+const CreditsCard = ({
+  credits,
+  buzz,
+  setBuzz,
+}: {
+  credits: number;
+  buzz?: boolean;
+  setBuzz?: (b: boolean) => void;
+}) => {
+  const handleBuzz = () =>
+    credits === 0 && setBuzz?.(true) && setTimeout(() => setBuzz(false), 300);
+  return credits > 0 && credits < 10 ? (
+    <div className="w-full bg-red-500 rounded-2xl p-4 flex flex-row justify-between px-8 gap-4">
+      <div className="flex flex-row items-end gap-4">
+        <span className="text-white flex flex-col text-lg font-semibold">
+          <span>Available</span>
+          <span>Credits</span>
+        </span>
+        <span className="text-white text-6xl font-bold">{credits}</span>
+        <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer flex flex-row items-center gap-1 rounded-xl px-2 py-1 ">
+          <HistoryIcon className="w-4 h-4" />
+          <Link href="/history"> Alert history</Link>
+        </span>
+      </div>
+      <div className="flex flex-row items-center gap-4">
+        <span className="text-white text-xl font-normal">
+          Your Alerts are <br /> about to{" "}
+          <span className="font-bold">finish!</span>
+        </span>
+        <span className="text-medium font-semibold bg-white text-neutral-900 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4">
+          <Link href="/profile">Topup</Link>
+        </span>
+      </div>
+    </div>
+  ) : credits === 0 ? (
+    <div className="w-full bg-lime-400 rounded-2xl p-4 flex flex-row justify-between px-8 gap-4">
+      <div className="flex flex-row items-end gap-4">
+        <span className="text-neutral-900 flex flex-col text-lg font-semibold">
+          <span>Available</span>
+          <span>Credits</span>
+        </span>
+        <motion.span
+          className="text-neutral-900 text-6xl font-bold cursor-pointer"
+          onClick={handleBuzz}
+          animate={buzz ? { x: [0, -3, 3, -3, 3, -2, 2, -1, 1, 0] } : { x: 0 }}
+          transition={{ duration: 0.3, type: "tween" }}
+        >
+          {credits}
+        </motion.span>
+        <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer flex flex-row items-center gap-1 rounded-xl px-2 py-1 ">
+          <HistoryIcon className="w-4 h-4" />
+          <Link href="/history"> Alert history</Link>
+        </span>
+      </div>
+      <div className="flex flex-row items-center gap-4">
+        <span className="text-neutral-900 text-xl font-normal">
+          Get started with
+          <br /> monthly alerts
+        </span>
+        <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4">
+          <Link href="/profile">Buy Credits</Link>
+        </span>
+      </div>
+    </div>
+  ) : (
+    <div className="w-full bg-lime-400 rounded-2xl p-4 flex flex-row justify-between px-8 gap-4">
+      <div className="flex flex-row items-end gap-4">
+        <span className="text-neutral-900 flex flex-col text-lg font-semibold">
+          <span>Available</span>
+          <span>Credits</span>
+        </span>
+        <span className="text-neutral-900 text-6xl font-bold">{credits}</span>
+        <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer flex flex-row items-center gap-1 rounded-xl px-2 py-1 ">
+          <HistoryIcon className="w-4 h-4" />
+          <Link href="/history"> Alert history</Link>
+        </span>
+      </div>
+      <div className="flex flex-row items-center gap-4">
+        <span className="text-neutral-900 text-xl font-normal">
+          Planning to go <br /> ballistic in trades?
+        </span>
+        <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4">
+          <Link href="/profile">Buy Credits</Link>
+        </span>
+      </div>
+    </div>
+  );
+};
+
 const Positions = () => {
   const { data: positions, isLoading } = usePositions();
   const { data: user } = useUser();
   const router = useRouter();
-  const [credits, setCredits] = useState(
-    (user?.credits?.length && user?.credits[0].credits) || 0
+  const [credits, setCredits] = useState<number>(
+    user?.credits?.[0]?.credits || 0
   );
-  const [loading, setLoading] = useState(false);
-  const [filterTabOpen, setFilterTabOpen] = useState(false);
-  const [filterTabVisible, setFilterTabVisible] = useState(false);
-  const [activeFilter, setActiveFilter] = useState<string>("all");
-  const [directionFilter, setDirectionFilter] = useState<string>("all");
-  const [statusOpen, setStatusOpen] = useState(false);
-  const [directionOpen, setDirectionOpen] = useState(false);
-  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [filterTabOpen, setFilterTabOpen] = useState<boolean>(false);
+  const [filterTabVisible, setFilterTabVisible] = useState<boolean>(false);
+  const [activeFilter, setActiveFilter] = useState<FilterStatus>("all");
+  const [directionFilter, setDirectionFilter] =
+    useState<FilterDirection>("all");
+  const [statusOpen, setStatusOpen] = useState<boolean>(false);
+  const [directionOpen, setDirectionOpen] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>("");
   const [shakeIndex, setShakeIndex] = useState<number | null>(null);
-  const [buzz, setBuzz] = useState(false);
-
-  useEffect(() => {
-    setCredits((user?.credits?.length && user?.credits[0].credits) || 0);
-  }, [user?.credits]);
-
+  const [buzz, setBuzz] = useState<boolean>(false);
+  useEffect(
+    () => setCredits(user?.credits?.[0]?.credits || 0),
+    [user?.credits]
+  );
   const createAlert = async (p: Position, idx: number) => {
     if (!credits) {
       setShakeIndex(idx);
       setBuzz(true);
       setTimeout(() => setShakeIndex(null), 600);
       setTimeout(() => setBuzz(false), 300);
-      toast.error("You don't have any credits. Please buy some credits to create alerts.");
+      toast.error(
+        "You don't have any credits. Please buy some credits to create alerts."
+      );
       return;
     }
     if (
@@ -73,29 +184,28 @@ const Positions = () => {
     queryClient.invalidateQueries({ queryKey: ["activeAlerts"] });
     setLoading(false);
   };
-
   const deleteAlerts = async (positionId: string) => {
     setLoading(true);
     await axios.delete("/api/alerts", { data: [positionId] });
     queryClient.invalidateQueries({ queryKey: ["activeAlerts"] });
     setLoading(false);
   };
-
-  const filteredPositions = positions?.filter(
-    (p) =>
-      (activeFilter === "all" ||
-        (activeFilter === "active" ? p.isActive : !p.isActive)) &&
-      (directionFilter === "all" ||
-        p.direction.toLowerCase() === directionFilter) &&
-      (search === "" ||
-        [p.asset, p.entryPrice, p.direction].some((v) =>
-          v.toString().toLowerCase().includes(search.toLowerCase())
-        ))
+  const filtered = filterPositions(
+    positions as Position[] | undefined,
+    activeFilter,
+    directionFilter,
+    search
   );
-
+  const withBuffer = (filtered ?? []).map((p) => {
+    const entry = Number(p.entryPrice);
+    const liq = Number(p.liquidationPrice);
+    const bufferAmount = liq - entry;
+    const bufferPercent = entry !== 0 ? ((liq - entry) / entry) * 100 : 0;
+    return { ...p, bufferAmount, bufferPercent };
+  });
   return (
     <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-2 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5 gap-1">
-      {(!user?.credits.length || user?.credits[0].credits === 0) && (
+      {(!user?.credits?.length || user?.credits?.[0]?.credits === 0) && (
         <MobileSection mobileNumber={user?.pd_id} id={user?.id} />
       )}
       <CreditsCard credits={credits} buzz={buzz} setBuzz={setBuzz} />
@@ -115,15 +225,13 @@ const Positions = () => {
         </div>
         <button
           className="bg-white rounded-2xl flex items-center justify-center h-16 w-[10vw]"
-          onClick={() => {
-            if (!filterTabOpen) {
-              setFilterTabVisible(true);
-              setTimeout(() => setFilterTabOpen(true), 10);
-            } else {
-              setFilterTabOpen(false);
-              setTimeout(() => setFilterTabVisible(false), 300);
-            }
-          }}
+          onClick={() =>
+            !filterTabOpen
+              ? (setFilterTabVisible(true),
+                setTimeout(() => setFilterTabOpen(true), 10))
+              : (setFilterTabOpen(false),
+                setTimeout(() => setFilterTabVisible(false), 300))
+          }
         >
           <FilterIcon className="w-8 h-8 text-neutral-900 cursor-pointer" />
         </button>
@@ -163,33 +271,22 @@ const Positions = () => {
               </Button>
               {statusOpen && (
                 <div className="absolute left-0 mt-2 w-36 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-[999]">
-                  <button
-                    className="w-full px-4 py-2 text-left hover:bg-gray-100"
-                    onClick={() => {
-                      setActiveFilter("all");
-                      setStatusOpen(false);
-                    }}
-                  >
-                    Status
-                  </button>
-                  <button
-                    className="w-full px-4 py-2 text-left hover:bg-gray-100"
-                    onClick={() => {
-                      setActiveFilter("active");
-                      setStatusOpen(false);
-                    }}
-                  >
-                    Active
-                  </button>
-                  <button
-                    className="w-full px-4 py-2 text-left hover:bg-gray-100"
-                    onClick={() => {
-                      setActiveFilter("inactive");
-                      setStatusOpen(false);
-                    }}
-                  >
-                    Inactive
-                  </button>
+                  {["Status", "Active", "Inactive"].map((v, i) => (
+                    <button
+                      key={v}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                      onClick={() => {
+                        setActiveFilter(
+                          v.toLowerCase() === "status"
+                            ? "all"
+                            : (v.toLowerCase() as FilterStatus)
+                        );
+                        setStatusOpen(false);
+                      }}
+                    >
+                      {v}
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
@@ -221,33 +318,22 @@ const Positions = () => {
               </Button>
               {directionOpen && (
                 <div className="absolute left-0 mt-2 w-36 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-[999]">
-                  <button
-                    className="w-full px-4 py-2 text-left hover:bg-gray-100"
-                    onClick={() => {
-                      setDirectionFilter("all");
-                      setDirectionOpen(false);
-                    }}
-                  >
-                    Direction
-                  </button>
-                  <button
-                    className="w-full px-4 py-2 text-left hover:bg-gray-100"
-                    onClick={() => {
-                      setDirectionFilter("long");
-                      setDirectionOpen(false);
-                    }}
-                  >
-                    Long
-                  </button>
-                  <button
-                    className="w-full px-4 py-2 text-left hover:bg-gray-100"
-                    onClick={() => {
-                      setDirectionFilter("short");
-                      setDirectionOpen(false);
-                    }}
-                  >
-                    Short
-                  </button>
+                  {["Direction", "Long", "Short"].map((v, i) => (
+                    <button
+                      key={v}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                      onClick={() => {
+                        setDirectionFilter(
+                          v.toLowerCase() === "direction"
+                            ? "all"
+                            : (v.toLowerCase() as FilterDirection)
+                        );
+                        setDirectionOpen(false);
+                      }}
+                    >
+                      {v}
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
@@ -256,14 +342,18 @@ const Positions = () => {
       )}
       <div className="w-full bg-indigo-500 rounded-3xl p-6 flex flex-col gap-4">
         <div className="grid grid-cols-8 gap-4 text-white text-md font-semibold px-8 h-8 items-center">
-          <div>Asset</div>
-          <div>Size</div>
-          <div>Leverage</div>
-          <div>Collateral</div>
-          <div>Entry</div>
-          <div>Liquidation Price</div>
-          <div>Buffer</div>
-          <div>Alert</div>
+          {[
+            "Asset",
+            "Size",
+            "Leverage",
+            "Collateral",
+            "Entry",
+            "Liquidation Price",
+            "Buffer",
+            "Alert",
+          ].map((v) => (
+            <div key={v}>{v}</div>
+          ))}
         </div>
         {isLoading ? (
           Array.from({ length: 4 }).map((_, i) => (
@@ -276,175 +366,91 @@ const Positions = () => {
               ))}
             </div>
           ))
-        ) : filteredPositions?.length === 0 ? (
+        ) : withBuffer.length === 0 ? (
           <div className="text-white text-lg text-center font-medium">
             No positions found
           </div>
         ) : (
-          (filteredPositions ?? []).map((p, i) => (
+          withBuffer.map((p, i) => (
             <div
               key={i}
-              className="grid grid-cols-8 gap-4 bg-white rounded-2xl px-8 h-16 items-center mb-4:last:mb-0"
+              className={`flex rounded-xl flex-col ${
+                p.bufferPercent < 10 ? "bg-red-500" : "bg-white"
+              }`}
             >
-              <div className="text-neutral-900 text-lg font-bold flex flex-col">
-                {p.asset}
-                <span className="text-neutral-500 text-xs font-medium">
-                  {p.direction.toUpperCase()}
-                </span>
-              </div>
-              <div className="text-neutral-900 text-lg">
-                {Math.abs(Number(p.size))}
-              </div>
-              <div className="text-neutral-900 text-lg">
-                {p.leverage.value}x {p.leverage.type}
-              </div>
-              <div className="text-neutral-900 text-lg">
-                $ {Number(p.collateral).toFixed(2)}
-              </div>
-              <div className="text-neutral-900 text-lg">{p.entryPrice}</div>
-              <div className="text-neutral-900 text-lg">
-                $ {Number(p.liquidationPrice).toFixed(2)}
-              </div>
-              <div className="text-neutral-900 text-lg">
-                $
-                {(Number(p.liquidationPrice) - Number(p.entryPrice)).toFixed(2)}{" "}
-                (
-                {(
-                  ((Number(p.liquidationPrice) - Number(p.entryPrice)) /
-                    Number(p.entryPrice)) *
-                  100
-                ).toFixed(2)}
-                %)
-              </div>
-              <div className="flex justify-start">
-                <motion.button
-                  className={`w-10 h-6 rounded-full transition-colors duration-200 cursor-pointer disabled:cursor-not-allowed ${
-                    p.isActive
-                      ? "bg-red-600 disabled:bg-red-600"
-                      : "bg-neutral-400 disabled:bg-neutral-400"
-                  } flex items-center px-1`}
-                  onClick={() => {
-                    p.isActive
-                      ? deleteAlerts(p?.id || "")
-                      : createAlert(p as Position, i);
-                  }}
-                  disabled={loading}
-                  animate={shakeIndex === i ? { x: [0, -3, 3, -3, 3, -2, 2, -1, 1, 0] } : { x: 0 }}
-                  transition={{ duration: 0.3, type: "tween" }}
-                >
+              <div
+                className={`grid grid-cols-8 gap-4 rounded-2xl px-8 h-16 items-center mb-4:last:mb-0 `}
+              >
+                <div className="text-neutral-900 text-lg font-bold flex flex-col">
+                  {p.asset}
                   <span
-                    className={`w-4 h-4 rounded-full bg-white transition-transform duration-200 ${
-                      p.isActive ? "translate-x-4" : "translate-x-0"
+                    className={`text-neutral-500 text-xs font-medium ${
+                      p.bufferPercent < 30
+                        ? "text-neutral-800"
+                        : "text-neutral-900"
                     }`}
-                  ></span>
-                </motion.button>
+                  >
+                    {p.direction.toUpperCase()}
+                  </span>
+                </div>
+                <div className="text-neutral-900 text-lg">
+                  {Math.abs(Number(p.size))}
+                </div>
+                <div className="text-neutral-900 text-lg">
+                  {p.leverage.value}x {p.leverage.type}
+                </div>
+                <div className="text-neutral-900 text-lg">
+                  $ {Number(p.collateral).toFixed(2)}
+                </div>
+                <div className="text-neutral-900 text-lg">{p.entryPrice}</div>
+                <div className="text-neutral-900 text-lg">
+                  $ {Number(p.liquidationPrice).toFixed(2)}
+                </div>
+                <div className="text-neutral-900 text-lg">
+                  ${p.bufferAmount.toFixed(2)} ({p.bufferPercent.toFixed(2)}%)
+                </div>
+                <div className="flex justify-start">
+                  <motion.button
+                    className={`w-10 h-6 rounded-full transition-colors duration-200 cursor-pointer disabled:cursor-not-allowed ${
+                      p.isActive
+                        ? "bg-red-600 disabled:bg-red-600"
+                        : "bg-neutral-400 disabled:bg-neutral-400"
+                    } flex items-center px-1`}
+                    onClick={() =>
+                      p.isActive ? deleteAlerts(p?.id || "") : createAlert(p, i)
+                    }
+                    disabled={loading}
+                    animate={
+                      shakeIndex === i
+                        ? { x: [0, -3, 3, -3, 3, -2, 2, -1, 1, 0] }
+                        : { x: 0 }
+                    }
+                    transition={{ duration: 0.3, type: "tween" }}
+                  >
+                    <span
+                      className={`w-4 h-4 rounded-full bg-white transition-transform duration-200 ${
+                        p.isActive ? "translate-x-4" : "translate-x-0"
+                      }`}
+                    ></span>
+                  </motion.button>
+                </div>
               </div>
+              {p.bufferPercent < 10 && (
+                <div className="bg-white rounded-lg p-2 flex justify-center text-md font-medium text-neutral-900 mb-2 mx-4">
+                  This trade is at Risk! Go to&nbsp;
+                  <Link
+                    href="https://app.hyperliquid.xyz"
+                    className="underline font-bold"
+                    target="_blank"
+                  >
+                    Hyperliquid
+                  </Link>
+                  &nbsp;to prevent liquidation.
+                </div>
+              )}
             </div>
           ))
         )}
-      </div>
-    </div>
-  );
-};
-
-const CreditsCard = ({ credits, buzz, setBuzz }: { credits: number, buzz?: boolean, setBuzz?: (b: boolean) => void }) => {
-  const handleBuzz = () => {
-    if (credits === 0 && setBuzz) {
-      setBuzz(true);
-      setTimeout(() => setBuzz(false), 300);
-    }
-  };
-
-  if (credits > 0 && credits < 10) {
-    return (
-      <div className="w-full bg-red-500 rounded-2xl p-4 flex flex-row justify-between px-8 gap-4">
-        <div className="flex flex-row items-end gap-4">
-          <span className="text-white flex flex-col text-lg font-semibold">
-            <span className="text-white text-lg font-semibold">Available</span>
-            <span className="text-white text-lg font-semibold">Credits</span>
-          </span>
-          <span className="text-white text-6xl font-bold">{credits}</span>
-          <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer ` flex flex-row items-center gap-1 rounded-xl px-2 py-1 ">
-            {" "}
-            <HistoryIcon className="w-4 h-4" />
-            <Link href="/history"> Alert history</Link>
-          </span>
-        </div>
-        <div className="flex flex-row items-center gap-4">
-          <span className="text-white text-xl font-normal">
-            Your Alerts are <br /> about to <span className="font-bold">finish!</span>
-          </span>
-          <span className="text-medium font-semibold bg-white text-neutral-900 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4">
-            <Link href="/profile">Topup</Link>
-          </span>
-        </div>
-      </div>
-    );
-  }
-
-  if (credits == 0) {
-    return (
-      <div className="w-full bg-lime-400 rounded-2xl p-4 flex flex-row justify-between px-8 gap-4">
-        <div className="flex flex-row items-end gap-4">
-          <span className="text-neutral-900 flex flex-col text-lg font-semibold">
-            <span className="text-neutral-900 text-lg font-semibold">
-              Available
-            </span>
-            <span className="text-neutral-900 text-lg font-semibold">
-              Credits
-            </span>
-          </span>
-          <motion.span
-            className="text-neutral-900 text-6xl font-bold cursor-pointer"
-            onClick={handleBuzz}
-            animate={buzz ? { x: [0, -3, 3, -3, 3, -2, 2, -1, 1, 0] } : { x: 0 }}
-            transition={{ duration: 0.3, type: "tween" }}
-          >
-            {credits}
-          </motion.span>
-          <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer ` flex flex-row items-center gap-1 rounded-xl px-2 py-1 ">
-            <HistoryIcon className="w-4 h-4" />
-            <Link href="/history"> Alert history</Link>
-          </span>
-        </div>
-        <div className="flex flex-row items-center gap-4">
-          <span className="text-neutral-900 text-xl font-normal">
-            Get started with
-            <br /> monthly alerts
-          </span>
-          <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4">
-            <Link href="/profile">Buy Credits</Link>
-          </span>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="w-full bg-lime-400 rounded-2xl p-4 flex flex-row justify-between px-8 gap-4">
-      <div className="flex flex-row items-end gap-4">
-        <span className="text-neutral-900 flex flex-col text-lg font-semibold">
-          <span className="text-neutral-900 text-lg font-semibold">
-            Available
-          </span>
-          <span className="text-neutral-900 text-lg font-semibold">
-            Credits
-          </span>
-        </span>
-        <span className="text-neutral-900 text-6xl font-bold">{credits}</span>
-        <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer ` flex flex-row items-center gap-1 rounded-xl px-2 py-1 ">
-          {" "}
-          <HistoryIcon className="w-4 h-4" />
-          <Link href="/history"> Alert history</Link>
-        </span>
-      </div>
-      <div className="flex flex-row items-center gap-4">
-        <span className="text-neutral-900 text-xl font-normal">
-          Planning to go <br/> ballistic in trades?
-        </span>
-        <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4">
-          <Link href="/profile">Buy Credits</Link>
-        </span>
       </div>
     </div>
   );
