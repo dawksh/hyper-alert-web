@@ -1,10 +1,10 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useDisconnect } from 'wagmi';
-import { motion, AnimatePresence } from 'framer-motion';
-import { LogOut } from 'lucide-react';
-import { useEffect } from 'react';
-import { queryClient } from './ProviderLayout';
-import { useRouter } from 'next/navigation';
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useDisconnect } from "wagmi";
+import { motion, AnimatePresence } from "framer-motion";
+import { LogOut, PowerCircleIcon, PowerIcon, PowerOff } from "lucide-react";
+import { useEffect } from "react";
+import { queryClient } from "./ProviderLayout";
+import { useRouter } from "next/navigation";
 export default function ConnectButtonCustom() {
   return (
     <ConnectButton.Custom>
@@ -17,35 +17,33 @@ export default function ConnectButtonCustom() {
         authenticationStatus,
         mounted,
       }) => {
-
         useEffect(() => {
-          if (authenticationStatus === 'authenticated') {
-            queryClient.invalidateQueries({ queryKey: ['user'] })
-            router.push('/app')
-          } else if (authenticationStatus === 'unauthenticated') {
-            router.push('/')
+          if (authenticationStatus === "authenticated") {
+            queryClient.invalidateQueries({ queryKey: ["user"] });
+            router.push("/app");
+          } else if (authenticationStatus === "unauthenticated") {
+            router.push("/");
           }
-        }, [authenticationStatus])
+        }, [authenticationStatus]);
 
-        const router = useRouter()
+        const router = useRouter();
 
         const { disconnect } = useDisconnect();
-        const ready = mounted && authenticationStatus !== 'loading';
+        const ready = mounted && authenticationStatus !== "loading";
         const connected =
           ready &&
           account &&
           chain &&
-          (!authenticationStatus ||
-            authenticationStatus === 'authenticated');
+          (!authenticationStatus || authenticationStatus === "authenticated");
         return (
           <div
             {...(!ready && {
-              'aria-hidden': true,
-              'style': {
+              "aria-hidden": true,
+              style: {
                 opacity: 0,
-                pointerEvents: 'none',
-                userSelect: 'none',
-                width: '100%',
+                pointerEvents: "none",
+                userSelect: "none",
+                width: "100%",
               },
             })}
           >
@@ -60,7 +58,9 @@ export default function ConnectButtonCustom() {
                   onClick={openConnectModal}
                   className="flex flex-row items-center justify-center w-full h-20 bg-lime-400 rounded-md cursor-pointer"
                 >
-                  <span className="text-neutral-900 text-xl font-semibold">Connect Wallet</span>
+                  <span className="text-neutral-900 text-xl font-semibold">
+                    Connect Wallet
+                  </span>
                 </motion.div>
               )}
               {connected && (
@@ -73,27 +73,34 @@ export default function ConnectButtonCustom() {
                   className="flex flex-row items-center gap-1 w-full h-20"
                 >
                   <motion.button
-                    onClick={openAccountModal}
                     type="button"
-                    className="flex items-center justify-center flex-1 h-20 bg-lime-400 rounded-md cursor-pointer"
+                    className="flex items-center flex-1 h-20 bg-white rounded-md justify-center cursor-pointer flex-row px-8 py-4"
                     initial={{ x: 0 }}
                     animate={{ x: 0 }}
                     exit={{ x: -40, opacity: 0 }}
                     transition={{ duration: 0.25 }}
                   >
-                    <span className="text-green-900 text-xl font-semibold">{account.address.slice(0, 6)}...{account.address.slice(-4)}</span>
+                    <div
+                      onClick={openAccountModal}
+                      className="flex items-end"
+                    >
+                      <span className="text-green-900 text-xl font-semibold">
+                        {account.address.slice(0, 6)}...
+                        {account.address.slice(-4)}
+                      </span>
+                    </div>
                   </motion.button>
-                  <motion.button
-                    onClick={() => disconnect()}
-                    type="button"
-                    className="flex items-center justify-center w-20 h-20 bg-red-500 rounded-md cursor-pointer"
-                    initial={{ x: 0 }}
-                    animate={{ x: 0 }}
-                    exit={{ x: 40, opacity: 0 }}
-                    transition={{ duration: 0.25 }}
-                  >
-                    <LogOut className="text-white text-xl font-semibold" />
-                  </motion.button>
+                    <motion.button
+                      onClick={() => disconnect()}
+                      type="button"
+                      className="flex items-center justify-center w-20 h-20 bg-red-500 rounded-md cursor-pointer"
+                      initial={{ x: 0 }}
+                      animate={{ x: 0 }}
+                      exit={{ x: 40, opacity: 0 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      <PowerIcon className="text-white text-xl font-semibold" />
+                    </motion.button>
                 </motion.div>
               )}
             </AnimatePresence>
