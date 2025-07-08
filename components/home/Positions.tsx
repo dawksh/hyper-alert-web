@@ -10,11 +10,15 @@ import axios from "axios";
 import { queryClient } from "../shared/ProviderLayout";
 import { Button } from "../ui/button";
 import { MobileSection } from "@/components/profile/MobileSection";
+import { motion } from "framer-motion";
 
 const Positions = () => {
   const { data: positions, isLoading } = usePositions();
   const { data: user } = useUser();
   const router = useRouter();
+  const [credits, setCredits] = useState(
+    (user?.credits?.length && user?.credits[0].credits) || 0
+  );
   const [loading, setLoading] = useState(false);
   const [filterTabOpen, setFilterTabOpen] = useState(false);
   const [filterTabVisible, setFilterTabVisible] = useState(false);
@@ -23,8 +27,22 @@ const Positions = () => {
   const [statusOpen, setStatusOpen] = useState(false);
   const [directionOpen, setDirectionOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [shakeIndex, setShakeIndex] = useState<number | null>(null);
+  const [buzz, setBuzz] = useState(false);
 
-  const createAlert = async (p: Position) => {
+  useEffect(() => {
+    setCredits((user?.credits?.length && user?.credits[0].credits) || 0);
+  }, [user?.credits]);
+
+  const createAlert = async (p: Position, idx: number) => {
+    if (!credits) {
+      setShakeIndex(idx);
+      setBuzz(true);
+      setTimeout(() => setShakeIndex(null), 600);
+      setTimeout(() => setBuzz(false), 300);
+      toast.error("You don't have any credits. Please buy some credits to create alerts.");
+      return;
+    }
     if (
       user?.telegram_id &&
       /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
@@ -80,7 +98,7 @@ const Positions = () => {
       {(!user?.credits.length || user?.credits[0].credits === 0) && (
         <MobileSection mobileNumber={user?.pd_id} id={user?.id} />
       )}
-      <CreditsCard />
+      <CreditsCard credits={credits} buzz={buzz} setBuzz={setBuzz} />
       <div className="w-full flex gap-1 items-center">
         <div className="rounded-xl flex justify-center items-center px-24 w-[60vw] h-16 bg-indigo-500">
           <span className="text-white text-xl font-normal">Your Positions</span>
@@ -299,7 +317,7 @@ const Positions = () => {
                 %)
               </div>
               <div className="flex justify-start">
-                <button
+                <motion.button
                   className={`w-10 h-6 rounded-full transition-colors duration-200 cursor-pointer disabled:cursor-not-allowed ${
                     p.isActive
                       ? "bg-red-600 disabled:bg-red-600"
@@ -308,16 +326,18 @@ const Positions = () => {
                   onClick={() => {
                     p.isActive
                       ? deleteAlerts(p?.id || "")
-                      : createAlert(p as Position);
+                      : createAlert(p as Position, i);
                   }}
                   disabled={loading}
+                  animate={shakeIndex === i ? { x: [0, -3, 3, -3, 3, -2, 2, -1, 1, 0] } : { x: 0 }}
+                  transition={{ duration: 0.3, type: "tween" }}
                 >
                   <span
                     className={`w-4 h-4 rounded-full bg-white transition-transform duration-200 ${
                       p.isActive ? "translate-x-4" : "translate-x-0"
                     }`}
                   ></span>
-                </button>
+                </motion.button>
               </div>
             </div>
           ))
@@ -327,14 +347,13 @@ const Positions = () => {
   );
 };
 
-const CreditsCard = () => {
-  const { data: user } = useUser();
-  const [credits, setCredits] = useState(
-    (user?.credits?.length && user?.credits[0].credits) || 0
-  );
-  useEffect(() => {
-    setCredits((user?.credits?.length && user?.credits[0].credits) || 0);
-  }, [user?.credits]);
+const CreditsCard = ({ credits, buzz, setBuzz }: { credits: number, buzz?: boolean, setBuzz?: (b: boolean) => void }) => {
+  const handleBuzz = () => {
+    if (credits === 0 && setBuzz) {
+      setBuzz(true);
+      setTimeout(() => setBuzz(false), 300);
+    }
+  };
 
   if (credits > 0 && credits < 10) {
     return (
@@ -375,9 +394,15 @@ const CreditsCard = () => {
               Credits
             </span>
           </span>
-          <span className="text-neutral-900 text-6xl font-bold">{credits}</span>
+          <motion.span
+            className="text-neutral-900 text-6xl font-bold cursor-pointer"
+            onClick={handleBuzz}
+            animate={buzz ? { x: [0, -3, 3, -3, 3, -2, 2, -1, 1, 0] } : { x: 0 }}
+            transition={{ duration: 0.3, type: "tween" }}
+          >
+            {credits}
+          </motion.span>
           <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer ` flex flex-row items-center gap-1 rounded-xl px-2 py-1 ">
-            {" "}
             <HistoryIcon className="w-4 h-4" />
             <Link href="/history"> Alert history</Link>
           </span>
@@ -388,7 +413,7 @@ const CreditsCard = () => {
             <br /> monthly alerts
           </span>
           <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4">
-            <Link href="/pricing">Subscribe</Link>
+            <Link href="/profile">Buy Credits</Link>
           </span>
         </div>
       </div>
@@ -418,7 +443,7 @@ const CreditsCard = () => {
           Planning to go <br/> ballistic in trades?
         </span>
         <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4">
-          <Link href="/pricing">Subscribe</Link>
+          <Link href="/profile">Buy Credits</Link>
         </span>
       </div>
     </div>
