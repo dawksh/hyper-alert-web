@@ -3,7 +3,7 @@ import { Position, usePositions } from "@/hooks/usePositions";
 import { useUser } from "@/hooks/useUser";
 import { FilterIcon, HistoryIcon, Search } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -16,13 +16,13 @@ const Positions = () => {
   const { data: user } = useUser();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [filterTabOpen, setFilterTabOpen] = useState(false)
-  const [filterTabVisible, setFilterTabVisible] = useState(false)
-  const [activeFilter, setActiveFilter] = useState<string>("all")
-  const [directionFilter, setDirectionFilter] = useState<string>("all")
-  const [statusOpen, setStatusOpen] = useState(false)
-  const [directionOpen, setDirectionOpen] = useState(false)
-  const [search, setSearch] = useState("")
+  const [filterTabOpen, setFilterTabOpen] = useState(false);
+  const [filterTabVisible, setFilterTabVisible] = useState(false);
+  const [activeFilter, setActiveFilter] = useState<string>("all");
+  const [directionFilter, setDirectionFilter] = useState<string>("all");
+  const [statusOpen, setStatusOpen] = useState(false);
+  const [directionOpen, setDirectionOpen] = useState(false);
+  const [search, setSearch] = useState("");
 
   const createAlert = async (p: Position) => {
     if (
@@ -63,15 +63,23 @@ const Positions = () => {
     setLoading(false);
   };
 
-  const filteredPositions = positions?.filter(p =>
-    (activeFilter === "all" || (activeFilter === "active" ? p.isActive : !p.isActive)) &&
-    (directionFilter === "all" || p.direction.toLowerCase() === directionFilter) &&
-    (search === "" || [p.asset, p.entryPrice, p.direction].some(v => v.toString().toLowerCase().includes(search.toLowerCase())))
-  )
+  const filteredPositions = positions?.filter(
+    (p) =>
+      (activeFilter === "all" ||
+        (activeFilter === "active" ? p.isActive : !p.isActive)) &&
+      (directionFilter === "all" ||
+        p.direction.toLowerCase() === directionFilter) &&
+      (search === "" ||
+        [p.asset, p.entryPrice, p.direction].some((v) =>
+          v.toString().toLowerCase().includes(search.toLowerCase())
+        ))
+  );
 
   return (
     <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-2 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5 gap-1">
-      {(!user?.credits.length ||  user?.credits[0].credits === 0) && <MobileSection mobileNumber={user?.pd_id} id={user?.id} />}
+      {(!user?.credits.length || user?.credits[0].credits === 0) && (
+        <MobileSection mobileNumber={user?.pd_id} id={user?.id} />
+      )}
       <CreditsCard />
       <div className="w-full flex gap-1 items-center">
         <div className="rounded-xl flex justify-center items-center px-24 w-[60vw] h-16 bg-indigo-500">
@@ -84,29 +92,36 @@ const Positions = () => {
             placeholder="Search your trade"
             className="w-full bg-transparent outline-none text-neutral-500 text-xl"
             value={search}
-            onChange={e => setSearch(e.target.value)}
+            onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <button className="bg-white rounded-2xl flex items-center justify-center h-16 w-[10vw]" onClick={() => {
-          if (!filterTabOpen) {
-            setFilterTabVisible(true)
-            setTimeout(() => setFilterTabOpen(true), 10)
-          } else {
-            setFilterTabOpen(false)
-            setTimeout(() => setFilterTabVisible(false), 300)
-          }
-        }}>
+        <button
+          className="bg-white rounded-2xl flex items-center justify-center h-16 w-[10vw]"
+          onClick={() => {
+            if (!filterTabOpen) {
+              setFilterTabVisible(true);
+              setTimeout(() => setFilterTabOpen(true), 10);
+            } else {
+              setFilterTabOpen(false);
+              setTimeout(() => setFilterTabVisible(false), 300);
+            }
+          }}
+        >
           <FilterIcon className="w-8 h-8 text-neutral-900 cursor-pointer" />
         </button>
       </div>
       {filterTabVisible && (
-        <div className={`w-full bg-lime-400 rounded-3xl p-6 flex flex-col gap-4 transition-all duration-500 ease-in-out ${filterTabOpen ? 'h-20' : 'h-0 pointer-events-none'}`}>
+        <div
+          className={`w-full bg-lime-400 rounded-3xl p-6 flex flex-col gap-4 transition-all duration-500 ease-in-out ${
+            filterTabOpen ? "h-20" : "h-0 pointer-events-none"
+          }`}
+        >
           <div className="flex flex-col md:flex-row gap-4 w-full">
             <div className="relative">
               <Button
                 variant="outline"
                 className="w-36 justify-between"
-                onClick={() => setStatusOpen(o => !o)}
+                onClick={() => setStatusOpen((o) => !o)}
                 type="button"
               >
                 {activeFilter === "active"
@@ -114,13 +129,49 @@ const Positions = () => {
                   : activeFilter === "inactive"
                   ? "Inactive"
                   : "Alert Status"}
-                <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                <svg
+                  className="ml-2 w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
               </Button>
               {statusOpen && (
                 <div className="absolute left-0 mt-2 w-36 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-[999]">
-                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setActiveFilter("all"); setStatusOpen(false); }}>Status</button>
-                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setActiveFilter("active"); setStatusOpen(false); }}>Active</button>
-                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setActiveFilter("inactive"); setStatusOpen(false); }}>Inactive</button>
+                  <button
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                    onClick={() => {
+                      setActiveFilter("all");
+                      setStatusOpen(false);
+                    }}
+                  >
+                    Status
+                  </button>
+                  <button
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                    onClick={() => {
+                      setActiveFilter("active");
+                      setStatusOpen(false);
+                    }}
+                  >
+                    Active
+                  </button>
+                  <button
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                    onClick={() => {
+                      setActiveFilter("inactive");
+                      setStatusOpen(false);
+                    }}
+                  >
+                    Inactive
+                  </button>
                 </div>
               )}
             </div>
@@ -128,7 +179,7 @@ const Positions = () => {
               <Button
                 variant="outline"
                 className="w-36 justify-between"
-                onClick={() => setDirectionOpen(o => !o)}
+                onClick={() => setDirectionOpen((o) => !o)}
                 type="button"
               >
                 {directionFilter === "long"
@@ -136,13 +187,49 @@ const Positions = () => {
                   : directionFilter === "short"
                   ? "Short"
                   : "Direction"}
-                <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                <svg
+                  className="ml-2 w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
               </Button>
               {directionOpen && (
                 <div className="absolute left-0 mt-2 w-36 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-[999]">
-                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setDirectionFilter("all"); setDirectionOpen(false); }}>Direction</button>
-                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setDirectionFilter("long"); setDirectionOpen(false); }}>Long</button>
-                  <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => { setDirectionFilter("short"); setDirectionOpen(false); }}>Short</button>
+                  <button
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                    onClick={() => {
+                      setDirectionFilter("all");
+                      setDirectionOpen(false);
+                    }}
+                  >
+                    Direction
+                  </button>
+                  <button
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                    onClick={() => {
+                      setDirectionFilter("long");
+                      setDirectionOpen(false);
+                    }}
+                  >
+                    Long
+                  </button>
+                  <button
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                    onClick={() => {
+                      setDirectionFilter("short");
+                      setDirectionOpen(false);
+                    }}
+                  >
+                    Short
+                  </button>
                 </div>
               )}
             </div>
@@ -162,7 +249,10 @@ const Positions = () => {
         </div>
         {isLoading ? (
           Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="grid grid-cols-8 gap-4 bg-white rounded-2xl px-8 h-16 items-center animate-pulse">
+            <div
+              key={i}
+              className="grid grid-cols-8 gap-4 bg-white rounded-2xl px-8 h-16 items-center animate-pulse"
+            >
               {Array.from({ length: 8 }).map((_, j) => (
                 <div key={j} className="h-6 w-full bg-zinc-200 rounded" />
               ))}
@@ -197,7 +287,17 @@ const Positions = () => {
               <div className="text-neutral-900 text-lg">
                 $ {Number(p.liquidationPrice).toFixed(2)}
               </div>
-              <div className="text-neutral-900 text-lg">${(Number(p.liquidationPrice) - Number(p.entryPrice)).toFixed(2)} ({((Number(p.liquidationPrice) - Number(p.entryPrice)) / Number(p.entryPrice) * 100).toFixed(2)}%)</div>
+              <div className="text-neutral-900 text-lg">
+                $
+                {(Number(p.liquidationPrice) - Number(p.entryPrice)).toFixed(2)}{" "}
+                (
+                {(
+                  ((Number(p.liquidationPrice) - Number(p.entryPrice)) /
+                    Number(p.entryPrice)) *
+                  100
+                ).toFixed(2)}
+                %)
+              </div>
               <div className="flex justify-start">
                 <button
                   className={`w-10 h-6 rounded-full transition-colors duration-200 cursor-pointer disabled:cursor-not-allowed ${
@@ -229,22 +329,100 @@ const Positions = () => {
 
 const CreditsCard = () => {
   const { data: user } = useUser();
+  const [credits, setCredits] = useState(
+    (user?.credits?.length && user?.credits[0].credits) || 0
+  );
+  useEffect(() => {
+    setCredits((user?.credits?.length && user?.credits[0].credits) || 0);
+  }, [user?.credits]);
+
+  if (credits > 0 && credits < 10) {
+    return (
+      <div className="w-full bg-red-500 rounded-2xl p-4 flex flex-row justify-between px-8 gap-4">
+        <div className="flex flex-row items-end gap-4">
+          <span className="text-white flex flex-col text-lg font-semibold">
+            <span className="text-white text-lg font-semibold">Available</span>
+            <span className="text-white text-lg font-semibold">Credits</span>
+          </span>
+          <span className="text-white text-6xl font-bold">{credits}</span>
+          <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer ` flex flex-row items-center gap-1 rounded-xl px-2 py-1 ">
+            {" "}
+            <HistoryIcon className="w-4 h-4" />
+            <Link href="/history"> Alert history</Link>
+          </span>
+        </div>
+        <div className="flex flex-row items-center gap-4">
+          <span className="text-white text-xl font-normal">
+            Your Alerts are <br /> about to <span className="font-bold">finish!</span>
+          </span>
+          <span className="text-medium font-semibold bg-white text-neutral-900 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4">
+            <Link href="/profile">Topup</Link>
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  if (credits == 0) {
+    return (
+      <div className="w-full bg-lime-400 rounded-2xl p-4 flex flex-row justify-between px-8 gap-4">
+        <div className="flex flex-row items-end gap-4">
+          <span className="text-neutral-900 flex flex-col text-lg font-semibold">
+            <span className="text-neutral-900 text-lg font-semibold">
+              Available
+            </span>
+            <span className="text-neutral-900 text-lg font-semibold">
+              Credits
+            </span>
+          </span>
+          <span className="text-neutral-900 text-6xl font-bold">{credits}</span>
+          <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer ` flex flex-row items-center gap-1 rounded-xl px-2 py-1 ">
+            {" "}
+            <HistoryIcon className="w-4 h-4" />
+            <Link href="/history"> Alert history</Link>
+          </span>
+        </div>
+        <div className="flex flex-row items-center gap-4">
+          <span className="text-neutral-900 text-xl font-normal">
+            Get started with
+            <br /> monthly alerts
+          </span>
+          <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4">
+            <Link href="/pricing">Subscribe</Link>
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full bg-lime-400 rounded-2xl p-4 flex flex-row justify-between px-8 gap-4">
       <div className="flex flex-row items-end gap-4">
         <span className="text-neutral-900 flex flex-col text-lg font-semibold">
-          <span className="text-neutral-900 text-lg font-semibold">Available</span>
-          <span className="text-neutral-900 text-lg font-semibold">Credits</span>
+          <span className="text-neutral-900 text-lg font-semibold">
+            Available
+          </span>
+          <span className="text-neutral-900 text-lg font-semibold">
+            Credits
+          </span>
         </span>
-        <span className="text-neutral-900 text-6xl font-bold">{user?.credits?.length && user?.credits[0].credits || 0}</span>
-        <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer ` flex flex-row items-center gap-1 rounded-xl px-2 py-1 "> <HistoryIcon className="w-4 h-4" /><Link href="/history"> Alert history</Link></span>
+        <span className="text-neutral-900 text-6xl font-bold">{credits}</span>
+        <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer ` flex flex-row items-center gap-1 rounded-xl px-2 py-1 ">
+          {" "}
+          <HistoryIcon className="w-4 h-4" />
+          <Link href="/history"> Alert history</Link>
+        </span>
       </div>
       <div className="flex flex-row items-center gap-4">
-        <span className="text-neutral-900 text-xl font-normal">Get started with<br/> monthly alerts</span>
-        <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4"><Link href="/pricing">Subscribe</Link></span>
+        <span className="text-neutral-900 text-xl font-normal">
+          Planning to go <br/> ballistic in trades?
+        </span>
+        <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4">
+          <Link href="/pricing">Subscribe</Link>
+        </span>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Positions;
