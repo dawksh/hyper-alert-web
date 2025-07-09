@@ -15,13 +15,13 @@ const Page = () => {
           className="text-white text-5xl md:text-6xl lg:text-8xl font-extrabold leading-tight max-w-6xl mt-24"
           style={{ letterSpacing: "-0.05em", lineHeight: "1em" }}
         >
-          We’ll give you a call before your Hyperliquid positions get{" "}
+          We'll give you a call before your Hyperliquid positions get{" "}
           <span className="text-lime-400">liquidated.</span>
         </h1>
       </section>
       {/* How It Works Section */}
-      <section className="w-full grid grid-cols-3 gap-1 md:gap-2">
-        <div className="bg-white rounded-xl flex flex-col items-start p-1 md:p-4 min-h-[20vh] md:min-h-[25vh] w-full max-w-[220px] md:max-w-[33vw] mx-auto shadow-xl">
+      <section className="w-full flex flex-row justify-between gap-1">
+        <div className="bg-white rounded-xl flex flex-col items-start p-1 md:p-4 min-h-[20vh] md:min-h-[25vh] w-[35vw] md:max-w-[35vw] mx-auto shadow-xl">
           <span className="text-neutral-900 text-base md:text-4xl font-normal">
             1.
             <br />
@@ -31,7 +31,7 @@ const Page = () => {
             hyperliquid wallet
           </span>
         </div>
-        <div className="bg-white rounded-xl flex flex-col items-start p-1 md:p-4 min-h-[20vh] md:min-h-[25vh] w-full max-w-[220px] md:max-w-[33vw] mx-auto shadow-xl">
+        <div className="bg-white rounded-xl flex flex-col items-start p-1 md:p-4 min-h-[20vh] md:min-h-[25vh] w-[40vw] md:max-w-[40vw] mx-auto shadow-xl">
           <span className="text-neutral-900 text-base md:text-4xl font-normal">
             2.
             <br />
@@ -45,7 +45,7 @@ const Page = () => {
             on.
           </span>
         </div>
-        <div className="bg-red-500 rounded-xl flex flex-col items-start p-1 md:p-4 min-h-[20vh] md:min-h-[25vh] w-full max-w-[220px] md:max-w-[33vw] mx-auto shadow-xl">
+        <div className="bg-red-500 rounded-xl flex flex-col items-start p-1 md:p-4 min-h-[20vh] md:min-h-[25vh] w-[25vw] md:max-w-[25vw] mx-auto shadow-xl">
           <span className="text-neutral-900 text-base md:text-4xl font-normal">
             3.
             <br />
