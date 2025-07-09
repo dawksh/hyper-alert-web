@@ -37,26 +37,28 @@ const TierCards = () => {
       {tiers.map((t, idx) => (
         <div
           key={t.name}
-          className="relative w-full bg-indigo-500 rounded-xl flex flex-col justify-between items-center py-8 px-4"
+          className={`relative w-full rounded-xl flex flex-col justify-between items-center py-8 px-4 ${user?.subscription_tier === t.price.toString() ? "bg-[#2A2A2A]" : "bg-indigo-500"}`}
         >
           <div className="w-full flex flex-col items-center gap-1">
-            <div className="w-full h-24 bg-lime-400 rounded-2xl flex items-center justify-center mb-2">
+            <div className={`w-full h-24 rounded-2xl flex items-center justify-center mb-2 ${user?.subscription_tier === t.price.toString() ? "bg-indigo-500" : "bg-lime-400"}`}>
               <span className="text-neutral-900 text-7xl font-black">{`$${t.price}`}</span>
             </div>
-            <span className="text-white text-4xl font-normal">
+            <span className="text-white text-6xl font-normal">
               Pack of <span className="font-bold">{t.credits}</span>
             </span>
-            <span className="text-white text-4xl font-normal">
+            <span className="text-white text-6xl font-normal">
               alerts/month
             </span>
           </div>
           <button
-            className="w-full h-14 bg-white rounded-2xl text-zinc-800 text-2xl py-4 font-semibold flex cursor-pointer items-center justify-center mt-4"
+            className={`w-full h-14 bg-white rounded-2xl text-zinc-800 text-2xl py-4 font-semibold flex items-center justify-center mt-4 ${user?.subscription_tier === t.price.toString() ? "bg-lime-400 cursor-not-allowed" : "cursor-pointer"}`}
             onClick={() => handleBuy(t, idx)}
-            disabled={loadingIndex === idx}
+            disabled={loadingIndex === idx || user?.subscription_tier === t.price.toString()}
           >
             {loadingIndex === idx ? (
               <Loader2 className="animate-spin" />
+            ) : user?.subscription_tier === t.price.toString() ? (
+              "Current Plan"
             ) : (
               "Buy Now"
             )}

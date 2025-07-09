@@ -34,6 +34,7 @@ type User = {
   stripe_id: string | null
   credits: Credit[]
   payments: Payment[]
+  subscription_tier: string
 }
 
 export const useUser = (): { data: User | undefined, isLoading: boolean } => {
