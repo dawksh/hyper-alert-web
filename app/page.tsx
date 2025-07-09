@@ -10,8 +10,11 @@ const Page = () => {
   return (
     <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center py-2 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5 gap-y-2">
       {/* Hero Section */}
-      <section className="w-full bg-indigo-500 rounded-xl flex flex-col justify-start items-start min-h-[300px] md:min-h-[unset] py-2 md:py-6 px-8 md:px-24">
-        <h1 className="text-white text-5xl md:text-6xl lg:text-8xl font-black leading-tight max-w-6xl mt-24">
+      <section className="w-full bg-indigo-500 rounded-xl flex flex-col justify-end items-start h-[85vh] md:min-h-[unset] py-8 md:py-16 px-8 md:px-24">
+        <h1
+          className="text-white text-5xl md:text-6xl lg:text-8xl font-extrabold leading-tight max-w-6xl mt-24"
+          style={{ letterSpacing: "-0.05em", lineHeight: "1em" }}
+        >
           We’ll give you a call before your Hyperliquid positions get{" "}
           <span className="text-lime-400">liquidated.</span>
         </h1>
