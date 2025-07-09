@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { useUser } from "@/hooks/useUser";
+import { toast } from "sonner";
 
 const tiers = [
   { name: "Basic", credits: 50, price: 50 },
@@ -9,15 +11,21 @@ const tiers = [
 ];
 
 const TierCards = () => {
+  const { data: user } = useUser();
   const [loadingIndex, setLoadingIndex] = useState<number | null>(null);
   const handleBuy = async (
     t: { price: number; credits: number },
     idx: number
   ) => {
+    if(!user?.stripe_id) {
+      toast.error("Please register your email to buy plans");
+      return;
+    }
     setLoadingIndex(idx);
     try {
       const res = await axios.post("/api/checkout_sessions", {
         price: t.price,
+        customerId: user?.stripe_id,
       });
       if (res.data?.url) window.location.href = res.data.url;
     } finally {
@@ -50,7 +58,7 @@ const TierCards = () => {
             {loadingIndex === idx ? (
               <Loader2 className="animate-spin" />
             ) : (
-              "Get Started"
+              "Buy Now"
             )}
           </button>
         </div>

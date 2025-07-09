@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const Pricing = () => (
   <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-4 gap-2 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5">
@@ -31,7 +32,9 @@ const Pricing = () => (
           <span className="text-white text-4xl font-normal">alerts/month</span>
         </div>
         <button className="w-full h-14 bg-white rounded-2xl text-zinc-800 text-2xl py-4 font-semibold flex items-center justify-center mt-4">
+            <Link href="/profile">
           Get Started
+            </Link>
         </button>
       </div>
       {/* 100 alerts */}
@@ -46,7 +49,9 @@ const Pricing = () => (
           <span className="text-white text-4xl font-normal">alerts/month</span>
         </div>
         <button className="w-full h-14 bg-white rounded-2xl text-zinc-800 text-2xl py-4 font-semibold flex items-center justify-center mt-4">
-          Get Started
+            <Link href="/profile">
+              Get Started
+            </Link>
         </button>
       </div>
       {/* 200 alerts */}
@@ -61,7 +66,9 @@ const Pricing = () => (
           <span className="text-white text-4xl font-normal">alerts/month</span>
         </div>
         <button className="w-full h-14 bg-white rounded-2xl text-zinc-800 text-2xl py-4 font-semibold flex items-center justify-center mt-4">
-          Get Started
+          <Link href="/profile">
+            Get Started
+          </Link>
         </button>
       </div>
     </div>

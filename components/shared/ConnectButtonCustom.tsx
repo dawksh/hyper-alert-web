@@ -1,10 +1,10 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useDisconnect } from "wagmi";
 import { motion, AnimatePresence } from "framer-motion";
-import { LogOut, PowerCircleIcon, PowerIcon, PowerOff } from "lucide-react";
+import { PowerIcon } from "lucide-react";
 import { useEffect } from "react";
 import { queryClient } from "./ProviderLayout";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 export default function ConnectButtonCustom() {
   return (
     <ConnectButton.Custom>
@@ -17,10 +17,14 @@ export default function ConnectButtonCustom() {
         authenticationStatus,
         mounted,
       }) => {
+
+        const pathname = usePathname();
         useEffect(() => {
           if (authenticationStatus === "authenticated") {
             queryClient.invalidateQueries({ queryKey: ["user"] });
-            router.push("/app");
+            if (pathname === "/") {
+              router.push("/app");
+            }
           } else if (authenticationStatus === "unauthenticated") {
             router.push("/");
           }

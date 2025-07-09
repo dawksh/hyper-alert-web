@@ -13,11 +13,11 @@ export async function POST(request: Request) {
     let price_id = "";
 
     if(price === 50) {
-      price_id = "price_1RhPwpBMM9SAnGH60bYMZGGa";
+      price_id = "price_1Riu0rBMM9SAnGH6ShpWqeIB";
     } else if(price === 200) {
-      price_id = "price_1RhbHsBMM9SAnGH6rScGc6IP";
+      price_id = "price_1RiuVABMM9SAnGH6jnt8ffEN";
     } else if(price === 500) {
-      price_id = "price_1RhbIQBMM9SAnGH6sFyrKmBE";
+      price_id = "price_1RiuVPBMM9SAnGH6V2k8SHq5";
     } else {
       return Response.json({ error: "Invalid price" }, { status: 400 });
     }
@@ -35,15 +35,16 @@ export async function POST(request: Request) {
           quantity: 1,
         },
       ],
-      payment_intent_data: {
+      customer: body.customerId,
+      subscription_data: {
         metadata: {
           user: serverSession?.address,
         },
       },
-      mode: "payment",
+      mode: "subscription",
       success_url: `${origin}/profile?success=true`,
       cancel_url: `${origin}/profile?canceled=true`,
-      payment_method_types: ["crypto", "card"],
+      payment_method_types: ["card"],
     });
     return NextResponse.json({ url: session?.url }, { status: 200 });
   } catch (err: any) {

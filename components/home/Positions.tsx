@@ -162,7 +162,7 @@ const Positions = () => {
       !user?.pd_id
     ) {
       toast.error(
-        "Please connect your Telegram or PD account to create alerts."
+        "Please connect your Telegram or Phone number to create alerts."
       );
       router.push("/profile");
       return;
