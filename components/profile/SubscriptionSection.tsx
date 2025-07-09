@@ -18,7 +18,7 @@ const TierCards = () => {
     idx: number
   ) => {
     if(!user?.stripe_id) {
-      toast.error("Please register your email to buy plans");
+      toast.error("Please add your email to buy plans");
       return;
     }
     setLoadingIndex(idx);
@@ -51,7 +51,7 @@ const TierCards = () => {
             </span>
           </div>
           <button
-            className="w-full h-14 bg-white rounded-2xl text-zinc-800 text-2xl py-4 font-semibold flex items-center justify-center mt-4"
+            className="w-full h-14 bg-white rounded-2xl text-zinc-800 text-2xl py-4 font-semibold flex cursor-pointer items-center justify-center mt-4"
             onClick={() => handleBuy(t, idx)}
             disabled={loadingIndex === idx}
           >
