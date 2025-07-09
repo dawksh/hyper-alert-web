@@ -3,6 +3,7 @@
 import Link from "next/link";
 import React from "react";
 import { useSession } from "next-auth/react";
+import XIcon from "@/components/Icons/XIcon";
 
 const Page = () => {
   const { data: session } = useSession();
@@ -60,17 +61,17 @@ const Page = () => {
       <section className="w-full bg-lime-400 rounded-xl flex flex-col items-start py-5 md:py-8 px-8 md:px-24">
         <h2 className="text-neutral-900 justify-start items-start text-3xl md:text-8xl lg:text-8xl font-bold max-w-6xl mt-16">
           We save thousands of dollars from liquidation for just
-          <span className="text-indigo-500">1$/alert</span>
+          <span className="text-indigo-500">$1/alert</span>
         </h2>
       </section>
       {/* Talk to us on Section */}
-      <section className="w-full bg-indigo-500 rounded-xl flex flex-col md:flex-col items-start md:items-start md:justify-end py-5 md:py-8 px-8 md:px-24 shadow-xl gap-2 md:gap-4 h-[60vh] justify-center mb-4">
+      <section className="w-full bg-indigo-500 rounded-xl flex flex-row md:flex-row items-end md:items-end md:justify-between py-5 md:py-8 px-8 md:px-24 shadow-xl gap-2 md:gap-4 h-[60vh] justify-center mb-4">
         <span className="text-black text-6xl md:text-8xl lg:text-8xl font-bold">
           Talk to us on:
         </span>
         <span className="text-white text-6xl md:text-8xl lg:text-8xl font-bold mt-1 md:mt-0">
-          <Link href="https://x.com/perpalert" target="_blank">
-            Twitter
+          <Link href="https://x.com/perpalertapp" target="_blank">
+            <XIcon className="w-[30vw] h-[50vh]" />
           </Link>
         </span>
       </section>
