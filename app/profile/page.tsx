@@ -1,7 +1,7 @@
 "use client";
 import { useUser } from "@/hooks/useUser";
 import { Loader2 } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { MobileSection } from "@/components/profile/MobileSection";
 import TelegramSection from "@/components/profile/TelegramSection";
 import ThresholdSection from "@/components/profile/ThresholdSection";
@@ -15,8 +15,12 @@ const Profile = () => {
   const { data: session } = useSession();
   const { openConnectModal } = useConnectModal();
 
+  useEffect(() => {
+    if (!session?.user) openConnectModal?.();
+  }, [session?.user, openConnectModal]);
+
+
   if(!session?.user) {
-    openConnectModal?.();
     return (
       <div className="w-full min-h-screen bg-zinc-900 flex flex-col justify-center items-center py-2 gap-1 px-28">
         <div className="text-white text-2xl font-bold">
