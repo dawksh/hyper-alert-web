@@ -8,12 +8,15 @@ import ThresholdSection from "@/components/profile/ThresholdSection";
 import SubscriptionSection from "@/components/profile/SubscriptionSection";
 import { useSession } from "next-auth/react";
 import { EmailSection } from "@/components/profile/EmailSection";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 const Profile = () => {
   const { data: user } = useUser();
   const { data: session } = useSession();
+  const { openConnectModal } = useConnectModal();
 
   if(!session?.user) {
+    openConnectModal?.();
     return (
       <div className="w-full min-h-screen bg-zinc-900 flex flex-col justify-center items-center py-2 gap-1 px-28">
         <div className="text-white text-2xl font-bold">

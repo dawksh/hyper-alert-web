@@ -19,6 +19,7 @@ export default function ConnectButtonCustom() {
       }) => {
 
         const pathname = usePathname();
+      
         useEffect(() => {
           if (authenticationStatus === "authenticated") {
             queryClient.invalidateQueries({ queryKey: ["user"] });
