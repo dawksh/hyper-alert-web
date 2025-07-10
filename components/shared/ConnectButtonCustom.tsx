@@ -74,11 +74,11 @@ export default function ConnectButtonCustom() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.25 }}
-                  className="flex flex-row items-center gap-1 w-full h-[20vh]"
+                  className="flex flex-row items-center gap-1 w-full h-[15vh]"
                 >
                   <motion.button
                     type="button"
-                    className="flex items-center flex-1 h-[20vh] bg-white rounded-md justify-center cursor-pointer flex-row px-8 py-4"
+                    className="flex items-center flex-1 h-[15vh] bg-white rounded-md justify-center cursor-pointer flex-row px-8 py-4"
                     initial={{ x: 0 }}
                     animate={{ x: 0 }}
                     exit={{ x: -40, opacity: 0 }}
@@ -88,7 +88,7 @@ export default function ConnectButtonCustom() {
                       onClick={openAccountModal}
                       className="flex items-end"
                     >
-                      <span className="text-green-900 text-2xl font-semibold">
+                      <span className="text-neutral-900 text-2xl font-semibold">
                         {account.address.slice(0, 6)}...
                         {account.address.slice(-4)}
                       </span>
@@ -97,7 +97,7 @@ export default function ConnectButtonCustom() {
                     <motion.button
                       onClick={() => disconnect()}
                       type="button"
-                      className="flex items-center justify-center w-[20vh] h-[20vh] bg-red-500 rounded-md cursor-pointer"
+                      className="flex items-center justify-center w-[20vh] h-[15vh] bg-red-500 rounded-md cursor-pointer"
                       initial={{ x: 0 }}
                       animate={{ x: 0 }}
                       exit={{ x: 40, opacity: 0 }}
