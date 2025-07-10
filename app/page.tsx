@@ -16,7 +16,7 @@ const Page = () => {
           className="text-white text-5xl md:text-6xl lg:text-8xl font-extrabold leading-tight max-w-6xl mt-24"
           style={{ letterSpacing: "-0.05em", lineHeight: "1em" }}
         >
-          We'll give you a call before your Hyperliquid positions get{" "}
+         We give you a call before your hyperliquid position gets{" "}
           <span className="text-lime-400">liquidated.</span>
         </h1>
       </section>
@@ -29,22 +29,19 @@ const Page = () => {
             Connect your
           </span>
           <span className="text-neutral-900 text-base md:text-4xl font-bold mt-1">
-            hyperliquid wallet
+            wallet
           </span>
         </div>
         <div className="bg-white rounded-xl flex flex-col items-start p-1 md:p-4 min-h-[20vh] md:min-h-[25vh] w-[40vw] md:max-w-[40vw] mx-auto shadow-xl">
           <span className="text-neutral-900 text-base md:text-4xl font-normal">
             2.
             <br />
-            Choose the trades you want to get
+            Select the positions you want 
           </span>
           <span className="text-neutral-900 text-base md:text-4xl font-bold mt-1">
-            notified
+            notified on.
           </span>
-          <span className="text-neutral-900 text-base md:text-4xl font-normal">
-            {" "}
-            on.
-          </span>
+         
         </div>
         <div className="bg-red-500 rounded-xl flex flex-col items-start p-1 md:p-4 min-h-[20vh] md:min-h-[25vh] w-[25vw] md:max-w-[25vw] mx-auto shadow-xl">
           <span className="text-neutral-900 text-base md:text-4xl font-normal">
@@ -61,7 +58,7 @@ const Page = () => {
       <section className="w-full bg-lime-400 rounded-xl flex flex-col items-start py-5 md:py-8 px-8 md:px-24">
         <h2 className="text-neutral-900 justify-start items-start text-3xl md:text-8xl lg:text-8xl font-bold max-w-6xl mt-16">
           We save thousands of dollars from liquidation for just
-          <span className="text-indigo-500">$1/alert</span>
+          <span className="text-indigo-500">$1 per alert</span>
         </h2>
       </section>
       {/* Talk to us on Section */}
