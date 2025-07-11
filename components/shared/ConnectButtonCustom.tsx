@@ -63,7 +63,7 @@ export default function ConnectButtonCustom() {
                   onClick={openConnectModal}
                   className="flex flex-row items-center justify-center w-full h-[15vh] bg-lime-400 rounded-md cursor-pointer"
                 >
-                  <span className="text-neutral-900 text-2xl font-semibold">
+                  <span className="text-neutral-900 text-md md:text-2xl 2xl:text-4xl font-semibold">
                     Connect Wallet
                   </span>
                 </motion.div>
@@ -89,7 +89,7 @@ export default function ConnectButtonCustom() {
                       onClick={openAccountModal}
                       className="flex items-end"
                     >
-                      <span className="text-neutral-900 text-2xl font-semibold">
+                      <span className="text-neutral-900 text-md md:text-2xl 2xl:text-4xl font-semibold">
                         {account.address.slice(0, 6)}...
                         {account.address.slice(-4)}
                       </span>
