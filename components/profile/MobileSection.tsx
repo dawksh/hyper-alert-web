@@ -45,9 +45,6 @@ export const MobileSection = ({
         <div className="text-zinc-800 text-5xl font-bold font-['Archivo'] 2xl:text-8xl">
           Get alerts on your phone
         </div>
-        <div className="text-zinc-800 text-xl font-normal font-['Archivo'] 2xl:text-4xl">
-        Enter your phone number to get alert calls.
-        </div>
       </div>
       <div className="flex flex-row gap-1 w-full">
         <div className="flex-1 bg-[#2A2A2A] rounded-md h-20 flex items-center px-8 text-white text-xl font-medium font-['Archivo'] 2xl:h-32 2xl:px-16 2xl:text-4xl">

@@ -363,9 +363,9 @@ const Positions = () => {
             "Size",
             "Leverage",
             "Collateral",
-            "Entry",
-            "Liquidation Price",
-            "Buffer",
+            "Entry Price",
+            "Mark Price",
+            "Liq. Price",
             "Alert",
           ].map((v, idx) =>
             idx === 1 ? (
@@ -450,10 +450,10 @@ const Positions = () => {
                 </div>
                 <div className="text-neutral-900 text-lg 2xl:text-3xl">{p.entryPrice}</div>
                 <div className="text-neutral-900 text-lg 2xl:text-3xl">
-                  $ {Number(p.liquidationPrice).toFixed(2)}
+                  ${Number(p.markPrice).toFixed(2)}
                 </div>
                 <div className="text-neutral-900 text-lg 2xl:text-3xl">
-                  ${p.bufferAmount.toFixed(2)} ({p.bufferPercent.toFixed(2)}%)
+                  $ {Number(p.liquidationPrice).toFixed(2)}
                 </div>
                 {/* Slider */}
                 <div className="flex justify-start">

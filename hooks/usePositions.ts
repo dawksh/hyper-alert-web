@@ -15,6 +15,7 @@ export type Position = {
     }
     direction: string
     id: string
+    markPrice: string
 }
 
 export const usePositions = () => {

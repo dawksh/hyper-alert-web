@@ -42,7 +42,7 @@ const ThresholdSection = ({
     <div className="flex flex-col gap-1 w-full">
       <div className="bg-lime-400 rounded-md w-full flex flex-col items-start px-12 py-6 gap-1 2xl:px-32 2xl:py-16">
         <div className="text-zinc-800 text-5xl font-bold font-['Archivo'] 2xl:text-8xl">
-          Liquidation Buffer (%)
+          Alert Buffer (%)
         </div>
         <div
           className="text-zinc-800 text-xl  font-normal font-['Archivo'] 2xl:text-4xl"
