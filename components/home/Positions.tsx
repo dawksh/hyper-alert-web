@@ -204,8 +204,8 @@ const Positions = () => {
     return { ...p, bufferAmount, bufferPercent };
   });
   return (
-    <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-2 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5 gap-1">
-      {(!user?.credits?.length || user?.credits?.[0]?.credits === 0) && (
+    <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-1 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5 gap-1">
+      {(!user?.credits?.length || user?.credits?.[0]?.credits === 0 || !user?.pd_id) && (
         <MobileSection mobileNumber={user?.pd_id} id={user?.id} />
       )}
       <CreditsCard credits={credits} buzz={buzz} setBuzz={setBuzz} />

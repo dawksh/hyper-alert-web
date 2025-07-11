@@ -53,8 +53,8 @@ const ThresholdSection = ({
           price.
         </div>
       </div>
-      <div className="bg-neutral-800 rounded-md h-[40vh] flex flex-col items-start justify-center px-12 py-6 gap-6">
-        <div className="text-white text-9xl text-start font-bold font-['Archivo']">
+      <div className="bg-neutral-800 rounded-md h-[50vh] flex flex-col items-start justify-center px-12 py-6 gap-6">
+        <div className="text-white text-[10rem] text-start font-black font-['Archivo']">
           {value}%
         </div>
         <div className="w-full flex flex-col items-center">

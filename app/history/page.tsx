@@ -41,26 +41,26 @@ const stats = [
 const History = () => {
   const { data: alerts } = useAlerts();
   return (
-    <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-2 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5">
-      <div className="flex flex-row justify-between items-center bg-lime-400 rounded-2xl p-4 w-full mb-4 h-[30vh]">
-        <div className="flex flex-col gap-2">
+    <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-1 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5">
+      <div className="flex flex-row justify-between items-center bg-lime-400 rounded-2xl p-4 w-full mb-1 h-[30vh]">
+        <div className="flex flex-col gap-1">
           <span className="text-neutral-900 text-8xl font-bold">Alert</span>
           <span className="text-neutral-900 text-8xl font-bold">History</span>
         </div>
-        <div className="flex flex-row gap-2">
-          <div className="flex flex-col justify-between gap-2 bg-neutral-900 rounded-2xl h-full py-8 px-4 w-[15vw]">
+        <div className="flex flex-row gap-1">
+          <div className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl h-full py-8 px-4 w-[15vw]">
             <div className="text-white text-3xl font-semibold">
               Total Alerts Sent
             </div>
             <div className="text-white text-6xl font-semibold">{alerts?.length}</div>
           </div>
-          <div className="flex flex-col justify-between gap-2 bg-neutral-900 rounded-2xl h-full py-8 px-4 w-[15vw]">
+          <div className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl h-full py-8 px-4 w-[15vw]">
             <div className="text-white text-3xl font-semibold">
               Liquidations Saved
             </div>
             <div className="text-white text-6xl font-semibold">{alerts?.filter((alert) => alert.acknowledged).length}</div>
           </div>
-          <div className="flex flex-col justify-between gap-2 bg-neutral-900 rounded-2xl h-full py-8 px-4 w-[15vw]">
+          <div className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl h-full py-8 px-4 w-[15vw]">
             <div className="text-white text-3xl font-semibold">
               Total Funds Saved
             </div>

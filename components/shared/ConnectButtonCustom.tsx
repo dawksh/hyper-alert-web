@@ -1,7 +1,7 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useDisconnect } from "wagmi";
 import { motion, AnimatePresence } from "framer-motion";
-import { PowerIcon } from "lucide-react";
+import PowerIcon from "../Icons/PowerIcon";
 import { useEffect } from "react";
 import { queryClient } from "./ProviderLayout";
 import { usePathname, useRouter } from "next/navigation";
@@ -104,7 +104,7 @@ export default function ConnectButtonCustom() {
                       exit={{ x: 40, opacity: 0 }}
                       transition={{ duration: 0.25 }}
                     >
-                      <PowerIcon className="text-white text-xl font-semibold" />
+                      <PowerIcon className="text-white w-1/3 h-1/3" />
                     </motion.button>
                 </motion.div>
               )}

@@ -37,7 +37,7 @@ const Profile = () => {
       </div>
     );
   return (
-    <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-2 gap-1 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5">
+    <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-1 gap-1 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5">
       {/* Mobile Number Section */}
       <MobileSection mobileNumber={user?.pd_id} id={user?.id} />
       {/* Email Section */}

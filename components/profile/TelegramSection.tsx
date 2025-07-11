@@ -26,7 +26,7 @@ const TelegramSection = ({
           </span>
         </div>
         <div
-          className={`flex-1 rounded-md h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo'] ${
+          className={`flex-1 rounded-md justify-center h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo'] ${
             isTelegramConnected
               ? "bg-indigo-500 opacity-60 cursor-not-allowed"
               : "bg-indigo-500 cursor-pointer"
