@@ -5,6 +5,8 @@ import { useUser } from "@/hooks/useUser";
 import { toast } from "sonner";
 import { EmailSection } from "./EmailSection";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSearchParams } from "next/navigation";
+import { useRef, useEffect } from "react";
 
 const tiers = [
   { name: "Basic", credits: 50, price: 50 },
@@ -12,7 +14,12 @@ const tiers = [
   { name: "Elite", credits: 500, price: 500 },
 ];
 
-const TierCards = () => {
+const TierCards = React.memo(() => {
+  const ref = useRef<HTMLDivElement>(null);
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    if (searchParams.get("buy") === "true") ref.current?.scrollIntoView({ behavior: "smooth" });
+  }, [searchParams]);
   const { data: user } = useUser();
   const [loadingIndex, setLoadingIndex] = useState<number | null>(null);
   const [showEmail, setShowEmail] = useState<boolean>(false);
@@ -37,7 +44,7 @@ const TierCards = () => {
     }
   };
   return (
-    <div className="flex items-center flex-col justify-center w-full h-full gap-1">
+    <div ref={ref} className="flex items-center flex-col justify-center w-full h-full gap-1">
       {/* Email Section */}
       <AnimatePresence>
         {showEmail && (!user?.email || !user?.stripe_id) && (
@@ -110,14 +117,14 @@ const TierCards = () => {
       </div>
     </div>
   );
-};
+});
 
 const SubscriptionSection = ({
   credits,
 }: {
   credits: number | null | undefined;
 }) => {
-  const { data: user } = useUser();
+  
   return (
     <div className="flex flex-col justify-center gap-1 w-full">
       <div className="bg-lime-400 rounded-md w-full flex flex-row items-center px-12 py-6 gap-1 2xl:px-32 2xl:py-6 2xl:gap-2 ">

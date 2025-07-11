@@ -62,7 +62,7 @@ const CreditsCard = ({
           <span className="font-bold">finish!</span>
         </span>
         <span className="text-lg 2xl:text-2xl font-semibold bg-white text-neutral-900 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 2xl:px-8 py-4 2xl:py-6">
-          <Link href="/profile">Topup</Link>
+          <Link href="/profile?buy=true">Topup</Link>
         </span>
       </div>
     </div>
@@ -92,7 +92,7 @@ const CreditsCard = ({
           <br /> monthly alerts
         </span>
         <span className="text-lg 2xl:text-2xl font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 2xl:px-8 py-4 2xl:py-6">
-          <Link href="/profile">Buy Credits</Link>
+          <Link href="/profile?buy=true">Buy Credits</Link>
         </span>
       </div>
     </div>
@@ -114,7 +114,7 @@ const CreditsCard = ({
           Planning to go <br /> ballistic in trades?
         </span>
         <span className="text-lg 2xl:text-2xl font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 2xl:px-8 py-4 2xl:py-6">
-          <Link href="/profile">Buy Credits</Link>
+          <Link href="/profile?buy=true">Buy Credits</Link>
         </span>
       </div>
     </div>
