@@ -13,8 +13,8 @@ const Page = () => {
       {/* Hero Section */}
       <section className="w-full bg-indigo-500 rounded-xl flex flex-col justify-end items-start h-[85vh] md:min-h-[unset] py-8 md:py-16 px-8 md:px-24">
         <h1
-          className="text-white text-5xl md:text-6xl lg:text-8xl font-extrabold leading-tight max-w-6xl mt-24"
-          style={{ letterSpacing: "-0.05em", lineHeight: "1em" }}
+          className="text-white font-extrabold leading-tight max-w-[80%] mt-24"
+          style={{ fontSize: "clamp(2.5rem, 7vw, 20rem)", letterSpacing: "-0.05em", lineHeight: "1em" }}
         >
          We give you a call before your hyperliquid position gets{" "}
           <span className="text-lime-400">liquidated.</span>
