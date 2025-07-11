@@ -6,20 +6,20 @@ const Pricing = () => (
     <div className="flex flex-col md:flex-row w-full gap-1">
       <div className="flex flex-col gap-1 w-full md:w-1/2">
         <div className="flex items-end justify-start bg-indigo-500 rounded-2xl w-full h-[20vh] md:h-[40vh] px-4 py-4 2xl:py-20 md:px-24 md:py-12">
-          <span className="text-white sm:text-6xl md:text-8xl 2xl:text-[14rem] font-extrabold">
+          <span className="text-white text-7xl md:text-8xl 2xl:text-[14rem] font-extrabold">
             Pricing
           </span>
         </div>
         <div className="flex items-end justify-center bg-[#2A2A2A] rounded-2xl w-full h-[20vh] md:h-[40vh] px-4 py-4 md:px-24 2xl:py-20 md:py-12">
-          <span className="text-white text-2xl sm:text-4xl md:text-5xl 2xl:text-[9rem] font-extrabold">
+          <span className="text-white text-5xl md:text-5xl 2xl:text-[9rem] font-extrabold">
             Monthly Subscription Plans
           </span>
         </div>
       </div>
       <div className="flex flex-row justify-center items-end bg-lime-500 rounded-2xl w-full md:w-1/2 h-[30vh] md:h-[80vh] px-4 md:px-12 mt-2 md:mt-0">
-        <span className="text-neutral-900 text-4xl sm:text-7xl md:text-[8rem] 2xl:text-[12rem] font-extrabold pb-8 md:pb-[45vh] 2xl:pb-[35vh]">$</span>
-        <span className="text-neutral-900 text-[5rem] sm:text-[10rem] md:text-[40rem] 2xl:text-[70rem] font-extrabold leading-none">1</span>
-        <span className="text-neutral-900 text-lg sm:text-3xl md:text-7xl 2xl:text-[12rem] font-extrabold pb-4 md:pb-24 2xl:pb-40">/per alert</span>
+        <span className="text-neutral-900 text-9xl md:text-[8rem] 2xl:text-[12rem] font-extrabold pb-28 md:pb-[45vh] 2xl:pb-[35vh]">$</span>
+        <span className="text-neutral-900 text-[16rem] md:text-[40rem] 2xl:text-[70rem] font-extrabold leading-none">1</span>
+        <span className="text-neutral-900 text-6xl md:text-7xl 2xl:text-[12rem] font-extrabold pb-8 md:pb-24 2xl:pb-40">/per alert</span>
       </div>
     </div>
 
