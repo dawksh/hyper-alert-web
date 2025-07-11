@@ -61,7 +61,7 @@ const Pricing = () => (
               fontSize: "clamp(3rem, 7vw, 10rem)",
               top: 0,
               left: 0,
-              transform: "translate(-60%, 70%)",
+              transform: "translate(-60%, 100%)",
             }}
           >
             $
@@ -74,7 +74,7 @@ const Pricing = () => (
               fontSize: "clamp(1.5rem, 4vw, 8rem)",
               bottom: 0,
               left: 0,
-              transform: "translate(180%, -100%)",
+              transform: "translate(230%, -150%)",
             }}
           >
             / alert
