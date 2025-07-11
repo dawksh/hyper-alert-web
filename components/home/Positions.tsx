@@ -421,7 +421,7 @@ const Positions = () => {
             <div
               key={i}
               className={`flex rounded-xl flex-col ${
-                p.bufferPercent < 30 ? "bg-red-500" : "bg-white"
+                p.bufferPercent < 10 ? "bg-red-500" : "bg-white"
               }`}
             >
               <div
@@ -431,7 +431,7 @@ const Positions = () => {
                   {p.asset}
                   <span
                     className={`text-neutral-500 text-xs 2xl:text-lg font-medium ${
-                      p.bufferPercent < 30
+                      p.bufferPercent < 10
                         ? "text-neutral-800"
                         : "text-neutral-900"
                     }`}
@@ -460,7 +460,7 @@ const Positions = () => {
                   <motion.button
                     className={`w-10 2xl:w-16 h-6 2xl:h-10 rounded-full transition-colors duration-200 cursor-pointer disabled:cursor-not-allowed ${
                       p.isActive
-                        ? p.bufferPercent < 30 ? "bg-red-600 disabled:bg-red-600" : "bg-green-600 disabled:bg-green-600"
+                        ? p.bufferPercent < 10 ? "bg-red-600 disabled:bg-red-600" : "bg-green-600 disabled:bg-green-600"
                         : "bg-neutral-400 disabled:bg-neutral-400"
                     } flex items-center px-1 2xl:px-2`}
                     onClick={() =>
@@ -482,7 +482,7 @@ const Positions = () => {
                   </motion.button>
                 </div>
               </div>
-              {p.bufferPercent < 30 && (
+              {p.bufferPercent < 10 && (
                 <div className="bg-white rounded-lg p-2 2xl:p-4 flex justify-center text-md 2xl:text-2xl font-medium text-neutral-900 mb-2 2xl:mb-4 mx-4 2xl:mx-8">
                   This trade is at Risk! Go to&nbsp;
                   <Link

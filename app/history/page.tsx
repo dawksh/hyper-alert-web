@@ -44,7 +44,7 @@ const History = () => {
           <div>Asset</div>
           <div>Size</div>
           <div>Margin</div>
-          <div>Liquidation</div>
+          <div>Liq. Price</div>
           <div>Alert Price</div>
           <div>Margin %</div>
           <div>Time</div>
@@ -67,8 +67,8 @@ const History = () => {
                 </span>
               </div>
               <div className="text-neutral-900 text-lg 2xl:text-3xl">{Math.abs(row.size).toFixed(2)}</div>
-              <div className="text-neutral-900 text-lg 2xl:text-3xl">{row.margin.toFixed(2)}</div>
-              <div className="text-neutral-900 text-lg 2xl:text-3xl">{row.liq_price.toFixed(2)}</div>
+              <div className="text-neutral-900 text-lg 2xl:text-3xl">${row.margin.toFixed(2)}</div>
+              <div className="text-neutral-900 text-lg 2xl:text-3xl">${row.liq_price.toFixed(2)}</div>
               <div className="text-neutral-900 text-lg 2xl:text-3xl">{row.last_price ? row.last_price.toFixed(2) : '-'}</div>
               <div className="text-neutral-900 text-lg 2xl:text-3xl">{row.last_price ? (row.last_price - row.liq_price).toFixed(2) : '-'}</div>
               <div className="text-neutral-900 text-lg 2xl:text-3xl">
