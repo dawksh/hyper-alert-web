@@ -56,17 +56,17 @@ const Page = () => {
       </section>
       {/* Pricing Section */}
       <section className="w-full bg-lime-400 rounded-xl flex flex-col items-start py-5 md:py-8 px-8 md:px-24">
-        <h2 className="text-neutral-900 justify-start items-start text-5xl md:text-8xl 2xl:text-9xl font-bold max-w-6xl 2xl:max-w-[40%] mt-16">
-          We save thousands of dollars from liquidation for just{" "}
+        <h2 className="text-neutral-900 justify-start items-start text-5xl md:text-8xl 2xl:text-9xl font-bold max-w-6xl 2xl:max-w-[70%] mt-16">
+          We save thousands of dollars from liquidation for just{" "} <br />
           <span className="text-indigo-500">$1 per alert</span>
         </h2>
       </section>
       {/* Talk to us on Section */}
-      <section className="w-full bg-indigo-500 rounded-xl flex flex-row md:flex-row items-end md:items-end md:justify-between py-5 md:py-8 px-8 md:px-24 gap-1 md:gap-4 h-[30vh] md:h-[60vh] 2xl:h-[50vh] justify-center mb-4">
+      <section className="w-full bg-indigo-500 rounded-xl flex flex-row md:flex-row items-end md:items-end md:justify-between py-5 md:py-8 px-8 md:px-24 gap-1 md:gap-4 2xl:h-fit justify-center mb-4">
         <span className="text-black text-6xl md:text-8xl 2xl:text-[15rem] font-bold">
           Reach out to us on:
         </span>
-        <span className="text-white font-bold mt-1 md:mt-0">
+        <span className="text-white font-bold mt-1 md:mt-0 hover:scale-105 transition-all duration-300">
           <Link href="https://x.com/perpalertapp" target="_blank">
             <XIcon className="w-full h-full md:w-[30vw] md:h-[50vh] 2xl:w-[20vw] 2xl:h-[30vh]" />
           </Link>

@@ -74,64 +74,37 @@ const Pricing = () => (
     </div>
 
     <div className="flex flex-col md:flex-row items-center justify-center w-full h-full gap-1">
-      {/* 50 alerts */}
-      <div className="relative w-full bg-indigo-500 rounded-3xl flex flex-col justify-around items-center py-4 px-2 2xl:h-[30vh] md:py-8 md:px-4 mb-2 md:mb-0">
-        <div className="w-full flex flex-col items-center gap-2">
-          <div className="w-full h-16 md:h-24 2xl:h-36 bg-lime-400 rounded-2xl flex items-center justify-center mb-2">
-            <span className="text-neutral-900 text-3xl sm:text-5xl md:text-7xl 2xl:text-[8rem] font-black">
-              $50
-            </span>
-          </div>
-          <span className="text-white text-xl sm:text-2xl md:text-4xl 2xl:text-[4rem] font-normal">
-            Pack of <span className="font-bold">50</span>
-          </span>
-          <span className="text-white text-xl sm:text-2xl md:text-4xl 2xl:text-[4rem] font-normal">
-            alerts/month
-          </span>
-        </div>
-        <button className="w-full h-12 md:h-14 2xl:h-28 bg-white rounded-2xl text-zinc-800 text-lg md:text-2xl 2xl:text-4xl py-2 md:py-4 font-semibold flex items-center justify-center mt-4 transition-colors duration-200 hover:bg-lime-600 hover:text-white">
-          <Link href="/profile">Get Started</Link>
-        </button>
-      </div>
-      {/* 100 alerts */}
-      <div className="relative w-full bg-indigo-500 rounded-3xl flex flex-col justify-around items-center py-4 px-2 2xl:h-[30vh] md:py-8 md:px-4 mb-2 md:mb-0">
-        <div className="w-full flex flex-col items-center gap-2">
-          <div className="w-full h-16 md:h-24 2xl:h-36 bg-lime-400 rounded-2xl flex items-center justify-center mb-2">
-            <span className="text-neutral-900 text-3xl sm:text-5xl md:text-7xl 2xl:text-[8rem] font-black">
-              $100
-            </span>
-          </div>
-          <span className="text-white text-xl sm:text-2xl md:text-4xl 2xl:text-[4rem] font-normal">
-            Pack of <span className="font-bold">100</span>
-          </span>
-          <span className="text-white text-xl sm:text-2xl md:text-4xl 2xl:text-[4rem] font-normal">
-            alerts/month
-          </span>
-        </div>
-        <button className="w-full h-12 md:h-14 2xl:h-28 bg-white rounded-2xl text-zinc-800 text-lg md:text-2xl 2xl:text-4xl py-2 md:py-4 font-semibold flex items-center justify-center mt-4 transition-colors duration-200 hover:bg-lime-600 hover:text-white">
-          <Link href="/profile">Get Started</Link>
-        </button>
-      </div>
-      {/* 200 alerts */}
-      <div className="relative w-full bg-indigo-500 rounded-3xl flex flex-col justify-around items-center py-4 px-2 2xl:h-[30vh] md:py-8 md:px-4">
-        <div className="w-full flex flex-col items-center gap-2">
-          <div className="w-full h-16 md:h-24 2xl:h-36 bg-lime-400 rounded-2xl flex items-center justify-center mb-2">
-            <span className="text-neutral-900 text-3xl sm:text-5xl md:text-7xl 2xl:text-[8rem] font-black">
-              $200
-            </span>
-          </div>
-          <span className="text-white text-xl sm:text-2xl md:text-4xl 2xl:text-[4rem] font-normal">
-            Pack of <span className="font-bold">200</span>
-          </span>
-          <span className="text-white text-xl sm:text-2xl md:text-4xl 2xl:text-[4rem] font-normal">
-            alerts/month
-          </span>
-        </div>
-        <button className="w-full h-12 md:h-14 2xl:h-28 bg-white rounded-2xl text-zinc-800 text-lg md:text-2xl 2xl:text-4xl py-2 md:py-4 font-semibold flex items-center justify-center mt-4 transition-colors duration-200 hover:bg-lime-600 hover:text-white">
-          <Link href="/profile">Get Started</Link>
-        </button>
-      </div>
+      {pricingOptions.map(({ price, count }) => (
+        <PricingCard key={count} price={price} count={count} />
+      ))}
     </div>
+  </div>
+);
+
+const pricingOptions = [
+  { price: 50, count: 50 },
+  { price: 100, count: 100 },
+  { price: 200, count: 200 },
+];
+
+const PricingCard = ({ price, count }: { price: number; count: number }) => (
+  <div className="relative w-full bg-indigo-500 rounded-3xl flex flex-col justify-around items-center py-4 px-2 h-fit md:py-8 md:px-4 mb-2 md:mb-0 last:mb-0">
+    <div className="w-full flex flex-col items-center gap-2">
+      <div className="w-full h-16 md:h-24 2xl:h-36 bg-lime-400 rounded-2xl flex items-center justify-center mb-2">
+        <span className="text-neutral-900 text-3xl sm:text-5xl md:text-7xl 2xl:text-[8rem] font-black">
+          {`$${price}`}
+        </span>
+      </div>
+      <span className="text-white text-xl sm:text-2xl md:text-4xl 2xl:text-[4rem] font-normal">
+        Pack of <span className="font-bold">{count}</span>
+      </span>
+      <span className="text-white text-xl sm:text-2xl md:text-4xl 2xl:text-[4rem] font-normal">
+        alerts/month
+      </span>
+    </div>
+    <button className="w-full h-[40%] bg-white rounded-2xl text-zinc-800 text-lg md:text-2xl 2xl:text-4xl py-2 md:py-4 font-semibold flex items-center justify-center mt-4 transition-colors duration-200 hover:bg-lime-600 hover:text-white">
+      <Link href="/profile">Get Started</Link>
+    </button>
   </div>
 );
 
