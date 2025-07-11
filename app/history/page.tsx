@@ -68,8 +68,8 @@ const History = () => {
           </div>
         </div>
       </div>
-      <div className="w-full bg-indigo-500 rounded-3xl p-6 flex flex-col gap-4">
-        <div className="grid grid-cols-8 gap-4 text-white text-md 2xl:text-2xl font-semibold px-8 h-8 2xl:h-16 items-center">
+      <div className="w-full bg-indigo-500 rounded-3xl p-6 2xl:p-12 flex flex-col gap-2 2xl:gap-4">
+        <div className="grid grid-cols-8 gap-2 2xl:gap-4 text-white text-md 2xl:text-2xl font-semibold px-8 2xl:px-16 h-8 2xl:h-16 items-center">
           <div>Asset</div>
           <div>Size</div>
           <div>Margin</div>
@@ -80,14 +80,14 @@ const History = () => {
           <div>Acknowledged</div>
         </div>
         {alerts?.length === 0 ? (
-          <div className="text-white text-lg text-center font-medium">
+          <div className="text-white text-lg 2xl:text-3xl text-center font-medium">
             No history found
           </div>
         ) : (
           alerts?.map((row, i) => (
             <div
               key={i}
-              className="grid grid-cols-8 gap-4 bg-white rounded-2xl px-8 h-16 items-center mb-4:last:mb-0"
+              className="grid grid-cols-8 gap-2 2xl:gap-4 bg-white rounded-2xl px-8 2xl:px-16 h-16 2xl:h-24 items-center mb-2:last:mb-0"
             >
               <div className="text-neutral-900 text-lg 2xl:text-3xl font-bold flex flex-col">
                 {row.coin}
