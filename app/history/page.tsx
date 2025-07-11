@@ -31,12 +31,6 @@ const data = [
   },
 ];
 
-const stats = [
-  { label: "Alert History", value: "200", size: "text-8xl" },
-  { label: "Liquidations Saved", value: "184", size: "text-8xl" },
-  { label: "Total Funds Saved", value: "10.4k$", size: "text-8xl" },
-  { label: "Total alert sent", value: "200", size: "text-8xl" },
-];
 
 const History = () => {
   const { data: alerts } = useAlerts();
@@ -81,7 +75,7 @@ const History = () => {
         </div>
         {alerts?.length === 0 ? (
           <div className="bg-white rounded-2xl px-8 2xl:px-16 py-8 2xl:py-16 text-lg 2xl:text-3xl text-center font-medium text-neutral-900 w-full flex items-center justify-center">
-          No Histtory Found
+          No History Found
         </div>
         ) : (
           alerts?.map((row, i) => (

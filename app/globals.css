@@ -147,6 +147,11 @@
   }
 }
 
+div, h1, h2, h3, span {
+  letter-spacing: -0.05em;
+  line-height: 1em;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

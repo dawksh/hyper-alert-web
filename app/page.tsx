@@ -14,7 +14,7 @@ const Page = () => {
       <section className="w-full bg-indigo-500 rounded-xl flex flex-col justify-end items-start h-[90vh] md:h-[85vh] py-8 md:py-16 px-8 md:px-24">
         <h1
           className="text-white font-extrabold leading-tight max-w-[70%] mt-24"
-          style={{ fontSize: "clamp(4.5rem, 7vw, 20rem)", letterSpacing: "-0.05em", lineHeight: "1em" }}
+          style={{ fontSize: "clamp(4.5rem, 7vw, 20rem)" }}
         >
          We give you a call before your hyperliquid position gets{" "}
           <span className="text-lime-400">liquidated.</span>
@@ -29,14 +29,14 @@ const Page = () => {
             Connect your
           </span>
           <span className="text-neutral-900 text-2xl md:text-4xl 2xl:text-8xl font-bold mt-1">
-            wallet
+            wallet.
           </span>
         </div>
         <div className="bg-white rounded-xl flex flex-col items-start p-4  min-h-[20vh] md:min-h-[25vh] w-[40vw] md:max-w-[40vw] mx-auto shadow-xl">
           <span className="text-neutral-900 text-2xl md:text-4xl 2xl:text-8xl font-normal">
             2.
             <br />
-            Select the positions you want 
+            Select the positions you want to be
           </span>
           <span className="text-neutral-900 text-2xl md:text-4xl 2xl:text-8xl font-bold mt-1">
             notified on.
@@ -47,7 +47,7 @@ const Page = () => {
           <span className="text-neutral-900 text-2xl md:text-4xl 2xl:text-8xl font-normal">
             3.
             <br />
-            Get{" "}
+            Receive{" "}
           </span>
           <span className="text-neutral-900 text-2xl md:text-4xl 2xl:text-8xl font-bold mt-1">
             alert!
@@ -57,7 +57,7 @@ const Page = () => {
       {/* Pricing Section */}
       <section className="w-full bg-lime-400 rounded-xl flex flex-col items-start py-5 md:py-8 px-8 md:px-24">
         <h2 className="text-neutral-900 justify-start items-start text-5xl md:text-8xl 2xl:text-9xl font-bold max-w-6xl 2xl:max-w-[40%] mt-16">
-          We save thousands of dollars from liquidation for just
+          We save thousands of dollars from liquidation for just{" "}
           <span className="text-indigo-500">$1 per alert</span>
         </h2>
       </section>
