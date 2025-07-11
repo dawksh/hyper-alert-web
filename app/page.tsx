@@ -57,13 +57,13 @@ const Page = () => {
       {/* Pricing Section */}
       <section className="w-full bg-lime-400 rounded-xl flex flex-col items-start py-5 md:py-8 px-8 md:px-24">
         <h2 className="text-neutral-900 justify-start items-start text-5xl md:text-8xl 2xl:text-9xl font-bold max-w-6xl 2xl:max-w-[70%] mt-16">
-          We save thousands of dollars from liquidation for just{" "} <br />
+          We save thousands of dollars from liquidation for just{" "}
           <span className="text-indigo-500">$1 per alert</span>
         </h2>
       </section>
       {/* Talk to us on Section */}
       <section className="w-full bg-indigo-500 rounded-xl flex flex-row md:flex-row items-end md:items-end md:justify-between py-5 md:py-8 px-8 md:px-24 gap-1 md:gap-4 2xl:h-fit justify-center mb-4">
-        <span className="text-black text-6xl md:text-8xl 2xl:text-[15rem] font-bold">
+        <span className="text-black text-6xl md:text-8xl lg:text-[10rem] font-bold">
           Reach out to us on:
         </span>
         <span className="text-white font-bold mt-1 md:mt-0 hover:scale-105 transition-all duration-300">

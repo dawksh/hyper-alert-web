@@ -227,7 +227,7 @@ const Positions = () => {
       <CreditsCard credits={credits} buzz={buzz} setBuzz={setBuzz} />
       <div className="w-full flex gap-1 items-center">
         <div className="rounded-xl flex justify-center items-center px-24 2xl:px-48 w-[60vw] h-16 2xl:h-28 bg-indigo-500">
-          <span className="text-white text-xl 2xl:text-3xl font-normal">Your Positions</span>
+          <span className="text-white text-xl 2xl:text-3xl font-normal">Set your alerts here</span>
         </div>
         <div className="flex items-center justify-center bg-white rounded-2xl px-6 2xl:px-12 h-16 2xl:h-28 w-[40vw]">
           <Search className="w-8 h-8 2xl:w-12 2xl:h-12 text-gray-500 mr-4" />
@@ -431,9 +431,7 @@ const Positions = () => {
                   {p.asset}
                   <span
                     className={`text-neutral-500 text-xs 2xl:text-lg font-medium ${
-                      p.bufferPercent < 10
-                        ? "text-neutral-800"
-                        : "text-neutral-900"
+                        "text-indigo-500"
                     }`}
                   >
                     {p.direction.toUpperCase()}

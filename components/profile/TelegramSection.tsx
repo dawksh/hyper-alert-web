@@ -34,7 +34,7 @@ const TelegramSection = ({
         >
           Register
           <span
-            className={`font-bold underline ml-2 ${
+            className={`font-bold ml-2 ${
               isTelegramConnected ? "cursor-not-allowed" : "cursor-pointer"
             }`}
             onClick={

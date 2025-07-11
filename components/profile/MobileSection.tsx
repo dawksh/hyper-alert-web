@@ -53,7 +53,7 @@ export const MobileSection = ({
         <PhoneInput
           defaultCountry="us"
           value={mobileNumber || phoneNumber}
-          className="w-2/5 bg-white rounded-md h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo'] 2xl:h-32 2xl:px-16 2xl:text-4xl"
+          className="w-2/5 bg-white rounded-md h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo'] 2xl:h-32 2xl:px-16 2xl:text-4xl flag-scale"
           onChange={(phone) => setPhoneNumber(phone)}
         />
         <div
