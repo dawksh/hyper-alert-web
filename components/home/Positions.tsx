@@ -139,6 +139,7 @@ const Positions = () => {
   const [search, setSearch] = useState<string>("");
   const [shakeIndex, setShakeIndex] = useState<number | null>(null);
   const [buzz, setBuzz] = useState<boolean>(false);
+  const [sort, setSort] = useState<{ key: "buffer" | "size" | null; order: "asc" | "desc" | null }>({ key: null, order: null });
   useEffect(
     () => setCredits(user?.credits?.[0]?.credits || 0),
     [user?.credits]
@@ -203,6 +204,21 @@ const Positions = () => {
     const bufferPercent = entry !== 0 ? ((liq - entry) / entry) * 100 : 0;
     return { ...p, bufferAmount, bufferPercent };
   });
+  const handleSort = (key: "buffer" | "size") => {
+    setSort((prev) => {
+      if (prev.key !== key) return { key, order: "asc" };
+      if (prev.order === "asc") return { key, order: "desc" };
+      if (prev.order === "desc") return { key: null, order: null };
+      return { key, order: "asc" };
+    });
+  };
+  const sorted = sort.key
+    ? [...(withBuffer ?? [])].sort((a, b) => {
+        const vA = sort.key === "size" ? Math.abs(Number(a.size)) : a.bufferAmount;
+        const vB = sort.key === "size" ? Math.abs(Number(b.size)) : b.bufferAmount;
+        return sort.order === "asc" ? vA - vB : vB - vA;
+      })
+    : withBuffer;
   return (
     <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-1 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5 gap-1">
       {(!user?.credits?.length || user?.credits?.[0]?.credits === 0 || !user?.pd_id) && (
@@ -342,18 +358,15 @@ const Positions = () => {
       )}
       <div className="w-full bg-indigo-500 rounded-3xl p-6 flex flex-col gap-4">
         <div className="grid grid-cols-8 gap-4 text-white text-md font-semibold px-8 h-8 items-center">
-          {[
-            "Asset",
-            "Size",
-            "Leverage",
-            "Collateral",
-            "Entry",
-            "Liquidation Price",
-            "Buffer",
-            "Alert",
-          ].map((v) => (
-            <div key={v}>{v}</div>
-          ))}
+          {["Asset","Size","Leverage","Collateral","Entry","Liquidation Price","Buffer","Alert"].map((v, idx) =>
+            idx === 1 ? (
+              <div key={v} className="cursor-pointer select-none flex items-center gap-1" onClick={() => handleSort("size")}>{v}{sort.key==="size"&&(sort.order==="asc"?"↑":sort.order==="desc"?"↓":"")}</div>
+            ) : idx === 6 ? (
+              <div key={v} className="cursor-pointer select-none flex items-center gap-1" onClick={() => handleSort("buffer")}>{v}{sort.key==="buffer"&&(sort.order==="asc"?"↑":sort.order==="desc"?"↓":"")}</div>
+            ) : (
+              <div key={v}>{v}</div>
+            )
+          )}
         </div>
         {isLoading ? (
           Array.from({ length: 4 }).map((_, i) => (
@@ -366,12 +379,12 @@ const Positions = () => {
               ))}
             </div>
           ))
-        ) : withBuffer.length === 0 ? (
+        ) : sorted.length === 0 ? (
           <div className="text-white text-lg text-center font-medium">
             No positions found
           </div>
         ) : (
-          withBuffer.map((p, i) => (
+          sorted.map((p, i) => (
             <div
               key={i}
               className={`flex rounded-xl flex-col ${
