@@ -13,11 +13,11 @@ const TelegramSection = ({
   return (
     <>
       <div className="flex flex-row gap-x-1 w-full">
-        <div className="flex-1 bg-[#2A2A2A] rounded-md h-20 flex items-center px-8 text-white text-xl font-medium font-['Archivo']">
+        <div className="flex-1 bg-[#2A2A2A] rounded-md h-20 flex items-center px-8 text-white text-xl font-medium font-['Archivo'] 2xl:h-32 2xl:px-16 2xl:text-4xl">
           Get notified on Telegram
         </div>
         <div
-          className="flex-1 bg-white rounded-md h-20 flex items-center px-8 text-2xl font-medium font-['Archivo']"
+          className="flex-1 bg-white rounded-md h-20 flex items-center px-8 text-2xl font-medium font-['Archivo'] 2xl:h-32 2xl:px-16 2xl:text-4xl"
           style={{ color: isTelegramConnected ? "#22c55e" : "#dc2626" }}
         >
           Telegram{" "}
@@ -30,7 +30,7 @@ const TelegramSection = ({
             isTelegramConnected
               ? "bg-indigo-500 opacity-60 cursor-not-allowed"
               : "bg-indigo-500 cursor-pointer"
-          }`}
+          } 2xl:h-32 2xl:px-16 2xl:text-4xl`}
         >
           Register
           <span
@@ -56,7 +56,7 @@ const TelegramSection = ({
           }`}
           style={{}}
         >
-          <div className="flex-1 bg-white rounded-md h-[30vh] flex flex-col items-start justify-center px-8 text-neutral-900 text-3xl font-medium font-['Archivo']">
+          <div className="flex-1 bg-white rounded-md h-[30vh] flex flex-col items-start justify-center px-8 text-neutral-900 text-3xl font-medium font-['Archivo'] 2xl:px-16 2xl:text-5xl">
             <div>
               Open Bot{" "}
               <span className="font-bold ml-2 underline cursor-pointer">
