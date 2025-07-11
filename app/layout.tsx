@@ -12,8 +12,8 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  title: "hyper alerts",
-  description: "hyper alerts",
+  title: "perp alert",
+  description: "perp alert | alerts for perps via calls",
 };
 
 export default function RootLayout({
