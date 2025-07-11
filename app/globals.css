@@ -113,6 +113,40 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+.react-international-phone-input-container {
+  height: 5rem;
+  font-size: 1.25rem;
+}
+.react-international-phone-input {
+  height: 5rem !important;
+  font-size: 1.25rem !important;
+  padding: 0 2rem !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.react-international-phone-country-selector-button {
+  height: 5rem !important;
+  font-size: 1.25rem !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+@media (min-width: 1800px) {
+  .react-international-phone-input-container {
+    height: 8rem;
+    font-size: 2.25rem;
+  }
+  .react-international-phone-input {
+    height: 8rem !important;
+    font-size: 2.25rem !important;
+    padding: 0 4rem !important;
+  }
+  .react-international-phone-country-selector-button {
+    height: 8rem !important;
+    font-size: 2.25rem !important;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
