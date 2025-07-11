@@ -33,7 +33,7 @@ const TierCards = () => {
     }
   };
   return (
-    <div className="flex items-center flex-row justify-center w-full h-full gap-1 2xl:gap-4">
+    <div className="flex items-center flex-row justify-center w-full h-full gap-1">
       {tiers.map((t, idx) => (
         <div
           key={t.name}
@@ -74,7 +74,7 @@ const SubscriptionSection = ({
 }: {
   credits: number | null | undefined;
 }) => (
-  <div className="flex flex-col justify-center gap-1 w-full mt-1 2xl:gap-4 2xl:mt-4">
+  <div className="flex flex-col justify-center gap-1 w-full">
     <div className="bg-lime-400 rounded-md w-full flex flex-row items-center px-12 py-6 gap-1 2xl:px-32 2xl:py-6 2xl:gap-2 ">
       <div className="flex flex-col gap-x-1 w-full">
         <div className="text-zinc-800 text-5xl font-bold font-['Archivo'] 2xl:text-8xl">
