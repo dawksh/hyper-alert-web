@@ -44,76 +44,76 @@ const CreditsCard = ({
   const handleBuzz = () =>
     credits === 0 && setBuzz?.(true) && setTimeout(() => setBuzz(false), 300);
   return credits > 0 && credits < 10 ? (
-    <div className="w-full bg-red-500 rounded-2xl p-4 flex flex-row justify-between px-8 gap-4">
-      <div className="flex flex-row items-end gap-4">
-        <span className="text-white flex flex-col text-lg font-semibold">
+    <div className="w-full bg-red-500 rounded-2xl p-4 2xl:p-8 flex flex-row justify-between px-8 2xl:px-16 gap-4 2xl:gap-8">
+      <div className="flex flex-row items-end gap-4 2xl:gap-8">
+        <span className="text-white flex flex-col text-lg 2xl:text-3xl font-semibold">
           <span>Available</span>
           <span>Credits</span>
         </span>
-        <span className="text-white text-6xl font-bold">{credits}</span>
-        <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer flex flex-row items-center gap-1 rounded-xl px-2 py-1 ">
-          <HistoryIcon className="w-4 h-4" />
+        <span className="text-white text-6xl 2xl:text-8xl font-bold">{credits}</span>
+        <span className="text-neutral-900 text-sm 2xl:text-lg font-semibold border-1 bg-white cursor-pointer flex flex-row items-center gap-1 rounded-xl px-2 2xl:px-4 py-1 2xl:py-2 ">
+          <HistoryIcon className="w-4 h-4 2xl:w-8 2xl:h-8" />
           <Link href="/history"> Alert history</Link>
         </span>
       </div>
-      <div className="flex flex-row items-center gap-4">
-        <span className="text-white text-xl font-normal">
+      <div className="flex flex-row items-center gap-4 2xl:gap-8">
+        <span className="text-white text-xl 2xl:text-4xl font-normal">
           Your Alerts are <br /> about to{" "}
           <span className="font-bold">finish!</span>
         </span>
-        <span className="text-medium font-semibold bg-white text-neutral-900 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4">
+        <span className="text-lg 2xl:text-2xl font-semibold bg-white text-neutral-900 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 2xl:px-8 py-4 2xl:py-6">
           <Link href="/profile">Topup</Link>
         </span>
       </div>
     </div>
   ) : credits === 0 ? (
-    <div className="w-full bg-lime-400 rounded-2xl p-4 flex flex-row justify-between px-8 gap-4">
-      <div className="flex flex-row items-end gap-4">
-        <span className="text-neutral-900 flex flex-col text-lg font-semibold">
+    <div className="w-full bg-lime-400 rounded-2xl p-4 2xl:p-8 flex flex-row justify-between px-8 2xl:px-16 gap-4 2xl:gap-8">
+      <div className="flex flex-row items-end gap-4 2xl:gap-8">
+        <span className="text-neutral-900 flex flex-col text-lg 2xl:text-3xl font-semibold">
           <span>Available</span>
           <span>Credits</span>
         </span>
         <motion.span
-          className="text-neutral-900 text-6xl font-bold cursor-pointer"
+          className="text-neutral-900 text-6xl 2xl:text-8xl font-bold cursor-pointer"
           onClick={handleBuzz}
           animate={buzz ? { x: [0, -3, 3, -3, 3, -2, 2, -1, 1, 0] } : { x: 0 }}
           transition={{ duration: 0.3, type: "tween" }}
         >
           {credits}
         </motion.span>
-        <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer flex flex-row items-center gap-1 rounded-xl px-2 py-1 ">
-          <HistoryIcon className="w-4 h-4" />
+        <span className="text-neutral-900 text-sm 2xl:text-lg font-semibold border-1 bg-white cursor-pointer flex flex-row items-center gap-1 rounded-xl px-2 2xl:px-4 py-1 2xl:py-2 ">
+          <HistoryIcon className="w-4 h-4 2xl:w-6 2xl:h-6" />
           <Link href="/history"> Alert history</Link>
         </span>
       </div>
-      <div className="flex flex-row items-center gap-4">
-        <span className="text-neutral-900 text-xl font-normal">
+      <div className="flex flex-row items-center gap-4 2xl:gap-8">
+        <span className="text-neutral-900 text-xl 2xl:text-4xl font-normal">
           Get started with
           <br /> monthly alerts
         </span>
-        <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4">
+        <span className="text-lg 2xl:text-2xl font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 2xl:px-8 py-4 2xl:py-6">
           <Link href="/profile">Buy Credits</Link>
         </span>
       </div>
     </div>
   ) : (
-    <div className="w-full bg-lime-400 rounded-2xl p-4 flex flex-row justify-between px-8 gap-4">
-      <div className="flex flex-row items-end gap-4">
-        <span className="text-neutral-900 flex flex-col text-lg font-semibold">
+    <div className="w-full bg-lime-400 rounded-2xl p-4 2xl:p-8 flex flex-row justify-between px-8 2xl:px-16 gap-4 2xl:gap-8">
+      <div className="flex flex-row items-end gap-4 2xl:gap-8">
+        <span className="text-neutral-900 flex flex-col text-lg 2xl:text-3xl font-semibold">
           <span>Available</span>
           <span>Credits</span>
         </span>
-        <span className="text-neutral-900 text-6xl font-bold">{credits}</span>
-        <span className="text-neutral-900 text-sm font-semibold border-1 bg-white cursor-pointer flex flex-row items-center gap-1 rounded-xl px-2 py-1 ">
-          <HistoryIcon className="w-4 h-4" />
+        <span className="text-neutral-900 text-6xl 2xl:text-8xl font-bold">{credits}</span>
+        <span className="text-neutral-900 text-sm 2xl:text-lg font-semibold border-1 bg-white cursor-pointer flex flex-row items-center gap-1 rounded-xl px-2 2xl:px-4 py-1 2xl:py-2 ">
+          <HistoryIcon className="w-4 h-4 2xl:w-6 2xl:h-6" />
           <Link href="/history"> Alert history</Link>
         </span>
       </div>
-      <div className="flex flex-row items-center gap-4">
-        <span className="text-neutral-900 text-xl font-normal">
+      <div className="flex flex-row items-center gap-4 2xl:gap-8">
+        <span className="text-neutral-900 text-xl 2xl:text-4xl font-normal">
           Planning to go <br /> ballistic in trades?
         </span>
-        <span className="text-medium font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 py-4">
+        <span className="text-lg 2xl:text-2xl font-semibold bg-[#2A2A2A] text-lime-400 cursor-pointer flex flex-row items-center gap-1 rounded-sm px-4 2xl:px-8 py-4 2xl:py-6">
           <Link href="/profile">Buy Credits</Link>
         </span>
       </div>
@@ -220,7 +220,7 @@ const Positions = () => {
       })
     : withBuffer;
   return (
-    <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-1 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5 gap-1">
+    <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-1 px-1 sm:px-2 md:px-3 2xl:px-5 gap-1">
       {(!user?.credits?.length || user?.credits?.[0]?.credits === 0 || !user?.pd_id) && (
         <MobileSection mobileNumber={user?.pd_id} id={user?.id} />
       )}
