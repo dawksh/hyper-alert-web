@@ -40,12 +40,12 @@ const ThresholdSection = ({
 
   return (
     <div className="flex flex-col gap-1 w-full">
-      <div className="bg-lime-400 rounded-md w-full flex flex-col items-start px-12 py-6 gap-1 ">
-        <div className="text-zinc-800 text-5xl font-bold font-['Archivo']">
+      <div className="bg-lime-400 rounded-md w-full flex flex-col items-start px-12 py-6 gap-1 2xl:px-32 2xl:py-16">
+        <div className="text-zinc-800 text-5xl font-bold font-['Archivo'] 2xl:text-8xl">
           Liquidation Buffer (%)
         </div>
         <div
-          className="text-zinc-800 text-xl  font-normal font-['Archivo']"
+          className="text-zinc-800 text-xl  font-normal font-['Archivo'] 2xl:text-4xl"
           style={{ letterSpacing: "-0.05em", lineHeight: "1em" }}
         >
           You’ll start receiving alerts when the price is{" "}
@@ -54,7 +54,7 @@ const ThresholdSection = ({
         </div>
       </div>
       <div className="bg-neutral-800 rounded-md h-[50vh] flex flex-col items-start justify-center px-12 py-6 gap-6">
-        <div className="text-white text-[10rem] text-start font-black font-['Archivo']">
+        <div className="text-white text-[10rem] 2xl:text-[24rem] text-start font-black font-['Archivo']">
           {value}%
         </div>
         <div className="w-full flex flex-col items-center">
