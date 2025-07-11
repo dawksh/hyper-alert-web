@@ -220,27 +220,27 @@ const Positions = () => {
       })
     : withBuffer;
   return (
-    <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-1 px-1 sm:px-2 md:px-3 2xl:px-5 gap-1">
+    <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center overflow-x-hidden py-1 px-1 sm:px-2 md:px-3 2xl:px-4 gap-1">
       {(!user?.credits?.length || user?.credits?.[0]?.credits === 0 || !user?.pd_id) && (
         <MobileSection mobileNumber={user?.pd_id} id={user?.id} />
       )}
       <CreditsCard credits={credits} buzz={buzz} setBuzz={setBuzz} />
       <div className="w-full flex gap-1 items-center">
-        <div className="rounded-xl flex justify-center items-center px-24 w-[60vw] h-16 bg-indigo-500">
-          <span className="text-white text-xl font-normal">Your Positions</span>
+        <div className="rounded-xl flex justify-center items-center px-24 2xl:px-48 w-[60vw] h-16 2xl:h-28 bg-indigo-500">
+          <span className="text-white text-xl 2xl:text-3xl font-normal">Your Positions</span>
         </div>
-        <div className="flex items-center justify-center bg-white rounded-2xl px-6 h-16 w-[40vw]">
-          <Search className="w-8 h-8 text-gray-500 mr-4" />
+        <div className="flex items-center justify-center bg-white rounded-2xl px-6 2xl:px-12 h-16 2xl:h-28 w-[40vw]">
+          <Search className="w-8 h-8 2xl:w-12 2xl:h-12 text-gray-500 mr-4" />
           <input
             type="text"
             placeholder="Search your trade"
-            className="w-full bg-transparent outline-none text-neutral-500 text-xl"
+            className="w-full bg-transparent outline-none text-neutral-500 text-xl 2xl:text-3xl"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <button
-          className="bg-white rounded-2xl flex items-center justify-center h-16 w-[10vw]"
+          className="bg-white rounded-2xl flex items-center justify-center h-16 2xl:h-28 w-[10vw]"
           onClick={() =>
             !filterTabOpen
               ? (setFilterTabVisible(true),
@@ -249,20 +249,20 @@ const Positions = () => {
                 setTimeout(() => setFilterTabVisible(false), 300))
           }
         >
-          <FilterIcon className="w-8 h-8 text-neutral-900 cursor-pointer" />
+          <FilterIcon className="w-8 h-8 2xl:w-12 2xl:h-12 text-neutral-900 cursor-pointer" />
         </button>
       </div>
       {filterTabVisible && (
         <div
-          className={`w-full bg-lime-400 rounded-3xl p-6 flex flex-col gap-4 transition-all duration-500 ease-in-out ${
-            filterTabOpen ? "h-20" : "h-0 pointer-events-none"
+          className={`w-full bg-lime-400 rounded-3xl p-6 2xl:p-12 flex flex-col gap-4 2xl:gap-8 transition-all duration-500 ease-in-out ${
+            filterTabOpen ? "h-20 2xl:h-32" : "h-0 pointer-events-none"
           }`}
         >
-          <div className="flex flex-col md:flex-row gap-4 w-full">
+          <div className="flex flex-col md:flex-row gap-4 2xl:gap-8 w-full">
             <div className="relative">
               <Button
                 variant="outline"
-                className="w-36 justify-between"
+                className="w-36 2xl:w-56 justify-between 2xl:text-2xl"
                 onClick={() => setStatusOpen((o) => !o)}
                 type="button"
               >
@@ -272,7 +272,7 @@ const Positions = () => {
                   ? "Inactive"
                   : "Alert Status"}
                 <svg
-                  className="ml-2 w-4 h-4"
+                  className="ml-2 w-4 h-4 2xl:w-6 2xl:h-6"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -286,11 +286,11 @@ const Positions = () => {
                 </svg>
               </Button>
               {statusOpen && (
-                <div className="absolute left-0 mt-2 w-36 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-[999]">
+                <div className="absolute left-0 mt-2 w-36 2xl:w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-[999]">
                   {["Status", "Active", "Inactive"].map((v, i) => (
                     <button
                       key={v}
-                      className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                      className="w-full px-4 py-2 2xl:px-6 2xl:py-4 text-left hover:bg-gray-100 2xl:text-xl"
                       onClick={() => {
                         setActiveFilter(
                           v.toLowerCase() === "status"
@@ -309,7 +309,7 @@ const Positions = () => {
             <div className="relative">
               <Button
                 variant="outline"
-                className="w-36 justify-between"
+                className="w-36 2xl:w-56 justify-between 2xl:text-2xl"
                 onClick={() => setDirectionOpen((o) => !o)}
                 type="button"
               >
@@ -319,7 +319,7 @@ const Positions = () => {
                   ? "Short"
                   : "Direction"}
                 <svg
-                  className="ml-2 w-4 h-4"
+                  className="ml-2 w-4 h-4 2xl:w-6 2xl:h-6"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -333,11 +333,11 @@ const Positions = () => {
                 </svg>
               </Button>
               {directionOpen && (
-                <div className="absolute left-0 mt-2 w-36 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-[999]">
+                <div className="absolute left-0 mt-2 w-36 2xl:w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-[999]">
                   {["Direction", "Long", "Short"].map((v, i) => (
                     <button
                       key={v}
-                      className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                      className="w-full px-4 py-2 2xl:px-6 2xl:py-4 text-left hover:bg-gray-100 2xl:text-xl"
                       onClick={() => {
                         setDirectionFilter(
                           v.toLowerCase() === "direction"
@@ -356,13 +356,46 @@ const Positions = () => {
           </div>
         </div>
       )}
-      <div className="w-full bg-indigo-500 rounded-3xl p-6 flex flex-col gap-4">
-        <div className="grid grid-cols-8 gap-4 text-white text-md font-semibold px-8 h-8 items-center">
-          {["Asset","Size","Leverage","Collateral","Entry","Liquidation Price","Buffer","Alert"].map((v, idx) =>
+      <div className="w-full bg-indigo-500 rounded-3xl p-6 flex flex-col gap-4 ">
+        <div className="grid grid-cols-8 gap-4 2xl:gap-8 text-white text-md 2xl:text-2xl font-semibold px-8 2xl:px-16 h-8 2xl:h-16 items-center">
+          {[
+            "Asset",
+            "Size",
+            "Leverage",
+            "Collateral",
+            "Entry",
+            "Liquidation Price",
+            "Buffer",
+            "Alert",
+          ].map((v, idx) =>
             idx === 1 ? (
-              <div key={v} className="cursor-pointer select-none flex items-center gap-1" onClick={() => handleSort("size")}>{v}{sort.key==="size"&&(sort.order==="asc"?"↑":sort.order==="desc"?"↓":"")}</div>
+              <div
+                key={v}
+                className="cursor-pointer select-none flex items-center gap-1"
+                onClick={() => handleSort("size")}
+              >
+                {v}
+                {sort.key === "size" &&
+                  (sort.order === "asc"
+                    ? "↑"
+                    : sort.order === "desc"
+                    ? "↓"
+                    : "")}
+              </div>
             ) : idx === 6 ? (
-              <div key={v} className="cursor-pointer select-none flex items-center gap-1" onClick={() => handleSort("buffer")}>{v}{sort.key==="buffer"&&(sort.order==="asc"?"↑":sort.order==="desc"?"↓":"")}</div>
+              <div
+                key={v}
+                className="cursor-pointer select-none flex items-center gap-1"
+                onClick={() => handleSort("buffer")}
+              >
+                {v}
+                {sort.key === "buffer" &&
+                  (sort.order === "asc"
+                    ? "↑"
+                    : sort.order === "desc"
+                    ? "↓"
+                    : "")}
+              </div>
             ) : (
               <div key={v}>{v}</div>
             )
@@ -372,15 +405,15 @@ const Positions = () => {
           Array.from({ length: 4 }).map((_, i) => (
             <div
               key={i}
-              className="grid grid-cols-8 gap-4 bg-white rounded-2xl px-8 h-16 items-center animate-pulse"
+              className="grid grid-cols-8 gap-4 2xl:gap-8 bg-white rounded-2xl px-8 2xl:px-16 h-16 2xl:h-24 items-center animate-pulse"
             >
               {Array.from({ length: 8 }).map((_, j) => (
-                <div key={j} className="h-6 w-full bg-zinc-200 rounded" />
+                <div key={j} className="h-6 2xl:h-10 w-full bg-zinc-200 rounded" />
               ))}
             </div>
           ))
         ) : sorted.length === 0 ? (
-          <div className="text-white text-lg text-center font-medium">
+          <div className="text-white text-lg 2xl:text-3xl text-center font-medium">
             No positions found
           </div>
         ) : (
@@ -392,12 +425,12 @@ const Positions = () => {
               }`}
             >
               <div
-                className={`grid grid-cols-8 gap-4 rounded-2xl px-8 h-16 items-center mb-4:last:mb-0 `}
+                className={`grid grid-cols-8 gap-4 2xl:gap-8 rounded-2xl px-8 2xl:px-16 h-16 2xl:h-24 items-center mb-4:last:mb-0 `}
               >
-                <div className="text-neutral-900 text-lg font-bold flex flex-col">
+                <div className="text-neutral-900 text-lg 2xl:text-3xl font-bold flex flex-col">
                   {p.asset}
                   <span
-                    className={`text-neutral-500 text-xs font-medium ${
+                    className={`text-neutral-500 text-xs 2xl:text-lg font-medium ${
                       p.bufferPercent < 30
                         ? "text-neutral-800"
                         : "text-neutral-900"
@@ -406,29 +439,29 @@ const Positions = () => {
                     {p.direction.toUpperCase()}
                   </span>
                 </div>
-                <div className="text-neutral-900 text-lg">
+                <div className="text-neutral-900 text-lg 2xl:text-3xl">
                   {Math.abs(Number(p.size))}
                 </div>
-                <div className="text-neutral-900 text-lg">
+                <div className="text-neutral-900 text-lg 2xl:text-3xl">
                   {p.leverage.value}x {p.leverage.type}
                 </div>
-                <div className="text-neutral-900 text-lg">
+                <div className="text-neutral-900 text-lg 2xl:text-3xl">
                   $ {Number(p.collateral).toFixed(2)}
                 </div>
-                <div className="text-neutral-900 text-lg">{p.entryPrice}</div>
-                <div className="text-neutral-900 text-lg">
+                <div className="text-neutral-900 text-lg 2xl:text-3xl">{p.entryPrice}</div>
+                <div className="text-neutral-900 text-lg 2xl:text-3xl">
                   $ {Number(p.liquidationPrice).toFixed(2)}
                 </div>
-                <div className="text-neutral-900 text-lg">
+                <div className="text-neutral-900 text-lg 2xl:text-3xl">
                   ${p.bufferAmount.toFixed(2)} ({p.bufferPercent.toFixed(2)}%)
                 </div>
                 <div className="flex justify-start">
                   <motion.button
-                    className={`w-10 h-6 rounded-full transition-colors duration-200 cursor-pointer disabled:cursor-not-allowed ${
+                    className={`w-10 2xl:w-16 h-6 2xl:h-10 rounded-full transition-colors duration-200 cursor-pointer disabled:cursor-not-allowed ${
                       p.isActive
                         ? "bg-red-600 disabled:bg-red-600"
                         : "bg-neutral-400 disabled:bg-neutral-400"
-                    } flex items-center px-1`}
+                    } flex items-center px-1 2xl:px-2`}
                     onClick={() =>
                       p.isActive ? deleteAlerts(p?.id || "") : createAlert(p, i)
                     }
@@ -441,15 +474,15 @@ const Positions = () => {
                     transition={{ duration: 0.3, type: "tween" }}
                   >
                     <span
-                      className={`w-4 h-4 rounded-full bg-white transition-transform duration-200 ${
-                        p.isActive ? "translate-x-4" : "translate-x-0"
+                      className={`w-4 2xl:w-6 h-4 2xl:h-6 rounded-full bg-white transition-transform duration-200 ${
+                        p.isActive ? "translate-x-4 2xl:translate-x-6" : "translate-x-0"
                       }`}
                     ></span>
                   </motion.button>
                 </div>
               </div>
               {p.bufferPercent < 10 && (
-                <div className="bg-white rounded-lg p-2 flex justify-center text-md font-medium text-neutral-900 mb-2 mx-4">
+                <div className="bg-white rounded-lg p-2 2xl:p-4 flex justify-center text-md 2xl:text-2xl font-medium text-neutral-900 mb-2 2xl:mb-4 mx-4 2xl:mx-8">
                   This trade is at Risk! Go to&nbsp;
                   <Link
                     href="https://app.hyperliquid.xyz"
