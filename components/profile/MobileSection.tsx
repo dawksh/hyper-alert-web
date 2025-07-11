@@ -41,26 +41,26 @@ export const MobileSection = ({
 
   return (
     <div className="flex flex-col gap-1 w-full">
-      <div className="bg-lime-400 rounded-md w-full flex flex-col items-start px-12 py-6 gap-1 ">
-        <div className="text-zinc-800 text-5xl font-bold font-['Archivo']">
+      <div className="bg-lime-400 rounded-md w-full flex flex-col items-start px-12 py-6 gap-1 2xl:px-32 2xl:py-16 ">
+        <div className="text-zinc-800 text-5xl font-bold font-['Archivo'] 2xl:text-8xl">
           Get alerts on your phone
         </div>
-        <div className="text-zinc-800 text-xl font-normal font-['Archivo']">
+        <div className="text-zinc-800 text-xl font-normal font-['Archivo'] 2xl:text-4xl">
         Enter your phone number to get alert calls.
         </div>
       </div>
       <div className="flex flex-row gap-1 w-full">
-        <div className="flex-1 bg-[#2A2A2A] rounded-md h-20 flex items-center px-8 text-white text-xl font-medium font-['Archivo']">
+        <div className="flex-1 bg-[#2A2A2A] rounded-md h-20 flex items-center px-8 text-white text-xl font-medium font-['Archivo'] 2xl:h-32 2xl:px-16 2xl:text-4xl">
           Your mobile number to get alert calls
         </div>
         <PhoneInput
           defaultCountry="us"
           value={mobileNumber || phoneNumber}
-          className="w-2/5 bg-white rounded-md h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo']"
+          className="w-2/5 bg-white rounded-md h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo'] 2xl:h-32 2xl:px-16 2xl:text-4xl"
           onChange={(phone) => setPhoneNumber(phone)}
         />
         <div
-          className={`bg-indigo-500 rounded-md h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo'] cursor-pointer ${
+          className={`bg-indigo-500 rounded-md h-20 flex items-center px-8 text-neutral-900 text-xl font-medium font-['Archivo'] cursor-pointer 2xl:h-32 2xl:px-16 2xl:text-4xl ${
             isLoading ? "opacity-50 cursor-not-allowed" : ""
           }`}
           onClick={handleSubmit}
