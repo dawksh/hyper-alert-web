@@ -53,7 +53,7 @@ const ThresholdSection = ({
           price.
         </div>
       </div>
-      <div className="bg-neutral-800 rounded-md h-[50vh] flex flex-col items-start justify-center px-12 py-6 gap-6">
+      <div className="bg-neutral-800 rounded-md h-[50vh] flex flex-col items-start justify-center px-12 py-6 gap-6 2xl:h-[60vh]">
         <div className="text-white text-[10rem] 2xl:text-[24rem] text-start font-black font-['Archivo']">
           {value}%
         </div>
@@ -73,7 +73,7 @@ const ThresholdSection = ({
               if (v > 85) v = 85;
               setValue(v);
             }}
-            className="w-full h-2 rounded-lg appearance-none cursor-pointer mt-2 mb-2"
+            className="w-full h-2 rounded-lg appearance-none cursor-pointer mt-2 mb-2 2xl:h-4"
             style={{
               background:
                 "linear-gradient(90deg, #7f1d1d 0%, #f87171 10%, #f59e42 25%, #fde047 50%, #bbf7d0 70%, #22c55e 85%, #166534 100%)",

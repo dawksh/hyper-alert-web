@@ -42,7 +42,7 @@ const History = () => {
   const { data: alerts } = useAlerts();
   return (
     <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-1 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5">
-      <div className="flex flex-row justify-between items-center bg-lime-400 rounded-2xl p-4 w-full mb-1 h-[30vh]">
+      <div className="flex flex-row justify-between items-center bg-lime-400 rounded-2xl p-4 w-full mb-1 h-[30vh] 2xl:h-[40vh]">
         <div className="flex flex-col gap-1">
           <span className="text-neutral-900 text-8xl 2xl:text-[12rem] font-bold">Alert</span>
           <span className="text-neutral-900 text-8xl 2xl:text-[12rem] font-bold">History</span>
