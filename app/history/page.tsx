@@ -4,62 +4,39 @@ import { useAlerts } from "@/hooks/useActiveAlerts";
 import clsx from "clsx";
 import { abbreviateNumber } from "@/lib/utils";
 
-const data = [
-  {
-    asset: "ETH/USDC",
-    type: "SHORT",
-    liquidation: "$4500.45",
-    alert: "$2,945.24",
-    margin: "$3200.45",
-    marginPct: "25%",
-    leverage: "2x",
-    time: "00:25:44",
-    action: "NO",
-    actionColor: "text-red-600",
-  },
-  {
-    asset: "ETH/USDC",
-    type: "SHORT",
-    liquidation: "$4500.45",
-    alert: "$2,945.24",
-    margin: "$3200.45",
-    marginPct: "25%",
-    leverage: "2x",
-    time: "00:25:44",
-    action: "YES",
-    actionColor: "text-green-600",
-  },
-];
-
 
 const History = () => {
   const { data: alerts } = useAlerts();
   return (
     <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-1 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5">
-      <div className="flex flex-row justify-between items-center bg-lime-400 rounded-2xl p-4 w-full mb-1 h-[30vh] 2xl:h-[40vh]">
+      <div className="flex flex-row justify-between items-center bg-lime-400 rounded-2xl p-8 w-full mb-1 h-fit ">
         <div className="flex flex-col gap-1">
           <span className="text-neutral-900 text-8xl 2xl:text-[12rem] font-bold">Alert</span>
           <span className="text-neutral-900 text-8xl 2xl:text-[12rem] font-bold">History</span>
         </div>
         <div className="flex flex-row gap-1">
-          <div className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl h-full py-8 2xl:py-24 px-4 2xl:px-8 w-[15vw] 2xl:w-[20vw]">
-            <div className="text-white text-3xl 2xl:text-6xl font-semibold">
-              Total Alerts Sent
+          {[
+            {
+              label: "Total Alerts Sent",
+              value: alerts?.length,
+            },
+            {
+              label: "Liquidations Saved",
+              value: alerts?.filter(a => a.acknowledged && a.last_alert).length,
+            },
+            {
+              label: "Total Funds Saved",
+              value: `${abbreviateNumber(Number(alerts?.filter(a => a.acknowledged && a.last_alert).reduce((acc, a) => acc + a.margin, 0).toFixed(2)))}$`,
+            },
+          ].map(({ label, value }, i) => (
+            <div
+              key={label}
+              className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl py-8 md:py-12 2xl:py-20 px-4 2xl:px-8 w-[15vw] 2xl:w-[20vw] min-h-[18rem] 2xl:min-h-[28rem]"
+            >
+              <div className="text-white text-3xl 2xl:text-6xl font-semibold max-w-[80%]">{label}</div>
+              <div className="text-white text-6xl 2xl:text-[8rem] font-semibold">{value}</div>
             </div>
-            <div className="text-white text-6xl 2xl:text-[8rem] font-semibold">{alerts?.length}</div>
-          </div>
-          <div className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl h-full py-8 2xl:py-24 px-4 2xl:px-8 w-[15vw] 2xl:w-[20vw]">
-            <div className="text-white text-3xl 2xl:text-6xl font-semibold">
-              Liquidations Saved
-            </div>
-            <div className="text-white text-6xl 2xl:text-[8rem] font-semibold">{alerts?.filter((alert) => alert.acknowledged).length}</div>
-          </div>
-          <div className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl h-full py-8 2xl:py-24 px-4 2xl:px-8 w-[15vw] 2xl:w-[20vw]">
-            <div className="text-white text-3xl 2xl:text-6xl font-semibold">
-              Total Funds Saved
-            </div>
-            <div className="text-white text-6xl 2xl:text-[8rem] font-semibold">{abbreviateNumber(Number(alerts?.filter((alert) => alert.acknowledged).reduce((acc, alert) => acc + alert.margin, 0).toFixed(2)))}$</div>
-          </div>
+          ))}
         </div>
       </div>
       <div className="w-full bg-indigo-500 rounded-3xl p-6 2xl:p-12 flex flex-col gap-2 2xl:gap-4">
@@ -78,7 +55,7 @@ const History = () => {
           No History Found
         </div>
         ) : (
-          alerts?.map((row, i) => (
+          alerts?.filter(a => a.last_alert).map((row, i) => (
             <div
               key={i}
               className="grid grid-cols-8 gap-2 2xl:gap-4 bg-white rounded-2xl px-8 2xl:px-16 h-16 2xl:h-24 items-center mb-2:last:mb-0"

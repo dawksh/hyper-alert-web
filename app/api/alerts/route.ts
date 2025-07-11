@@ -46,14 +46,14 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-    const session = await getServerSession(authOptions)
-    if (!session?.address) {
-        return Response.json(
-            { error: "Unauthorized" },
-            { status: 401 }
-        );
+    try {
+        const session = await getServerSession(authOptions)
+        if (!session?.address) return Response.json({ error: "Unauthorized" }, { status: 401 });
+        const positionId = await request.text();
+        const { data } = await axios.post(`${process.env.API_URL}/user/acknowledge-alerts`, { alert: positionId });
+        return Response.json(data);
+    } catch(err) {
+        console.log(err)
+        return Response.json({ error: "Internal Server Error" }, { status: 500 });
     }
-    const body = await request.json()
-    const { data } = await axios.post(`${process.env.API_URL}/user/acknowledge-alerts`, { alerts: body });
-    return Response.json(data);
 }

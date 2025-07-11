@@ -187,8 +187,8 @@ const Positions = () => {
   };
   const deleteAlerts = async (positionId: string) => {
     setLoading(true);
-    await axios.delete("/api/alerts", { data: [positionId] });
-    queryClient.invalidateQueries({ queryKey: ["activeAlerts"] });
+    await axios.delete("/api/alerts", { data: positionId });
+    queryClient.invalidateQueries({ queryKey: ["activeAlerts", user?.address] });
     setLoading(false);
   };
   const filtered = filterPositions(
@@ -421,7 +421,7 @@ const Positions = () => {
             <div
               key={i}
               className={`flex rounded-xl flex-col ${
-                p.bufferPercent < 10 ? "bg-red-500" : "bg-white"
+                p.bufferPercent < 30 ? "bg-red-500" : "bg-white"
               }`}
             >
               <div
@@ -455,15 +455,16 @@ const Positions = () => {
                 <div className="text-neutral-900 text-lg 2xl:text-3xl">
                   ${p.bufferAmount.toFixed(2)} ({p.bufferPercent.toFixed(2)}%)
                 </div>
+                {/* Slider */}
                 <div className="flex justify-start">
                   <motion.button
                     className={`w-10 2xl:w-16 h-6 2xl:h-10 rounded-full transition-colors duration-200 cursor-pointer disabled:cursor-not-allowed ${
                       p.isActive
-                        ? "bg-red-600 disabled:bg-red-600"
+                        ? p.bufferPercent < 30 ? "bg-red-600 disabled:bg-red-600" : "bg-green-600 disabled:bg-green-600"
                         : "bg-neutral-400 disabled:bg-neutral-400"
                     } flex items-center px-1 2xl:px-2`}
                     onClick={() =>
-                      p.isActive ? deleteAlerts(p?.id || "") : createAlert(p, i)
+                      p.isActive ? deleteAlerts(p?.id) : createAlert(p, i)
                     }
                     disabled={loading}
                     animate={
@@ -481,7 +482,7 @@ const Positions = () => {
                   </motion.button>
                 </div>
               </div>
-              {p.bufferPercent < 10 && (
+              {p.bufferPercent < 30 && (
                 <div className="bg-white rounded-lg p-2 2xl:p-4 flex justify-center text-md 2xl:text-2xl font-medium text-neutral-900 mb-2 2xl:mb-4 mx-4 2xl:mx-8">
                   This trade is at Risk! Go to&nbsp;
                   <Link
