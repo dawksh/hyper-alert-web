@@ -39,37 +39,47 @@ const Pricing = () => (
         </div>
       </div>
       <div
-        className="flex flex-row justify-center items-end bg-lime-500 rounded-2xl w-full md:w-1/2 h-[30vh] md:h-[80vh] px-4 mt-2 md:mt-0"
+        className="flex justify-center items-end bg-lime-400 rounded-2xl w-full md:w-1/2 h-[30vh] md:h-[80vh] px-4 mt-2 md:mt-0"
         style={{
           paddingLeft: "clamp(1rem, 4vw, 6rem)",
           paddingRight: "clamp(1rem, 4vw, 6rem)",
         }}
       >
-        <span
-          className="text-neutral-900 font-extrabold"
-          style={{
-            fontSize: "clamp(3rem, 7vw, 10rem)",
-            paddingBottom: "clamp(2rem, 10vh, 50vh)",
-          }}
-        >
-          $
-        </span>
-        <span
-          className="text-neutral-900 font-extrabold leading-none"
-          style={{ fontSize: "clamp(6rem, 35vw, 40rem)" }}
-        >
-          1
-        </span>
-        <span
-          className="text-neutral-900 font-extrabold"
-          style={{
-            fontSize: "clamp(1.5rem, 4vw, 8rem)",
-            paddingBottom: "clamp(1rem, 10vh, 50vh)",
-            paddingLeft: "clamp(0.5rem, 2vw, 4vw)",
-          }}
-        >
-          / alert
-        </span>
+        <div className="relative flex items-center justify-center">
+          {/* Main numeral */}
+          <span
+            className="text-neutral-900 font-extrabold leading-none"
+            style={{ fontSize: "clamp(6rem, 40vw, 45rem)" }}
+          >
+            1
+          </span>
+
+          {/* Dollar sign - positioned top-left of "1" */}
+          <span
+            className="absolute text-neutral-900 font-extrabold"
+            style={{
+              fontSize: "clamp(3rem, 7vw, 10rem)",
+              top: 0,
+              left: 0,
+              transform: "translate(-60%, 70%)",
+            }}
+          >
+            $
+          </span>
+
+          {/* / alert - positioned bottom-left of "1" */}
+          <span
+            className="absolute text-neutral-900 font-extrabold"
+            style={{
+              fontSize: "clamp(1.5rem, 4vw, 8rem)",
+              bottom: 0,
+              left: 0,
+              transform: "translate(180%, -100%)",
+            }}
+          >
+            / alert
+          </span>
+        </div>
       </div>
     </div>
 
