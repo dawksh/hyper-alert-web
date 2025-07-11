@@ -61,7 +61,7 @@ export default function ConnectButtonCustom() {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.25 }}
                   onClick={openConnectModal}
-                  className="flex flex-row items-center justify-center w-full h-[15vh] bg-lime-400 rounded-md cursor-pointer"
+                  className="flex flex-row items-center justify-center w-full h-[10vh] md:h-[15vh] bg-lime-400 rounded-md cursor-pointer"
                 >
                   <span className="text-neutral-900 text-md md:text-2xl 2xl:text-4xl font-semibold">
                     Connect Wallet
@@ -75,11 +75,11 @@ export default function ConnectButtonCustom() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.25 }}
-                  className="flex flex-row items-center gap-1 w-full h-[15vh]"
+                  className="flex flex-row items-center gap-1 w-full h-[10vh] md:h-[15vh]"
                 >
                   <motion.button
                     type="button"
-                    className="flex items-center flex-1 h-[15vh] bg-white rounded-md justify-center cursor-pointer flex-row px-8 py-4"
+                    className="flex items-center flex-1 h-[10vh] md:h-[15vh] bg-white rounded-md justify-center cursor-pointer flex-row px-8 py-4"
                     initial={{ x: 0 }}
                     animate={{ x: 0 }}
                     exit={{ x: -40, opacity: 0 }}
@@ -98,7 +98,7 @@ export default function ConnectButtonCustom() {
                     <motion.button
                       onClick={() => disconnect()}
                       type="button"
-                      className="flex items-center justify-center w-[20vh] h-[15vh] bg-red-500 rounded-md cursor-pointer"
+                      className="flex items-center justify-center w-[20vh] h-[10vh] md:h-[15vh] bg-red-500 rounded-md cursor-pointer"
                       initial={{ x: 0 }}
                       animate={{ x: 0 }}
                       exit={{ x: 40, opacity: 0 }}
