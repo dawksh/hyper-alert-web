@@ -44,32 +44,32 @@ const History = () => {
     <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-1 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5">
       <div className="flex flex-row justify-between items-center bg-lime-400 rounded-2xl p-4 w-full mb-1 h-[30vh]">
         <div className="flex flex-col gap-1">
-          <span className="text-neutral-900 text-8xl font-bold">Alert</span>
-          <span className="text-neutral-900 text-8xl font-bold">History</span>
+          <span className="text-neutral-900 text-8xl 2xl:text-[12rem] font-bold">Alert</span>
+          <span className="text-neutral-900 text-8xl 2xl:text-[12rem] font-bold">History</span>
         </div>
         <div className="flex flex-row gap-1">
-          <div className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl h-full py-8 px-4 w-[15vw]">
-            <div className="text-white text-3xl font-semibold">
+          <div className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl h-full py-8 2xl:py-24 px-4 2xl:px-8 w-[15vw] 2xl:w-[20vw]">
+            <div className="text-white text-3xl 2xl:text-6xl font-semibold">
               Total Alerts Sent
             </div>
-            <div className="text-white text-6xl font-semibold">{alerts?.length}</div>
+            <div className="text-white text-6xl 2xl:text-[8rem] font-semibold">{alerts?.length}</div>
           </div>
-          <div className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl h-full py-8 px-4 w-[15vw]">
-            <div className="text-white text-3xl font-semibold">
+          <div className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl h-full py-8 2xl:py-24 px-4 2xl:px-8 w-[15vw] 2xl:w-[20vw]">
+            <div className="text-white text-3xl 2xl:text-6xl font-semibold">
               Liquidations Saved
             </div>
-            <div className="text-white text-6xl font-semibold">{alerts?.filter((alert) => alert.acknowledged).length}</div>
+            <div className="text-white text-6xl 2xl:text-[8rem] font-semibold">{alerts?.filter((alert) => alert.acknowledged).length}</div>
           </div>
-          <div className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl h-full py-8 px-4 w-[15vw]">
-            <div className="text-white text-3xl font-semibold">
+          <div className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl h-full py-8 2xl:py-24 px-4 2xl:px-8 w-[15vw] 2xl:w-[20vw]">
+            <div className="text-white text-3xl 2xl:text-6xl font-semibold">
               Total Funds Saved
             </div>
-            <div className="text-white text-6xl font-semibold">{abbreviateNumber(Number(alerts?.filter((alert) => alert.acknowledged).reduce((acc, alert) => acc + alert.margin, 0).toFixed(2)))}$</div>
+            <div className="text-white text-6xl 2xl:text-[8rem] font-semibold">{abbreviateNumber(Number(alerts?.filter((alert) => alert.acknowledged).reduce((acc, alert) => acc + alert.margin, 0).toFixed(2)))}$</div>
           </div>
         </div>
       </div>
       <div className="w-full bg-indigo-500 rounded-3xl p-6 flex flex-col gap-4">
-        <div className="grid grid-cols-8 gap-4 text-white text-md font-semibold px-8 h-8 items-center">
+        <div className="grid grid-cols-8 gap-4 text-white text-md 2xl:text-2xl font-semibold px-8 h-8 2xl:h-16 items-center">
           <div>Asset</div>
           <div>Size</div>
           <div>Margin</div>
@@ -89,22 +89,22 @@ const History = () => {
               key={i}
               className="grid grid-cols-8 gap-4 bg-white rounded-2xl px-8 h-16 items-center mb-4:last:mb-0"
             >
-              <div className="text-neutral-900 text-lg font-bold flex flex-col">
+              <div className="text-neutral-900 text-lg 2xl:text-3xl font-bold flex flex-col">
                 {row.coin}
-                <span className="text-neutral-500 text-xs font-medium">
+                <span className="text-neutral-500 text-xs 2xl:text-lg font-medium">
                   {row.direction}
                 </span>
               </div>
-              <div className="text-neutral-900 text-lg">{Math.abs(row.size).toFixed(2)}</div>
-              <div className="text-neutral-900 text-lg">{row.margin.toFixed(2)}</div>
-              <div className="text-neutral-900 text-lg">{row.liq_price.toFixed(2)}</div>
-              <div className="text-neutral-900 text-lg">{row.last_price ? row.last_price.toFixed(2) : '-'}</div>
-              <div className="text-neutral-900 text-lg">{row.last_price ? (row.last_price - row.liq_price).toFixed(2) : '-'}</div>
-              <div className="text-neutral-900 text-lg">
+              <div className="text-neutral-900 text-lg 2xl:text-3xl">{Math.abs(row.size).toFixed(2)}</div>
+              <div className="text-neutral-900 text-lg 2xl:text-3xl">{row.margin.toFixed(2)}</div>
+              <div className="text-neutral-900 text-lg 2xl:text-3xl">{row.liq_price.toFixed(2)}</div>
+              <div className="text-neutral-900 text-lg 2xl:text-3xl">{row.last_price ? row.last_price.toFixed(2) : '-'}</div>
+              <div className="text-neutral-900 text-lg 2xl:text-3xl">{row.last_price ? (row.last_price - row.liq_price).toFixed(2) : '-'}</div>
+              <div className="text-neutral-900 text-lg 2xl:text-3xl">
                 {row.last_alert ? new Date(row.last_alert).toLocaleString("en-IN", { year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit" }) : "-"}
               </div>
               <div
-                className={clsx(row.acknowledged ? "text-green-600" : "text-red-600", "font-bold")}
+                className={clsx(row.acknowledged ? "text-green-600" : "text-red-600", "font-bold", "text-lg", "2xl:text-3xl")}
               >
                 {row.acknowledged ? "YES" : "NO"}
               </div>
