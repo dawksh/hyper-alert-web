@@ -80,9 +80,9 @@ const History = () => {
           <div>Acknowledged</div>
         </div>
         {alerts?.length === 0 ? (
-          <div className="text-white text-lg 2xl:text-3xl text-center font-medium">
-            No history found
-          </div>
+          <div className="bg-white rounded-2xl px-8 2xl:px-16 py-8 2xl:py-16 text-lg 2xl:text-3xl text-center font-medium text-neutral-900 w-full flex items-center justify-center">
+          No Histtory Found
+        </div>
         ) : (
           alerts?.map((row, i) => (
             <div
