@@ -8,6 +8,7 @@ import axios from "axios";
 export async function POST(request: Request) {
   try {
     const headersList = await headers();
+    const origin = headersList.get("origin");
     const body = await request.json();
     const price = body.price;
     let productId = "";
@@ -41,6 +42,8 @@ export async function POST(request: Request) {
         dueDate: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
         invoiceType: "recurring",
         collectionMethod: "charge_automatically",
+        success_url: `${origin}/profile?success=true`,
+        cancel_url: `${origin}/profile?canceled=true`,
         lineItems: {
           data: [
             {

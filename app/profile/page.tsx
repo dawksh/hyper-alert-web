@@ -40,8 +40,6 @@ const Profile = () => {
     <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-1 gap-1 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5">
       {/* Mobile Number Section */}
       <MobileSection mobileNumber={user?.pd_id} id={user?.id} />
-      {/* Email Section */}
-      {!user.email && !user.stripe_id && <EmailSection email={user?.email} id={user?.id} />}
       {/* Telegram Section */}
       <TelegramSection telegramId={user?.telegram_id} />
       {/* Liquidation Threshold Section */}
