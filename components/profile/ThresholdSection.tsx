@@ -58,9 +58,17 @@ const ThresholdSection = ({
           {value}%
         </div>
         <div className="w-full flex flex-col items-center">
-          <div className="w-full flex flex-row items-center justify-between px-2">
-            <span className="text-neutral-400 text-lg">min</span>
-            <span className="text-neutral-400 text-lg">max</span>
+          <div className="w-full flex flex-row items-center justify-between px-2 py-8 relative">
+            <span className="absolute left-0 text-neutral-400 text-lg" style={{left: 0}}>Liq.<div style={{width:2,height:24,background:'#a3a3a3',margin:'0 auto',marginTop:4}} /></span>
+            <span className="absolute" style={{left: 'calc(5% + 0.5rem)'}}>
+              <span className="text-neutral-400 text-lg">min</span>
+              <div style={{width:2,height:24,background:'#a3a3a3',margin:'0 auto',marginTop:4}} />
+            </span>
+            <span className="absolute" style={{left: 'calc(85% -  2rem)'}}>
+              <span className="text-neutral-400 text-lg">max</span>
+              <div style={{width:2,height:24,background:'#a3a3a3',margin:'0 auto',marginTop:4}} />
+            </span>
+            <span className="absolute right-0 text-neutral-400 text-lg" style={{right: 0}}>Trade Start<div style={{width:2,height:24,background:'#a3a3a3',margin:'0 auto',marginTop:4}} /></span>
           </div>
           <input
             type="range"

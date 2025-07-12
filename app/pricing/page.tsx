@@ -98,10 +98,10 @@ const pricingOptions = [
 ];
 
 const PricingCard = ({ price, count }: { price: number; count: number }) => (
-  <div className="relative w-full bg-indigo-500 rounded-3xl flex flex-col justify-around items-center py-4 px-2 h-fit md:py-8 md:px-4 mb-2 md:mb-0 last:mb-0">
-    <div className="w-full flex flex-col items-center gap-2">
-      <div className="w-full h-16 md:h-24 2xl:h-36 bg-lime-400 rounded-2xl flex items-center justify-center mb-2">
-        <span className="text-neutral-900 text-3xl sm:text-5xl md:text-7xl 2xl:text-[8rem] font-black">
+  <div className="relative w-full bg-indigo-500 rounded-3xl flex flex-col justify-around items-center py-4 px-2 h-fit md:py-16 md:px-4 mb-2 md:mb-0 last:mb-0">
+    <div className="w-full flex flex-col justify-between items-center gap-2">
+      <div className="w-full p-9 md:px  -12 2xl:h-36 bg-lime-400 rounded-2xl flex items-center justify-center mb-2">
+        <span className="text-neutral-900 text-3xl sm:text-5xl md:text-9xl 2xl:text-[10rem] font-black">
           {`$${price}`}
         </span>
       </div>

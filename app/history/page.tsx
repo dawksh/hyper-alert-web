@@ -26,7 +26,7 @@ const History = () => {
             },
             {
               label: "Total Funds Saved",
-              value: `${abbreviateNumber(Number(alerts?.filter(a => a.acknowledged && a.last_alert).reduce((acc, a) => acc + a.margin, 0).toFixed(2)))}$`,
+              value: `$${abbreviateNumber(Number(alerts?.filter(a => a.acknowledged && a.last_alert).reduce((acc, a) => acc + a.margin, 0).toFixed(2)))}`,
             },
           ].map(({ label, value }, i) => (
             <div

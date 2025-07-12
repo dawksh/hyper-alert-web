@@ -137,7 +137,7 @@ const SubscriptionSection = ({
             alerts.
           </div>
         </div>
-        <div className="bg-neutral-800 rounded-md w-[18vw] 2xl:w-[20vw] h-[10vh] flex flex-row items-center justify-around px-10 py-6 gap-1 2xl:h-[15vh] 2xl:px-20 2xl:py-12 2xl:gap-4 ">
+        <div className="bg-neutral-800 rounded-md w-[18vw] 2xl:w-[20vw] h-[10vh] flex flex-row items-center justify-around px-8 py-6 gap-1 2xl:h-[15vh] 2xl:px-20 2xl:py-12 2xl:gap-4 ">
           <div className="text-white text-lg font-normal font-['Archivo'] tracking-tight 2xl:text-3xl">
             Remaining Credits
           </div>
