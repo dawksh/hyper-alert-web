@@ -1,7 +1,7 @@
 "use client";
 import { Position as BasePosition, usePositions } from "@/hooks/usePositions";
 import { useUser } from "@/hooks/useUser";
-import { FilterIcon, HistoryIcon, Search } from "lucide-react";
+import {  HistoryIcon, Search } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -11,6 +11,7 @@ import { queryClient } from "../shared/ProviderLayout";
 import { Button } from "../ui/button";
 import { MobileSection } from "@/components/profile/MobileSection";
 import { motion } from "framer-motion";
+import FilterIcon from "../Icons/FilterIcon";
 
 type Position = BasePosition & { isActive: boolean; id: string };
 type FilterDirection = "all" | "long" | "short";

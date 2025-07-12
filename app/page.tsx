@@ -55,7 +55,7 @@ const Page = () => {
         </div>
       </section>
       {/* Pricing Section */}
-      <section className="w-full bg-lime-400 rounded-xl flex flex-col items-start py-5 md:py-8 px-8 md:px-24">
+      <section className="w-full bg-lime-400 rounded-xl flex flex-col items-start py-10 md:py-24 px-8 md:px-24">
         <h2 className="text-neutral-900 justify-start items-start text-5xl md:text-8xl 2xl:text-9xl font-bold max-w-6xl 2xl:max-w-[70%] mt-16">
           We save thousands of dollars from liquidation for just{" "}
           <span className="text-indigo-500">$1 per alert</span>
