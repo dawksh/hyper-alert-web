@@ -31,10 +31,10 @@ const History = () => {
           ].map(({ label, value }, i) => (
             <div
               key={label}
-              className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl py-8 md:py-12 2xl:py-20 px-4 2xl:px-8 w-[15vw] 2xl:w-[20vw] min-h-[18rem] 2xl:min-h-[28rem]"
+              className="flex flex-col justify-between gap-1 bg-neutral-900 rounded-2xl py-8 md:py-12 2xl:py-20 px-4 2xl:px-8 w-[20vw] 2xl:w-[25vw] min-h-[18rem] 2xl:min-h-[28rem]"
             >
               <div className="text-white text-3xl 2xl:text-6xl font-semibold max-w-[80%]">{label}</div>
-              <div className="text-white text-6xl 2xl:text-[8rem] font-semibold">{value}</div>
+              <div className="text-white text-6xl 2xl:text-[8rem] font-bold">{value}</div>
             </div>
           ))}
         </div>
