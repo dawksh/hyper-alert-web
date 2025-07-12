@@ -88,13 +88,19 @@ const Pricing = () => (
         <PricingCard key={count} price={price} count={count} />
       ))}
     </div>
+    <div className="w-full h-full flex flex-col items-center justify-center bg-white rounded-2xl p-4">
+      <span className="text-indigo-500 text-2xl sm:text-3xl md:text-5xl 2xl:text-[6rem] font-normal">
+        *Any unused credits from the current month will automatically{" "}
+        <span className="font-bold">carry over to the next month.</span>
+      </span>
+    </div>
   </div>
 );
 
 const pricingOptions = [
   { price: 50, count: 50 },
-  { price: 100, count: 100 },
   { price: 200, count: 200 },
+  { price: 500, count: 500 },
 ];
 
 const PricingCard = ({ price, count }: { price: number; count: number }) => (

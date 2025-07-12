@@ -9,7 +9,7 @@ const Page = () => {
   const { data: session } = useSession();
   const isConnected = !!session?.address;
   return (
-    <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center py-1 px-1 sm:px-2 md:px-3 lg:px-4 xl:px-5 gap-y-1">
+    <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center py-1 px-1 sm:px-2 md:px-4 2xl:px-5 gap-y-1">
       {/* Hero Section */}
       <section className="w-full bg-indigo-500 rounded-xl flex flex-col justify-end items-start h-[90vh] md:h-[85vh] py-8 md:py-16 px-8 md:px-24">
         <h1
