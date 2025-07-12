@@ -26,6 +26,17 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "perp alert",
+    description: "perp alert | alerts for perps via calls",
+    images: [
+      {
+        url: "/og.svg",
+        alt: "perp alert logo",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
