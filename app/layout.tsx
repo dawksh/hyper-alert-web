@@ -14,6 +14,18 @@ const archivo = Archivo({
 export const metadata: Metadata = {
   title: "perp alert",
   description: "perp alert | alerts for perps via calls",
+  openGraph: {
+    title: "perp alert",
+    description: "perp alert | alerts for perps via calls",
+    images: [
+      {
+        url: "/og.svg",
+        width: 1200,
+        height: 630,
+        alt: "perp alert logo",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
