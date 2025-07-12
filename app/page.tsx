@@ -14,7 +14,7 @@ const Page = () => {
       <section className="w-full bg-indigo-500 rounded-xl flex flex-col justify-end items-start h-[90vh] md:h-[85vh] py-8 md:py-16 px-8 md:px-24">
         <h1
           className="text-white font-extrabold leading-tight max-w-[70%] mt-24"
-          style={{ fontSize: "clamp(4.5rem, 7vw, 20rem)" }}
+          style={{ fontSize: "clamp(3.5rem, 7vw, 20rem)" }}
         >
          We give you a call before your hyperliquid position gets{" "}
           <span className="text-lime-400">liquidated.</span>
