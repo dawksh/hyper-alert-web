@@ -23,10 +23,13 @@ export const useAlerts = () => {
     const { data, isLoading, error } = useQuery({
         queryKey: ['activeAlerts', address],
         queryFn: async () => {
-            const { data } = await axios.get<Alert[]>(`/api/alerts?wallet=${address}`)
+            if(address) {
+                const { data } = await axios.get<Alert[]>(`/api/alerts?wallet=${address}`)
+                return data
+            }
+            const { data } = await axios.get<Alert[]>(`/api/alerts`)
             return data
         },
-        enabled: !!address,
         refetchInterval: 60000,
     })
 

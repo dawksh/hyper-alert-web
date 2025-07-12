@@ -1,13 +1,44 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
-import { useSession } from "next-auth/react";
+import React, { useEffect, useState, useRef } from "react";
 import XIcon from "@/components/Icons/XIcon";
+import { useAlerts } from "@/hooks/useActiveAlerts";
+import { abbreviateNumber } from "@/lib/utils";
 
 const Page = () => {
-  const { data: session } = useSession();
-  const isConnected = !!session?.address;
+  const { data: alerts } = useAlerts();
+  const [totalMargin, setTotalMargin] = useState<number | null>(null);
+  const [animatedMargin, setAnimatedMargin] = useState<number>(0);
+  const pricingRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    setTotalMargin(
+      alerts?.reduce((acc, alert) => acc + alert.margin, 0) || null
+    );
+  }, [alerts]);
+  useEffect(() => {
+    const observer = new window.IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.2 }
+    );
+    if (pricingRef.current) observer.observe(pricingRef.current);
+    return () => observer.disconnect();
+  }, []);
+  useEffect(() => {
+    if (totalMargin === null || !inView) return;
+    let start = 0;
+    let startTime: number | null = null;
+    const duration = 2000;
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      setAnimatedMargin(Math.floor(progress * (totalMargin - start) + start));
+      if (progress < 1) requestAnimationFrame(animate);
+      else setAnimatedMargin(totalMargin);
+    };
+    requestAnimationFrame(animate);
+  }, [totalMargin, inView]);
   return (
     <div className="min-h-screen w-full bg-zinc-900 flex flex-col items-center py-1 px-1 sm:px-2 md:px-4 2xl:px-5 gap-y-1">
       {/* Hero Section */}
@@ -16,7 +47,7 @@ const Page = () => {
           className="text-white font-extrabold leading-tight max-w-[70%] mt-24"
           style={{ fontSize: "clamp(3.5rem, 7vw, 20rem)" }}
         >
-         We give you a call before your hyperliquid position gets{" "}
+          We give you a call before your hyperliquid position gets{" "}
           <span className="text-lime-400">liquidated.</span>
         </h1>
       </section>
@@ -41,7 +72,6 @@ const Page = () => {
           <span className="text-neutral-900 text-2xl md:text-4xl 2xl:text-8xl font-bold mt-1">
             notified on.
           </span>
-         
         </div>
         <div className="bg-red-500 rounded-xl flex flex-col items-start p-4 min-h-[20vh] md:min-h-[25vh] w-[25vw] md:max-w-[25vw] mx-auto shadow-xl">
           <span className="text-neutral-900 text-2xl md:text-4xl 2xl:text-8xl font-normal">
@@ -55,9 +85,18 @@ const Page = () => {
         </div>
       </section>
       {/* Pricing Section */}
-      <section className="w-full bg-lime-400 rounded-xl flex flex-col items-start py-10 md:py-24 px-8 md:px-24">
+      <section
+        ref={pricingRef}
+        className="w-full bg-lime-400 rounded-xl flex flex-col items-start py-10 md:py-24 px-8 md:px-24"
+      >
         <h2 className="text-neutral-900 justify-start items-start text-5xl md:text-8xl 2xl:text-9xl font-bold max-w-6xl 2xl:max-w-[70%] mt-16">
-          We save thousands of dollars from liquidation for just{" "}
+          We&apos;ve saved{" "}
+          {totalMargin ? (
+            <span>${animatedMargin.toFixed(0)}</span>
+          ) : (
+            "thousands of dollars"
+          )}{" "}
+          from liquidations for just{" "}
           <span className="text-indigo-500">$1 per alert.</span>
         </h2>
       </section>
