@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 const Pricing = () => (
-  <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-1 gap-1 px-1 sm:px-2 md:px-3 2xl:px-4">
+  <div className="w-full min-h-screen bg-zinc-900 flex flex-col items-center py-1 gap-1 px-1 sm:px-2 md:px-4 2xl:px-5">
     <div className="flex flex-col md:flex-row w-full gap-1">
       <div className="flex flex-col gap-1 w-full md:w-1/2">
         <div
@@ -112,7 +112,7 @@ const PricingCard = ({ price, count }: { price: number; count: number }) => (
         alerts/month
       </span>
     </div>
-    <button className="w-full h-[40%] bg-white rounded-2xl text-zinc-800 text-lg md:text-2xl 2xl:text-4xl py-2 md:py-4 font-semibold flex items-center justify-center mt-4 transition-colors duration-200 hover:bg-lime-600 hover:text-white">
+    <button className="w-full h-[40%] bg-white rounded-2xl text-zinc-800 text-lg md:text-2xl 2xl:text-4xl py-2 md:py-4 font-semibold flex items-center justify-center mt-4 transition-all duration-200 hover:bg-gray-400">
       <Link href="/profile">Get Started</Link>
     </button>
   </div>

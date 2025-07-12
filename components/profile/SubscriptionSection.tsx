@@ -59,29 +59,27 @@ const TierCards = React.memo(() => {
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="flex items-center flex-row justify-center w-full h-full gap-1">
+      <div className="flex items-center flex-row justify-center w-full h-full mb-4 gap-1">
         {tiers.map((t, idx) => (
           <div
             key={t.name}
-            className={`relative w-full bg-indigo-500 rounded-3xl flex flex-col justify-around items-center py-4 px-2 h-full md:py-8 md:px-4 2xl:py-16 2xl:px-8 ${
-              user?.subscription_tier === t.price.toString()
+            className={`relative w-full rounded-3xl flex flex-col justify-around items-center py-4 px-2 h-full md:py-16 md:px-4 2xl:py-16 2xl:px-8 ${
+              user?.subscription_tier != t.price.toString()
                 ? "bg-[#2A2A2A]"
                 : "bg-indigo-500"
             }`}
           >
             <div className="w-full flex flex-col items-center gap-2">
               <div
-                className={`w-full h-16 md:h-24 2xl:h-36 ${
-                  user?.subscription_tier === t.price.toString()
-                    ? "bg-neutral-800"
+                className={`w-full md:py-12 2xl:py-16 ${
+                  user?.subscription_tier != t.price.toString()
+                    ? "bg-indigo-500"
                     : "bg-lime-400"
                 } rounded-2xl flex items-center justify-center mb-2`}
               >
                 <span
-                  className={`text-3xl sm:text-5xl md:text-7xl 2xl:text-[8rem] font-black ${
-                    user?.subscription_tier === t.price.toString()
-                      ? "text-white"
-                      : "text-neutral-900"
+                  className={`text-3xl sm:text-5xl md:text-9xl 2xl:text-[10rem] font-black ${
+                   "text-neutral-900"
                   }`}
                 >{`$${t.price}`}</span>
               </div>
@@ -96,7 +94,7 @@ const TierCards = React.memo(() => {
               className={`w-full h-12 md:h-14 2xl:h-28 bg-white rounded-2xl text-zinc-800 text-lg md:text-2xl 2xl:text-4xl py-2 md:py-4 2xl:py-8 font-semibold flex items-center justify-center mt-4 transition-colors duration-200 ${
                 user?.subscription_tier === t.price.toString()
                   ? "bg-lime-400 cursor-not-allowed"
-                  : "cursor-pointer hover:bg-lime-600 hover:text-white"
+                  : "cursor-pointer hover:bg-gray-400 transition-all duration-200"
               }`}
               onClick={() => handleBuy(t, idx)}
               disabled={
